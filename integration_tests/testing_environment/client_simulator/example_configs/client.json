@@ -1,0 +1,14 @@
+{
+    "experiment_name": "exp06",
+    "oses": ["Windows"],
+    "configs": { 
+                "Windows": ["None"]
+                },
+    "browsers": ["chrome", "firefox"],
+    "pets": {
+        "chrome":   [ ["None"], ["JSc=2"], ["JSc=3", "uoc"], ["uoc"]],
+        "firefox":   [ ["None"], ["JSf=2"], ["JSf=3", "uoc"], ["uoc"]]   
+        },
+    "repeats": 1, 
+    "test_behaviors": ["cross_reload"]
+}

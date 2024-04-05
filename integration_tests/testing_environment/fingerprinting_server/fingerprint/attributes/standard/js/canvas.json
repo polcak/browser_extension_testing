@@ -1,0 +1,10 @@
+{
+  "name" : "canvas",
+  "description" : "hash of the canvas fingerprint of the user's browser",
+  "files" : ["canvas.js"],
+  "variables" :[
+                "canvas.spoof",
+                "canvas.pointInPath",
+                "canvas.pointInStroke"], 
+  "hash" : "True"
+}
