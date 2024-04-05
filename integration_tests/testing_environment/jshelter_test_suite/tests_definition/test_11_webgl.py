@@ -22,145 +22,145 @@
 #
 
 # Test WebGLRenderingContext.getParameter for unmaskedVendor
-def test_unmasked_vendor(noaddon, jsrun, expected):
+def test_unmasked_vendor(noaddon, addonRun, expected):
     if expected.webglParameters == 'REAL VALUE':
-        assert jsrun.webglParameters['webglVendor'] == noaddon.webglParameters['webglVendor']
+        assert addonRun.webglParameters['webglVendor'] == noaddon.webglParameters['webglVendor']
     else:
-        if jsrun.webglParameters['webglVendor'] == noaddon.webglParameters['webglVendor']:
-            assert jsrun.webglParameters['webglVendor'] == ""
+        if addonRun.webglParameters['webglVendor'] == noaddon.webglParameters['webglVendor']:
+            assert addonRun.webglParameters['webglVendor'] == ""
         else:
             assert True
 
 # Test WebGLRenderingContext.getParameter for unmaskedRenderer
-def test_unmasked_renderer(noaddon, jsrun, expected):
+def test_unmasked_renderer(noaddon, addonRun, expected):
     if expected.webglParameters == 'REAL VALUE':
-        assert jsrun.webglParameters['webglRenderer'] == noaddon.webglParameters['webglRenderer']
+        assert addonRun.webglParameters['webglRenderer'] == noaddon.webglParameters['webglRenderer']
     else:
-        assert jsrun.webglParameters['webglRenderer'] != noaddon.webglParameters['webglRenderer']
+        assert addonRun.webglParameters['webglRenderer'] != noaddon.webglParameters['webglRenderer']
 
 # Test WebGLRenderingContext.getParameter
-def test_other_parameters(noaddon, jsrun, expected):
+def test_other_parameters(noaddon, addonRun, expected):
     if expected.webglParameters == 'SPOOF VALUE':
         spoof_sum = 0
         if noaddon.webglParameters['maxVertexUniformComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxVertexUniformComponents'] <= noaddon.webglParameters['maxVertexUniformComponents']
-            spoof_sum += noaddon.webglParameters['maxVertexUniformComponents'] - jsrun.webglParameters['maxVertexUniformComponents']
+            assert 0 <= addonRun.webglParameters['maxVertexUniformComponents'] <= noaddon.webglParameters['maxVertexUniformComponents']
+            spoof_sum += noaddon.webglParameters['maxVertexUniformComponents'] - addonRun.webglParameters['maxVertexUniformComponents']
         if noaddon.webglParameters['maxVertexUniformBlocks'] != None:
-            assert 0 <= jsrun.webglParameters['maxVertexUniformBlocks'] <= noaddon.webglParameters['maxVertexUniformBlocks']
-            spoof_sum += noaddon.webglParameters['maxVertexUniformBlocks'] - jsrun.webglParameters['maxVertexUniformBlocks']
+            assert 0 <= addonRun.webglParameters['maxVertexUniformBlocks'] <= noaddon.webglParameters['maxVertexUniformBlocks']
+            spoof_sum += noaddon.webglParameters['maxVertexUniformBlocks'] - addonRun.webglParameters['maxVertexUniformBlocks']
         if noaddon.webglParameters['maxVertexOutputComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxVertexOutputComponents'] <= noaddon.webglParameters['maxVertexOutputComponents']
-            spoof_sum += noaddon.webglParameters['maxVertexOutputComponents'] - jsrun.webglParameters['maxVertexOutputComponents']
+            assert 0 <= addonRun.webglParameters['maxVertexOutputComponents'] <= noaddon.webglParameters['maxVertexOutputComponents']
+            spoof_sum += noaddon.webglParameters['maxVertexOutputComponents'] - addonRun.webglParameters['maxVertexOutputComponents']
         if noaddon.webglParameters['maxVaryingComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxVaryingComponents'] <= noaddon.webglParameters['maxVaryingComponents']
-            spoof_sum += noaddon.webglParameters['maxVaryingComponents'] - jsrun.webglParameters['maxVaryingComponents']
+            assert 0 <= addonRun.webglParameters['maxVaryingComponents'] <= noaddon.webglParameters['maxVaryingComponents']
+            spoof_sum += noaddon.webglParameters['maxVaryingComponents'] - addonRun.webglParameters['maxVaryingComponents']
         if noaddon.webglParameters['maxTransformFeedbackInterleavedComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxTransformFeedbackInterleavedComponents'] <= noaddon.webglParameters['maxTransformFeedbackInterleavedComponents']
-            spoof_sum += noaddon.webglParameters['maxTransformFeedbackInterleavedComponents'] - jsrun.webglParameters['maxTransformFeedbackInterleavedComponents']
+            assert 0 <= addonRun.webglParameters['maxTransformFeedbackInterleavedComponents'] <= noaddon.webglParameters['maxTransformFeedbackInterleavedComponents']
+            spoof_sum += noaddon.webglParameters['maxTransformFeedbackInterleavedComponents'] - addonRun.webglParameters['maxTransformFeedbackInterleavedComponents']
         if noaddon.webglParameters['maxFragmentUniformComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxFragmentUniformComponents'] <= noaddon.webglParameters['maxFragmentUniformComponents']
-            spoof_sum += noaddon.webglParameters['maxFragmentUniformComponents'] - jsrun.webglParameters['maxFragmentUniformComponents']
+            assert 0 <= addonRun.webglParameters['maxFragmentUniformComponents'] <= noaddon.webglParameters['maxFragmentUniformComponents']
+            spoof_sum += noaddon.webglParameters['maxFragmentUniformComponents'] - addonRun.webglParameters['maxFragmentUniformComponents']
         if noaddon.webglParameters['maxFragmentUniformBlocks'] != None:
-            assert 0 <= jsrun.webglParameters['maxFragmentUniformBlocks'] <= noaddon.webglParameters['maxFragmentUniformBlocks']
-            spoof_sum += noaddon.webglParameters['maxFragmentUniformBlocks'] - jsrun.webglParameters['maxFragmentUniformBlocks']
+            assert 0 <= addonRun.webglParameters['maxFragmentUniformBlocks'] <= noaddon.webglParameters['maxFragmentUniformBlocks']
+            spoof_sum += noaddon.webglParameters['maxFragmentUniformBlocks'] - addonRun.webglParameters['maxFragmentUniformBlocks']
         if noaddon.webglParameters['maxFragmentInputComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxFragmentInputComponents'] <= noaddon.webglParameters['maxFragmentInputComponents']
-            spoof_sum += noaddon.webglParameters['maxFragmentInputComponents'] - jsrun.webglParameters['maxFragmentInputComponents']
+            assert 0 <= addonRun.webglParameters['maxFragmentInputComponents'] <= noaddon.webglParameters['maxFragmentInputComponents']
+            spoof_sum += noaddon.webglParameters['maxFragmentInputComponents'] - addonRun.webglParameters['maxFragmentInputComponents']
         if noaddon.webglParameters['maxUniformBufferBindings'] != None:
-            assert 0 <= jsrun.webglParameters['maxUniformBufferBindings'] <= noaddon.webglParameters['maxUniformBufferBindings']
-            spoof_sum += noaddon.webglParameters['maxUniformBufferBindings'] - jsrun.webglParameters['maxUniformBufferBindings']
+            assert 0 <= addonRun.webglParameters['maxUniformBufferBindings'] <= noaddon.webglParameters['maxUniformBufferBindings']
+            spoof_sum += noaddon.webglParameters['maxUniformBufferBindings'] - addonRun.webglParameters['maxUniformBufferBindings']
         if noaddon.webglParameters['maxCombinedUniformBlocks'] != None:
-            assert 0 <= jsrun.webglParameters['maxCombinedUniformBlocks'] <= noaddon.webglParameters['maxCombinedUniformBlocks']
-            spoof_sum += noaddon.webglParameters['maxCombinedUniformBlocks'] - jsrun.webglParameters['maxCombinedUniformBlocks']
+            assert 0 <= addonRun.webglParameters['maxCombinedUniformBlocks'] <= noaddon.webglParameters['maxCombinedUniformBlocks']
+            spoof_sum += noaddon.webglParameters['maxCombinedUniformBlocks'] - addonRun.webglParameters['maxCombinedUniformBlocks']
         if noaddon.webglParameters['maxCombinedVertexUniformComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxCombinedVertexUniformComponents'] <= noaddon.webglParameters['maxCombinedVertexUniformComponents']
-            spoof_sum += noaddon.webglParameters['maxCombinedVertexUniformComponents'] - jsrun.webglParameters['maxCombinedVertexUniformComponents']
+            assert 0 <= addonRun.webglParameters['maxCombinedVertexUniformComponents'] <= noaddon.webglParameters['maxCombinedVertexUniformComponents']
+            spoof_sum += noaddon.webglParameters['maxCombinedVertexUniformComponents'] - addonRun.webglParameters['maxCombinedVertexUniformComponents']
         if noaddon.webglParameters['maxCombinedFragmentUniformComponents'] != None:
-            assert 0 <= jsrun.webglParameters['maxCombinedFragmentUniformComponents'] <= noaddon.webglParameters['maxCombinedFragmentUniformComponents']
-            spoof_sum += noaddon.webglParameters['maxCombinedFragmentUniformComponents'] - jsrun.webglParameters['maxCombinedFragmentUniformComponents']
+            assert 0 <= addonRun.webglParameters['maxCombinedFragmentUniformComponents'] <= noaddon.webglParameters['maxCombinedFragmentUniformComponents']
+            spoof_sum += noaddon.webglParameters['maxCombinedFragmentUniformComponents'] - addonRun.webglParameters['maxCombinedFragmentUniformComponents']
         if noaddon.webglParameters['maxVertexAttribs'] != None:
-            assert 0 <= jsrun.webglParameters['maxVertexAttribs'] <= noaddon.webglParameters['maxVertexAttribs']
-            spoof_sum += noaddon.webglParameters['maxVertexAttribs'] - jsrun.webglParameters['maxVertexAttribs']
+            assert 0 <= addonRun.webglParameters['maxVertexAttribs'] <= noaddon.webglParameters['maxVertexAttribs']
+            spoof_sum += noaddon.webglParameters['maxVertexAttribs'] - addonRun.webglParameters['maxVertexAttribs']
         if noaddon.webglParameters['maxVertexUniformVectors'] != None:
-            assert 0 <= jsrun.webglParameters['maxVertexUniformVectors'] <= noaddon.webglParameters['maxVertexUniformVectors']
-            spoof_sum += noaddon.webglParameters['maxVertexUniformVectors'] - jsrun.webglParameters['maxVertexUniformVectors']
+            assert 0 <= addonRun.webglParameters['maxVertexUniformVectors'] <= noaddon.webglParameters['maxVertexUniformVectors']
+            spoof_sum += noaddon.webglParameters['maxVertexUniformVectors'] - addonRun.webglParameters['maxVertexUniformVectors']
         if noaddon.webglParameters['maxVertexTextureImageUnits'] != None:
-            assert 0 <= jsrun.webglParameters['maxVertexTextureImageUnits'] <= noaddon.webglParameters['maxVertexTextureImageUnits']
-            spoof_sum += noaddon.webglParameters['maxVertexTextureImageUnits'] - jsrun.webglParameters['maxVertexTextureImageUnits']
+            assert 0 <= addonRun.webglParameters['maxVertexTextureImageUnits'] <= noaddon.webglParameters['maxVertexTextureImageUnits']
+            spoof_sum += noaddon.webglParameters['maxVertexTextureImageUnits'] - addonRun.webglParameters['maxVertexTextureImageUnits']
         if noaddon.webglParameters['maxTextureSize'] != None:
-            assert 0 <= jsrun.webglParameters['maxTextureSize'] <= noaddon.webglParameters['maxTextureSize']
-            spoof_sum += noaddon.webglParameters['maxTextureSize'] - jsrun.webglParameters['maxTextureSize']
+            assert 0 <= addonRun.webglParameters['maxTextureSize'] <= noaddon.webglParameters['maxTextureSize']
+            spoof_sum += noaddon.webglParameters['maxTextureSize'] - addonRun.webglParameters['maxTextureSize']
         if noaddon.webglParameters['maxCubeMapTextureSize'] != None:
-            assert 0 <= jsrun.webglParameters['maxCubeMapTextureSize'] <= noaddon.webglParameters['maxCubeMapTextureSize']
-            spoof_sum += noaddon.webglParameters['maxCubeMapTextureSize'] - jsrun.webglParameters['maxCubeMapTextureSize']
+            assert 0 <= addonRun.webglParameters['maxCubeMapTextureSize'] <= noaddon.webglParameters['maxCubeMapTextureSize']
+            spoof_sum += noaddon.webglParameters['maxCubeMapTextureSize'] - addonRun.webglParameters['maxCubeMapTextureSize']
         if noaddon.webglParameters['max3DTextureSize'] != None:
-            assert 0 <= jsrun.webglParameters['max3DTextureSize'] <= noaddon.webglParameters['max3DTextureSize']
-            spoof_sum += noaddon.webglParameters['max3DTextureSize'] - jsrun.webglParameters['max3DTextureSize']
+            assert 0 <= addonRun.webglParameters['max3DTextureSize'] <= noaddon.webglParameters['max3DTextureSize']
+            spoof_sum += noaddon.webglParameters['max3DTextureSize'] - addonRun.webglParameters['max3DTextureSize']
         if noaddon.webglParameters['maxArrayTextureLayers'] != None:
-            assert 0 <= jsrun.webglParameters['maxArrayTextureLayers'] <= noaddon.webglParameters['maxArrayTextureLayers']
-            spoof_sum += noaddon.webglParameters['maxArrayTextureLayers'] - jsrun.webglParameters['maxArrayTextureLayers']
+            assert 0 <= addonRun.webglParameters['maxArrayTextureLayers'] <= noaddon.webglParameters['maxArrayTextureLayers']
+            spoof_sum += noaddon.webglParameters['maxArrayTextureLayers'] - addonRun.webglParameters['maxArrayTextureLayers']
         assert spoof_sum > 0
     elif expected.webglParameters == 'ZERO VALUE':
-        assert (jsrun.webglParameters['maxVertexUniformComponents'] == 0)
-        assert (jsrun.webglParameters['maxVertexUniformBlocks'] == 0)
-        assert (jsrun.webglParameters['maxVertexOutputComponents'] == 0)
-        assert (jsrun.webglParameters['maxVaryingComponents'] == 0)
-        assert (jsrun.webglParameters['maxTransformFeedbackInterleavedComponents'] == 0)
-        assert (jsrun.webglParameters['maxFragmentUniformComponents'] == 0)
-        assert (jsrun.webglParameters['maxFragmentUniformBlocks'] == 0)
-        assert (jsrun.webglParameters['maxFragmentInputComponents'] == 0)
-        assert (jsrun.webglParameters['maxUniformBufferBindings'] == 0)
-        assert (jsrun.webglParameters['maxCombinedUniformBlocks'] == 0)
-        assert (jsrun.webglParameters['maxCombinedVertexUniformComponents'] == 0)
-        assert (jsrun.webglParameters['maxCombinedFragmentUniformComponents'] == 0)
-        assert (jsrun.webglParameters['maxVertexAttribs'] == 0)
-        assert (jsrun.webglParameters['maxVertexUniformVectors'] == 0)
-        assert (jsrun.webglParameters['maxVertexTextureImageUnits'] == 0)
-        assert (jsrun.webglParameters['maxTextureSize'] == 0)
-        assert (jsrun.webglParameters['maxCubeMapTextureSize'] == 0)
-        assert (jsrun.webglParameters['max3DTextureSize'] == 0)
-        assert (jsrun.webglParameters['maxArrayTextureLayers'] == 0)
+        assert (addonRun.webglParameters['maxVertexUniformComponents'] == 0)
+        assert (addonRun.webglParameters['maxVertexUniformBlocks'] == 0)
+        assert (addonRun.webglParameters['maxVertexOutputComponents'] == 0)
+        assert (addonRun.webglParameters['maxVaryingComponents'] == 0)
+        assert (addonRun.webglParameters['maxTransformFeedbackInterleavedComponents'] == 0)
+        assert (addonRun.webglParameters['maxFragmentUniformComponents'] == 0)
+        assert (addonRun.webglParameters['maxFragmentUniformBlocks'] == 0)
+        assert (addonRun.webglParameters['maxFragmentInputComponents'] == 0)
+        assert (addonRun.webglParameters['maxUniformBufferBindings'] == 0)
+        assert (addonRun.webglParameters['maxCombinedUniformBlocks'] == 0)
+        assert (addonRun.webglParameters['maxCombinedVertexUniformComponents'] == 0)
+        assert (addonRun.webglParameters['maxCombinedFragmentUniformComponents'] == 0)
+        assert (addonRun.webglParameters['maxVertexAttribs'] == 0)
+        assert (addonRun.webglParameters['maxVertexUniformVectors'] == 0)
+        assert (addonRun.webglParameters['maxVertexTextureImageUnits'] == 0)
+        assert (addonRun.webglParameters['maxTextureSize'] == 0)
+        assert (addonRun.webglParameters['maxCubeMapTextureSize'] == 0)
+        assert (addonRun.webglParameters['max3DTextureSize'] == 0)
+        assert (addonRun.webglParameters['maxArrayTextureLayers'] == 0)
     else:
-        assert (jsrun.webglParameters['maxVertexUniformComponents'] == noaddon.webglParameters['maxVertexUniformComponents'] )
-        assert (jsrun.webglParameters['maxVertexUniformBlocks'] == noaddon.webglParameters['maxVertexUniformBlocks'])
-        assert (jsrun.webglParameters['maxVertexOutputComponents'] == noaddon.webglParameters['maxVertexOutputComponents'])
-        assert (jsrun.webglParameters['maxVaryingComponents'] == noaddon.webglParameters['maxVaryingComponents'])
-        assert (jsrun.webglParameters['maxTransformFeedbackInterleavedComponents'] == noaddon.webglParameters['maxTransformFeedbackInterleavedComponents'])
-        assert (jsrun.webglParameters['maxFragmentUniformComponents'] == noaddon.webglParameters['maxFragmentUniformComponents'])
-        assert (jsrun.webglParameters['maxFragmentUniformBlocks']  == noaddon.webglParameters['maxFragmentUniformBlocks'])
-        assert (jsrun.webglParameters['maxFragmentInputComponents'] == noaddon.webglParameters['maxFragmentInputComponents'])
-        assert (jsrun.webglParameters['maxUniformBufferBindings'] == noaddon.webglParameters['maxUniformBufferBindings'])
-        assert (jsrun.webglParameters['maxCombinedUniformBlocks'] == noaddon.webglParameters['maxCombinedUniformBlocks'])
-        assert (jsrun.webglParameters['maxCombinedVertexUniformComponents'] == noaddon.webglParameters['maxCombinedVertexUniformComponents'])
-        assert (jsrun.webglParameters['maxCombinedFragmentUniformComponents'] == noaddon.webglParameters['maxCombinedFragmentUniformComponents'])
-        assert (jsrun.webglParameters['maxVertexAttribs'] == noaddon.webglParameters['maxVertexAttribs'])
-        assert (jsrun.webglParameters['maxVertexUniformVectors'] == noaddon.webglParameters['maxVertexUniformVectors'])
-        assert (jsrun.webglParameters['maxVertexTextureImageUnits'] == noaddon.webglParameters['maxVertexTextureImageUnits'])
-        assert (jsrun.webglParameters['maxTextureSize'] == noaddon.webglParameters['maxTextureSize'])
-        assert (jsrun.webglParameters['maxCubeMapTextureSize'] == noaddon.webglParameters['maxCubeMapTextureSize'])
-        assert (jsrun.webglParameters['max3DTextureSize'] == noaddon.webglParameters['max3DTextureSize'])
-        assert (jsrun.webglParameters['maxArrayTextureLayers'] == noaddon.webglParameters['maxArrayTextureLayers'])
+        assert (addonRun.webglParameters['maxVertexUniformComponents'] == noaddon.webglParameters['maxVertexUniformComponents'] )
+        assert (addonRun.webglParameters['maxVertexUniformBlocks'] == noaddon.webglParameters['maxVertexUniformBlocks'])
+        assert (addonRun.webglParameters['maxVertexOutputComponents'] == noaddon.webglParameters['maxVertexOutputComponents'])
+        assert (addonRun.webglParameters['maxVaryingComponents'] == noaddon.webglParameters['maxVaryingComponents'])
+        assert (addonRun.webglParameters['maxTransformFeedbackInterleavedComponents'] == noaddon.webglParameters['maxTransformFeedbackInterleavedComponents'])
+        assert (addonRun.webglParameters['maxFragmentUniformComponents'] == noaddon.webglParameters['maxFragmentUniformComponents'])
+        assert (addonRun.webglParameters['maxFragmentUniformBlocks']  == noaddon.webglParameters['maxFragmentUniformBlocks'])
+        assert (addonRun.webglParameters['maxFragmentInputComponents'] == noaddon.webglParameters['maxFragmentInputComponents'])
+        assert (addonRun.webglParameters['maxUniformBufferBindings'] == noaddon.webglParameters['maxUniformBufferBindings'])
+        assert (addonRun.webglParameters['maxCombinedUniformBlocks'] == noaddon.webglParameters['maxCombinedUniformBlocks'])
+        assert (addonRun.webglParameters['maxCombinedVertexUniformComponents'] == noaddon.webglParameters['maxCombinedVertexUniformComponents'])
+        assert (addonRun.webglParameters['maxCombinedFragmentUniformComponents'] == noaddon.webglParameters['maxCombinedFragmentUniformComponents'])
+        assert (addonRun.webglParameters['maxVertexAttribs'] == noaddon.webglParameters['maxVertexAttribs'])
+        assert (addonRun.webglParameters['maxVertexUniformVectors'] == noaddon.webglParameters['maxVertexUniformVectors'])
+        assert (addonRun.webglParameters['maxVertexTextureImageUnits'] == noaddon.webglParameters['maxVertexTextureImageUnits'])
+        assert (addonRun.webglParameters['maxTextureSize'] == noaddon.webglParameters['maxTextureSize'])
+        assert (addonRun.webglParameters['maxCubeMapTextureSize'] == noaddon.webglParameters['maxCubeMapTextureSize'])
+        assert (addonRun.webglParameters['max3DTextureSize'] == noaddon.webglParameters['max3DTextureSize'])
+        assert (addonRun.webglParameters['maxArrayTextureLayers'] == noaddon.webglParameters['maxArrayTextureLayers'])
 
 # Test WebGLRenderingContext.getShaderPrecisionFormat
-def test_webgl_precisions(noaddon, jsrun, expected):
+def test_webgl_precisions(noaddon, addonRun, expected):
     if expected.webglPrecisions == 'ZERO VALUE':
-        assert jsrun.webglPrecisions != noaddon.webglPrecisions
+        assert addonRun.webglPrecisions != noaddon.webglPrecisions
     else:
-        assert jsrun.webglPrecisions == noaddon.webglPrecisions
+        assert addonRun.webglPrecisions == noaddon.webglPrecisions
 
 # Test WebGLRenderingContext.readPixels
-def test_webgl_read_pixels(noaddon, jsrun, expected):
-    if jsrun.webglPixels == "ERROR":
+def test_webgl_read_pixels(noaddon, addonRun, expected):
+    if addonRun.webglPixels == "ERROR":
         print("\nWebGLRenderingContext.readPixels failed.")
         assert False
     if expected.webglPixels == 'SPOOF VALUE':
-        assert jsrun.webglPixels != noaddon.webglPixels
+        assert addonRun.webglPixels != noaddon.webglPixels
     else:
-        assert jsrun.webglPixels == noaddon.webglPixels
+        assert addonRun.webglPixels == noaddon.webglPixels
 
 # Test HTMLCanvasElement.toDataURL on webgl canvas
-def test_webgl_to_data_URL(noaddon, jsrun, expected):
+def test_webgl_to_data_URL(noaddon, addonRun, expected):
     if expected.webglDataURL == 'SPOOF VALUE':
-        assert jsrun.webglDataURL != noaddon.webglDataURL
+        assert addonRun.webglDataURL != noaddon.webglDataURL
     else:
-        assert jsrun.webglDataURL == noaddon.webglDataURL
+        assert addonRun.webglDataURL == noaddon.webglDataURL

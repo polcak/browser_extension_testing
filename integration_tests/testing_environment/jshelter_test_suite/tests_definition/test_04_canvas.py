@@ -27,8 +27,8 @@
 ## This test fails in Google Chrome on JShelter level 3 - expected failure because of known bug:
 ## selenium.common.exceptions.JavascriptException: Message: javascript error:
 ## Failed to execute 'getRandomValues' on 'Crypto': parameter 1 is not of type 'ArrayBufferView'.
-def test_canvas(jsrun, expected):
-    is_spoofed = jsrun.protectCanvas
+def test_canvas(addonRun, expected):
+    is_spoofed = addonRun.protectCanvas
     if is_spoofed == "ERROR":
         print("\nCan not read Canvas data.")
         assert False
@@ -38,54 +38,54 @@ def test_canvas(jsrun, expected):
         else:
             assert is_spoofed ==  False
 
-def test_getImageData(noaddon, jsrun, expected):
-    if jsrun.canvasImageData == "ERROR":
+def test_getImageData(noaddon, addonRun, expected):
+    if addonRun.canvasImageData == "ERROR":
         print("\n getImageData error.")
         assert False
     else:
         if expected.canvasImageData == 'SPOOF VALUE':
-            assert jsrun.canvasImageData != noaddon.canvasImageData
+            assert addonRun.canvasImageData != noaddon.canvasImageData
         else:
-            assert jsrun.canvasImageData == noaddon.canvasImageData
+            assert addonRun.canvasImageData == noaddon.canvasImageData
 
 
-def test_to_data_URL(noaddon, jsrun, expected):
-    if jsrun.canvasDataURL == "ERROR":
+def test_to_data_URL(noaddon, addonRun, expected):
+    if addonRun.canvasDataURL == "ERROR":
         print("\n toDataURL error.")
         assert False
     else:
         if expected.canvasDataURL == 'SPOOF VALUE':
-            assert jsrun.canvasDataURL != noaddon.canvasDataURL
+            assert addonRun.canvasDataURL != noaddon.canvasDataURL
         else:
-            assert jsrun.canvasDataURL == noaddon.canvasDataURL
+            assert addonRun.canvasDataURL == noaddon.canvasDataURL
 
 
-def test_to_blob(noaddon, jsrun, expected):
-    if jsrun.canvasBlob == "ERROR":
+def test_to_blob(noaddon, addonRun, expected):
+    if addonRun.canvasBlob == "ERROR":
         print("\n toBlob error.")
         assert False
     else:
         if expected.canvasBlob == 'SPOOF VALUE':
-            assert jsrun.canvasBlob != noaddon.canvasBlob
+            assert addonRun.canvasBlob != noaddon.canvasBlob
         else:
-            assert jsrun.canvasBlob == noaddon.canvasBlob
+            assert addonRun.canvasBlob == noaddon.canvasBlob
 
-def test_is_point_in_path(jsrun, expected):
-    if jsrun.canvasPointPath == "ERROR":
+def test_is_point_in_path(addonRun, expected):
+    if addonRun.canvasPointPath == "ERROR":
         print("\n isPointInPath error.")
         assert False
     else:
         if expected.canvasPointPath in {'SPOOF VALUE','FALSE VALUE'}:
-            assert jsrun.canvasPointPath == False
+            assert addonRun.canvasPointPath == False
         else:
-            assert jsrun.canvasPointPath == True
+            assert addonRun.canvasPointPath == True
 
-def test_is_point_in_stroke(jsrun, expected):
-    if jsrun.canvasPointStroke == "ERROR":
+def test_is_point_in_stroke(addonRun, expected):
+    if addonRun.canvasPointStroke == "ERROR":
         print("\n isPointInStroke error.")
         assert False
     else:
         if expected.canvasPointStroke in {'SPOOF VALUE','FALSE VALUE'} :
-            assert jsrun.canvasPointStroke == False
+            assert addonRun.canvasPointStroke == False
         else:
-            assert jsrun.canvasPointStroke == True
+            assert addonRun.canvasPointStroke == True

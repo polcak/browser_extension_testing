@@ -5,6 +5,9 @@ from values_tested import TestedValues
 def read_browsers(file_path):
     with open(file_path, 'r') as file:
         data = json.load(file)
+        testing = data.get('integration_testing')
+        if not testing:
+             return False
         browsers = data.get('browsers', [])
         browser_dict = {browser: [] for browser in browsers}
         return browser_dict
@@ -91,24 +94,31 @@ def create_browser_data():
     results = os.listdir('/usr/app/src/fingerprinting_server/outputs')
     browsers_tested = read_browsers('/usr/app/src/client_simulator/example_configs/client.json')
 
-    jshelter_tested = False
+    if not browsers_tested:
+         return False
+
+    #jshelter_tested = False
 
     for file_name in results:
                 if "log--" in file_name:
                     split = file_name.split('_')
                     browser = split[1]
-
+                    
                     if "None" in split:
                         browsers_tested[browser].insert(0, file_name)
-                    if "JSc=0" in split or "JSf=0" in split or "JSc=1" in split or "JSf=1" in split or "JSc=2" in split or "JSf=2" in split or "JSc=3" in split or "JSf=3" in split:
-                        jshelter_tested = True
+                        
+                    #if "JSc_0" in split or "JSf_0" in split or "JSc_1" in split or "JSf_1" in split or "JSc_2" in split or "JSf_2" in split or "JSc_3" in split or "JSf_3" in split:
+                        #jshelter_tested = True
+                    else:
                         browsers_tested[browser] += [file_name]
+                    
 
     
-    if not jshelter_tested:
-        return False
+    #if not jshelter_tested:
+    #    return False
 
     for browser, values in browsers_tested.items():
+        print(browser, values)
        
         noaddon = '/usr/app/src/fingerprinting_server/outputs/' + values[0]
         testedNoaddon = read_data(noaddon)
@@ -118,5 +128,6 @@ def create_browser_data():
             jsaddon = '/usr/app/src/fingerprinting_server/outputs/' + value
             testedJS = read_data(jsaddon)
             browsers_tested[browser][values.index(value)] = testedJS
-          
+
+    print(browsers_tested)     
     return browsers_tested

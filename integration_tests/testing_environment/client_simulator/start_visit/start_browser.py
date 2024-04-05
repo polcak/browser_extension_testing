@@ -35,25 +35,25 @@ class PetConfig:
     def __init__(self):
         print("configuring")
 
-        self.petfco={"ghf": "ghostery_f",
-                "uof": "uBlock_Origin_f",
-                "PBf": "Privacy_Badger_f",
-                "NSf": "NoScript_f",
-                "DDGPEf": "DuckDuckGoPE_f",
-                "Ghf": "Ghostery_f",
-                "NCf": "NetCraft_f",
-                "DEf": "Decentraleyes_f",
-                "JSf": "JShelter_f"}
+        self.petfco={"gh": "ghostery_f",
+                "uo": "uBlock_Origin_f",
+                "PB": "Privacy_Badger_f",
+                "NS": "NoScript_f",
+                "DDGPE": "DuckDuckGoPE_f",
+                "Gh": "Ghostery_f",
+                "NC": "NetCraft_f",
+                "DE": "Decentraleyes_f",
+                "JS": "JShelter_f"}
 
-        self.petcco={"ghc": "ghostery_c",
-                "uoc": "uBlock_Origin_c",
-                "PBc": "Privacy_Badger_c",
-                "NSc": "NoScript_c",
-                "DDGPEc": "DuckDuckGoPE_c",
-                "Ghc": "Ghostery_c",
-                "NCc": "NetCraft_c",
-                "DEc": "Decentraleyes_c",
-                "JSc": "JShelter_c"}
+        self.petcco={"gh": "ghostery_c",
+                "uo": "uBlock_Origin_c",
+                "PB": "Privacy_Badger_c",
+                "NS": "NoScript_c",
+                "DDGPE": "DuckDuckGoPE_c",
+                "Gh": "Ghostery_c",
+                "NC": "NetCraft_c",
+                "DE": "Decentraleyes_c",
+                "JS": "JShelter_c"}
 
         self.petf = {"None":"", 
                 "uBlock_Origin_f": "uBlock0@raymondhill.net.xpi",
@@ -107,7 +107,7 @@ class PetConfig:
 
         for oneAddon in my_pets:
             
-            oneAddon, *testing_level = oneAddon.split('=')
+            oneAddon, *testing_level = oneAddon.split('_')
             if testing_level: JSlevel = testing_level[0]
 
             if oneAddon in self.petco[my_browser].keys(): 

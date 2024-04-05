@@ -25,7 +25,7 @@ import pytest
 import re
 
 from store_values import create_browser_data
-from shared_set import set_shared_noaddon, set_shared_jsrun, set_shared_level, set_shared_browser
+from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled, get_shared_addonsInstalled
 
 ## Main module - it starts and control testing.
 #
@@ -35,7 +35,7 @@ def main():
     browser_data = create_browser_data()  
 
     if not browser_data:
-        print("JShelter was not tested, test evaluation skipped.")
+        print("Integration testing skipped.")
         exit(0)
 
     print("Integration testing for JShelter starting.")
@@ -46,14 +46,20 @@ def main():
         set_shared_browser(browser)
         set_shared_noaddon(no_addon)
         
+        
         for value in values[1:]:
-            
             print("Browser currently tested:", browser)
+            set_shared_addonsInstalled(value.addons)
             
-            js_level = re.search(r'\d+', value.addons).group(0)
-            print("JShelter level tested:", js_level)
-            set_shared_jsrun(value)
-            set_shared_level(js_level)
+            if "JS" in value.addons:
+                js_level = re.search(r'\d+', value.addons).group(0)
+                print("JShelter level tested:", js_level)
+                set_shared_level(js_level)
+                
+            set_shared_addonRun(value)
+            
+            
+            print(get_shared_addonsInstalled())
             pytest.main(['-s'])
 
 

@@ -37,60 +37,60 @@
 
 
 ## Test user agent.
-def test_user_agent(noaddon, jsrun, browser, expected):
+def test_user_agent(noaddon, addonRun, browser, expected):
     if expected.navigator.userAgent[browser] == 'REAL VALUE':
-        assert jsrun.navigator.userAgent == noaddon.navigator.userAgent
+        assert addonRun.navigator.userAgent == noaddon.navigator.userAgent
     else:
-        assert jsrun.navigator.userAgent == expected.navigator.userAgent[browser]
+        assert addonRun.navigator.userAgent == expected.navigator.userAgent[browser]
 
-def test_app_version(noaddon, jsrun, expected):
+def test_app_version(noaddon, addonRun, expected):
     if expected.navigator.appVersion == 'REAL VALUE':
-        assert jsrun.navigator.appVersion == noaddon.navigator.appVersion
+        assert addonRun.navigator.appVersion == noaddon.navigator.appVersion
     else:
-        assert jsrun.navigator.appVersion == expected.navigator.appVersion
+        assert addonRun.navigator.appVersion == expected.navigator.appVersion
 
 	
-def test_platform(noaddon, jsrun, expected):
+def test_platform(noaddon, addonRun, expected):
     if expected.navigator.platform == 'REAL VALUE':
-        assert jsrun.navigator.platform == noaddon.navigator.platform
+        assert addonRun.navigator.platform == noaddon.navigator.platform
     else:
-        assert jsrun.navigator.platform == expected.navigator.platform
+        assert addonRun.navigator.platform == expected.navigator.platform
 
-def test_vendor(noaddon, jsrun, browser, expected):
+def test_vendor(noaddon, addonRun, browser, expected):
     if expected.navigator.vendor[browser] == 'REAL VALUE':
-        assert jsrun.navigator.vendor == noaddon.navigator.vendor
+        assert addonRun.navigator.vendor == noaddon.navigator.vendor
     else:
-        assert jsrun.navigator.vendor == expected.navigator.vendor[browser]
+        assert addonRun.navigator.vendor == expected.navigator.vendor[browser]
 
-def test_language(noaddon, jsrun, expected):
+def test_language(noaddon, addonRun, expected):
     if expected.navigator.language  == 'REAL VALUE':
-        assert jsrun.navigator.language == noaddon.navigator.language 
+        assert addonRun.navigator.language == noaddon.navigator.language 
     else:
-        assert jsrun.navigator.language == expected.navigator.language 
+        assert addonRun.navigator.language == expected.navigator.language 
 
-def test_languages(noaddon, jsrun, expected):
+def test_languages(noaddon, addonRun, expected):
     if expected.navigator.languages  == 'REAL VALUE':
-        assert jsrun.navigator.languages == noaddon.navigator.languages 
+        assert addonRun.navigator.languages == noaddon.navigator.languages 
     else:
-        assert jsrun.navigator.languages == expected.navigator.languages 
+        assert addonRun.navigator.languages == expected.navigator.languages 
 
-def test_cookie_enabled(noaddon, jsrun, expected):
+def test_cookie_enabled(noaddon, addonRun, expected):
     if expected.navigator.cookieEnabled  == 'REAL VALUE':
-        assert jsrun.navigator.cookieEnabled == noaddon.navigator.cookieEnabled 
+        assert addonRun.navigator.cookieEnabled == noaddon.navigator.cookieEnabled 
     else:
-        assert jsrun.navigator.cookieEnabled == expected.navigator.cookieEnabled 
+        assert addonRun.navigator.cookieEnabled == expected.navigator.cookieEnabled 
 
-def test_do_not_track(noaddon, jsrun, expected):
+def test_do_not_track(noaddon, addonRun, expected):
     if expected.navigator.doNotTrack == 'REAL VALUE':
-        assert jsrun.navigator.doNotTrack == noaddon.navigator.doNotTrack  
+        assert addonRun.navigator.doNotTrack == noaddon.navigator.doNotTrack  
     else:
-        assert jsrun.navigator.doNotTrack == expected.navigator.doNotTrack 
+        assert addonRun.navigator.doNotTrack == expected.navigator.doNotTrack 
 
-def test_oscpu(noaddon, jsrun, expected):
+def test_oscpu(noaddon, addonRun, expected):
     if expected.navigator.oscpu == 'REAL VALUE':
-        assert jsrun.navigator.oscpu == noaddon.navigator.oscpu   
+        assert addonRun.navigator.oscpu == noaddon.navigator.oscpu   
     else:
-        assert jsrun.navigator.oscpu == expected.navigator.oscpu  
+        assert addonRun.navigator.oscpu == expected.navigator.oscpu  
 
 	
 LIVING_STANDARD_PLUGINS = [
@@ -102,30 +102,30 @@ LIVING_STANDARD_PLUGINS = [
         ]
 
 	
-def test_plugins_count(noaddon, jsrun, browser, expected):
-    if jsrun.navigator.plugins == LIVING_STANDARD_PLUGINS and noaddon.navigator.plugins == LIVING_STANDARD_PLUGINS:
+def test_plugins_count(noaddon, addonRun, browser, expected):
+    if addonRun.navigator.plugins == LIVING_STANDARD_PLUGINS and noaddon.navigator.plugins == LIVING_STANDARD_PLUGINS:
         return # JShelter should not modify the plugins that are the same in all conformant browsers
     if expected.navigator.plugins['count'][browser] == 'IGNORE':
         return
     elif expected.navigator.plugins['count'][browser] == 'REAL VALUE':
-        assert len(jsrun.navigator.plugins) == len(noaddon.navigator.plugins)
+        assert len(addonRun.navigator.plugins) == len(noaddon.navigator.plugins)
     elif expected.navigator.plugins['count'][browser] == 'PLUS_2':
-        assert len(jsrun.navigator.plugins) == len(noaddon.navigator.plugins) + 2
+        assert len(addonRun.navigator.plugins) == len(noaddon.navigator.plugins) + 2
     else:
-        assert len(jsrun.navigator.plugins) == expected.navigator.plugins['count'][browser]
+        assert len(addonRun.navigator.plugins) == expected.navigator.plugins['count'][browser]
 
 	
-def test_plugins(noaddon, jsrun, browser, expected):
-    if jsrun.navigator.plugins == LIVING_STANDARD_PLUGINS and noaddon.navigator.plugins == LIVING_STANDARD_PLUGINS:
+def test_plugins(noaddon, addonRun, browser, expected):
+    if addonRun.navigator.plugins == LIVING_STANDARD_PLUGINS and noaddon.navigator.plugins == LIVING_STANDARD_PLUGINS:
         return # JShelter should not modify the plugins that are the same in all conformant browsers
     if expected.navigator.plugins['count'][browser] == 'IGNORE':
         return
     elif expected.navigator.plugins['count'][browser] == 'REAL VALUE':
-        assert jsrun.navigator.plugins == noaddon.navigator.plugins
+        assert addonRun.navigator.plugins == noaddon.navigator.plugins
     elif expected.navigator.plugins['value'][browser] == 'EMPTY':
-        assert not jsrun.navigator.plugins
+        assert not addonRun.navigator.plugins
     else:
-        assert jsrun.navigator.plugins != noaddon.navigator.plugins
+        assert addonRun.navigator.plugins != noaddon.navigator.plugins
 
 	
 LIVING_STANDARD_MIME_TYPES = [
@@ -135,20 +135,20 @@ LIVING_STANDARD_MIME_TYPES = [
              'pdf', 'type': 'text/pdf'},
         ]
 
-def test_mime_types(noaddon, jsrun, expected):
-    if jsrun.navigator.mimeTypes == LIVING_STANDARD_MIME_TYPES and noaddon.navigator.mimeTypes == LIVING_STANDARD_MIME_TYPES:
+def test_mime_types(noaddon, addonRun, expected):
+    if addonRun.navigator.mimeTypes == LIVING_STANDARD_MIME_TYPES and noaddon.navigator.mimeTypes == LIVING_STANDARD_MIME_TYPES:
         return # JShelter should not modify the plugins that are the same in all conformant browsers
     if expected.navigator.mimeTypes == 'IGNORE':
         return
     elif expected.navigator.mimeTypes == 'EMPTY':
-        assert jsrun.navigator.mimeTypes == []
+        assert addonRun.navigator.mimeTypes == []
     elif expected.navigator.mimeTypes == 'SPOOF VALUE':
         if noaddon.navigator.mimeTypes == []:
-            assert jsrun.navigator.mimeTypes == []
+            assert addonRun.navigator.mimeTypes == []
         else:
-            assert jsrun.navigator.mimeTypes != noaddon.navigator.mimeTypes
+            assert addonRun.navigator.mimeTypes != noaddon.navigator.mimeTypes
     else:
-        assert jsrun.navigator.mimeTypes == noaddon.navigator.mimeTypes
+        assert addonRun.navigator.mimeTypes == noaddon.navigator.mimeTypes
 
 
 ## Test app version.

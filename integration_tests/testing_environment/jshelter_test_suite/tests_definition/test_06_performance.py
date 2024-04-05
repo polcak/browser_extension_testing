@@ -25,9 +25,9 @@ from math_operations import is_in_accuracy
 
 
 ## Test performance.
-def test_performance(jsrun, expected):
+def test_performance(addonRun, expected):
     is_performance_rounded = True
-    performance = jsrun.performance
+    performance = addonRun.performance
     # Make 3 measurement.
     for i in performance:
         # Wait a while to value of performance will be changed.

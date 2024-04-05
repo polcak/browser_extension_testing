@@ -35,10 +35,10 @@ from math_operations import is_in_accuracy
 #  Hours should be real value. Maximal deviation should be 1 (change hour during command execution or another timezone).
 
 ## Test time accuracy.
-def test_accuracy(jsrun, expected):
+def test_accuracy(addonRun, expected):
     #Suppose time is rounded.
     is_time_rounded = True
-    time = jsrun.time
+    time = addonRun.time
     # Make 3 measurement.
     for t in time:
         # Wait a while to value of time will be changed.

@@ -27,9 +27,10 @@
 #  Shared browser can save time of creating new browser because one browser is reused for more tested JST levels.
 #  Use getter and setter. Do not acces directly private variable _shared_browser.
 _noaddon = None
-_jsrun = None
+_addonRun = None
 _level = None
 _browser = None
+_addonsInstalled = None
 
 
 ## Setter for _shared_browser.
@@ -37,9 +38,9 @@ def set_shared_noaddon(noaddon):
     global _noaddon
     _noaddon = noaddon
 
-def set_shared_jsrun(jsrun):
-    global _jsrun
-    _jsrun = jsrun
+def set_shared_addonRun(addonRun):
+    global _addonRun
+    _addonRun = addonRun
 
 def set_shared_level(level):
     global _level
@@ -50,16 +51,19 @@ def set_shared_browser(browser):
     global _browser
     _browser = browser
 
+def set_shared_addonsInstalled(addonsInstalled):
+    global _addonsInstalled
+    _addonsInstalled = addonsInstalled
+
 
 ## Getter for _shared_browser.
 def get_shared_noaddon():
     global _noaddon
-    return _noaddon
-    
+    return _noaddon   
 
-def get_shared_jsrun():
-    global _jsrun
-    return _jsrun
+def get_shared_addonRun():
+    global _addonRun
+    return _addonRun
 
 def get_shared_level():
     global _level
@@ -68,3 +72,7 @@ def get_shared_level():
 def get_shared_browser():
     global _browser
     return str(_browser)
+
+def get_shared_addonsInstalled():
+    global _addonsInstalled
+    return str(_addonsInstalled)

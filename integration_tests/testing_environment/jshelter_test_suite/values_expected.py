@@ -43,7 +43,7 @@ from values_tested import TestedValues
 
 
 ## Expected values for default level 0 of JShelter.
-level0 = TestedValues(
+JS_0 = TestedValues(
     addons = 'JShelter=0',
     userAgent={'firefox': 'REAL VALUE',
                 'chrome': 'REAL VALUE',
@@ -131,7 +131,7 @@ level0 = TestedValues(
 )
 
 ## Expected values for default level 1 of JShelter.
-level1 = TestedValues(
+JS_1 = TestedValues(
     addons = 'JShelter=1',
     userAgent={'firefox': 'REAL VALUE',
                 'chrome': 'REAL VALUE',
@@ -223,7 +223,7 @@ level1 = TestedValues(
 )
 
 ## Expected values for default level 2 of JShelter.
-level2 = TestedValues(
+JS_2 = TestedValues(
     addons = 'JShelter=2',
     userAgent={'firefox': 'REAL VALUE',
                 'chrome': 'REAL VALUE',
@@ -314,8 +314,178 @@ level2 = TestedValues(
     ECMAarrays = ''
 )
 
+
 ## Expected values for default level 3 of JShelter.
-level3 = TestedValues(
+JS_3 = TestedValues(
+    addons = 'JShelter=3',
+    userAgent={'firefox': 'REAL VALUE',
+                'chrome': 'REAL VALUE',
+                'firefox=esr': 'REAL VALUE',
+                'chrome=beta': 'REAL VALUE',
+                'chrome=dev': 'REAL VALUE',
+                'chrome=canary': 'REAL VALUE'},
+    appVersion='REAL VALUE',
+    platform='REAL VALUE',
+    vendor={'firefox': 'REAL VALUE',
+            'chrome': 'REAL VALUE',
+            'chrome=beta': 'REAL VALUE',
+            'chrome=dev': 'REAL VALUE',
+            'chrome=canary': 'REAL VALUE',
+            'firefox=esr': 'REAL VALUE'},
+    language='REAL VALUE',
+    languages='REAL VALUE',
+    doNotTrack='REAL VALUE',
+    cookieEnabled='REAL VALUE',
+    oscpu='REAL VALUE',
+    gpsAccuracy={'value': "null"},
+    altitude={'value': "null"},
+    altitudeAccurac={'value': "null"},
+    heading={'value': "null"},
+    latitude={'value': "null"},
+    longitude={'value': "null"},
+    speed={'value': "null"},
+    timestamp={'value': "null"},
+    valid = True,
+    deviceMemory={'firefox': None,
+                  'firefox=esr': None,
+                   'chrome': 'SPOOF VALUE',
+                   'chrome=dev': 'SPOOF VALUE',
+                   'chrome=canary': 'SPOOF VALUE',
+                   'chrome=beta': 'SPOOF VALUE',
+                   'valid_values': {4}},
+    hardwareConcurrency={'value':'SPOOF VALUE',
+                          'valid_values': {2}},
+    IOdevices= "EMPTY",
+    #referrer='REAL VALUE',
+    time={'value': 'REAL VALUE',
+          'accuracy': 1.0},
+    plugins={'count': {'firefox': 0,
+                       'firefox=esr': 0,
+                       'chrome': 0,
+                       'chrome=dev': 0,
+                       'chrome=canary': 0,
+                       'chrome=beta': 0}, # Modified by JShelter
+             'value': {'firefox': 'EMPTY',
+                       'firefox=esr': 'EMPTY',
+                       'chrome': 'EMPTY',
+                       'chrome=dev': 'EMPTY',
+                       'chrome=canary': 'EMPTY',
+                       'chrome=beta': 'EMPTY'}}, # Modified by JShelter
+    mimeTypes='EMPTY', # Modified by JShelter
+    get_channel= 'SPOOF VALUE',
+    get_channel2= '',
+    copy_channel= 'SPOOF VALUE',
+    copy_channel2= '',
+    byte_time_domain= 'SPOOF VALUE',
+    float_time_domain= 'SPOOF VALUE',
+    byte_frequency= 'SPOOF VALUE',
+    float_frequency= 'SPOOF VALUE',
+    performance={'value': 'REAL VALUE',
+                 'accuracy': 1},
+    protectCanvas=True,
+    canvasImageData = 'SPOOF VALUE',
+    canvasDataURL = 'SPOOF VALUE',
+    canvasBlob = 'SPOOF VALUE',
+    canvasPointPath = 'FALSE VALUE',
+    canvasPointStroke = 'FALSE VALUE',
+    webglParameters = 'ZERO VALUE',
+    webglPrecisions = 'ZERO VALUE',
+    webglPixels = 'SPOOF VALUE',
+    webglDataURL = 'SPOOF VALUE',
+    worker = 'REMOVED',
+    methods_toString='REAL VALUE',
+    ECMAarrays = ''
+)
+
+uo = TestedValues(
+    addons = 'JShelter=0',
+    userAgent={'firefox': 'REAL VALUE',
+                'chrome': 'REAL VALUE',
+                'firefox=esr': 'REAL VALUE',
+                'chrome=beta': 'REAL VALUE',
+                'chrome=dev': 'REAL VALUE',
+                'chrome=canary': 'REAL VALUE'},
+    appVersion='REAL VALUE',
+    platform='REAL VALUE',
+    vendor={'firefox': 'REAL VALUE',
+            'chrome': 'REAL VALUE',
+            'chrome=beta': 'REAL VALUE',
+            'chrome=dev': 'REAL VALUE',
+            'chrome=canary': 'REAL VALUE',
+            'firefox=esr': 'REAL VALUE'},
+    language='REAL VALUE',
+    languages='REAL VALUE',
+    doNotTrack='REAL VALUE',
+    cookieEnabled='REAL VALUE',
+    oscpu='REAL VALUE',
+    gpsAccuracy={'value': 'REAL VALUE',
+                  'accuracy': 'EXACTLY'},
+    altitude={'value': 'REAL VALUE',
+              'accuracy': 'EXACTLY'},
+    altitudeAccurac={'value': 'REAL VALUE',
+                      'accuracy': 'EXACTLY'},
+    heading={'value': 'REAL VALUE',
+             'accuracy': 'EXACTLY'},
+    latitude={'value': 'REAL VALUE',
+              'accuracy': 'EXACTLY'},
+    longitude={'value': 'REAL VALUE',
+               'accuracy': 'EXACTLY'},
+    speed={'value': 'REAL VALUE',
+           'accuracy': 'EXACTLY'},
+    timestamp={'value': 'REAL VALUE',
+               'accuracy': 'EXACTLY'},
+    valid = True,
+    deviceMemory={'firefox': 'REAL VALUE',
+                 'chrome': 'REAL VALUE',
+                 'chrome=dev': 'REAL VALUE',
+                 'chrome=beta': 'REAL VALUE',
+                 'chrome=canary': 'REAL VALUE',
+                 'firefox=esr': 'REAL VALUE'},
+    hardwareConcurrency={'value':'REAL VALUE'},
+    IOdevices='REAL VALUE',
+    #referrer='REAL VALUE',
+    time={'value': 'REAL VALUE',
+          'accuracy': 'EXACTLY'},
+    plugins={'count': {'firefox': 0,
+                       'chrome': 'IGNORE',
+                       'chrome=dev': 'IGNORE',
+                       'chrome=beta': 'IGNORE',
+                       'chrome=canary': 'IGNORE',
+                       'firefox=esr': 0}, # See note above
+             'value': {'firefox': 'EMPTY',
+                       'chrome': 'IGNORE',
+                       'chrome=dev': 'IGNORE',
+                       'chrome=beta': 'IGNORE',
+                       'chrome=canary': 'IGNORE',
+                       'firefox=esr': 'EMPTY'}}, # See note above
+    mimeTypes='IGNORE', # See note above
+    get_channel= 'REAL VALUE',
+    get_channel2= '',
+    copy_channel= 'REAL VALUE',
+    copy_channel2= '',
+    byte_time_domain= 'REAL VALUE',
+    float_time_domain= 'REAL VALUE',
+    byte_frequency= 'REAL VALUE',
+    float_frequency= 'REAL VALUE',
+    performance={'value': 'REAL VALUE',
+                 'accuracy': 'EXACTLY'},
+    protectCanvas=False,
+    canvasImageData = 'REAL VALUE',
+    canvasDataURL = 'REAL VALUE',
+    canvasBlob = 'REAL VALUE',
+    canvasPointPath = 'REAL VALUE',
+    canvasPointStroke = 'REAL VALUE',
+    webglParameters = 'REAL VALUE',
+    webglPrecisions = 'REAL VALUE',
+    webglPixels = 'REAL VALUE',
+    webglDataURL = 'REAL VALUE',
+    worker = 'REAL VALUE',
+    methods_toString='REAL VALUE',
+    ECMAarrays = ''
+)
+
+
+JS_3_uo = TestedValues(
     addons = 'JShelter=3',
     userAgent={'firefox': 'REAL VALUE',
                 'chrome': 'REAL VALUE',

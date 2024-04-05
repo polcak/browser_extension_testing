@@ -29,42 +29,42 @@
 
 
 ## Test device memory.
-def test_device_memory(noaddon, jsrun, expected, browser):
-	if noaddon.device.deviceMemory == "null" and jsrun.device.deviceMemory == "null":
+def test_device_memory(noaddon, addonRun, expected, browser):
+	if noaddon.device.deviceMemory == "null" and addonRun.device.deviceMemory == "null":
 		return # This browser does not support deviceMemory so JShelter should not spoof that value
 	elif noaddon.device.deviceMemory == "null":
-		assert jsrun.device.deviceMemory == "null"
+		assert addonRun.device.deviceMemory == "null"
 	if expected.device.deviceMemory[browser] == 'SPOOF VALUE':
-		assert jsrun.device.deviceMemory in expected.device.deviceMemory['valid_values']
-		assert jsrun.device.deviceMemory <= noaddon.device.deviceMemory
+		assert addonRun.device.deviceMemory in expected.device.deviceMemory['valid_values']
+		assert addonRun.device.deviceMemory <= noaddon.device.deviceMemory
 	else:
-		assert jsrun.device.deviceMemory == noaddon.device.deviceMemory
+		assert addonRun.device.deviceMemory == noaddon.device.deviceMemory
 
 
 ## Test hardware concurrency.
-def test_hardware_concurrency(noaddon, jsrun, expected):
+def test_hardware_concurrency(noaddon, addonRun, expected):
 	if expected.device.hardwareConcurrency['value'] == 'REAL VALUE':
-		assert jsrun.device.hardwareConcurrency == noaddon.device.hardwareConcurrency
+		assert addonRun.device.hardwareConcurrency == noaddon.device.hardwareConcurrency
 	elif expected.device.hardwareConcurrency['value'] == 'SPOOF VALUE':
 		expectedval = expected.device.hardwareConcurrency['valid_values']
 		if expectedval == "UP TO REAL VALUE":
 			expectedval = range(noaddon.device.hardwareConcurrency + 1)
-		assert jsrun.device.hardwareConcurrency in expectedval
+		assert addonRun.device.hardwareConcurrency in expectedval
 	else:
 		assert False # We should not get here
 
 
 ## Test IOdevices.
-def test_IOdevices(noaddon, jsrun, expected):
+def test_IOdevices(noaddon, addonRun, expected):
 	if expected.device.IOdevices == 'REAL VALUE':
-		assert len(jsrun.device.IOdevices) == len(noaddon.device.IOdevices)
-		for i in range(len(jsrun.device.IOdevices)):
-			assert jsrun.device.IOdevices[i]['kind'] == noaddon.device.IOdevices[i]['kind']
+		assert len(addonRun.device.IOdevices) == len(noaddon.device.IOdevices)
+		for i in range(len(addonRun.device.IOdevices)):
+			assert addonRun.device.IOdevices[i]['kind'] == noaddon.device.IOdevices[i]['kind']
 	elif expected.device.IOdevices == 'EMPTY':
-		if jsrun.device.IOdevices == 'ERROR':
-			assert jsrun.device.IOdevices == 'ERROR'
+		if addonRun.device.IOdevices == 'ERROR':
+			assert addonRun.device.IOdevices == 'ERROR'
 		else:
-			assert jsrun.device.IOdevices == []
-			assert len(jsrun.device.IOdevices) == 0
+			assert addonRun.device.IOdevices == []
+			assert len(addonRun.device.IOdevices) == 0
 	else:
-		assert len(jsrun.device.IOdevices) in expected.device.IOdevices
+		assert len(addonRun.device.IOdevices) in expected.device.IOdevices

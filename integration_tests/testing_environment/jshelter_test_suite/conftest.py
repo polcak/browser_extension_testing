@@ -24,8 +24,8 @@
 
 import pytest
 
-from shared_set import get_shared_noaddon, get_shared_jsrun, get_shared_level, get_shared_browser
-import values_expected
+from shared_set import get_shared_noaddon, get_shared_addonRun, get_shared_addonsInstalled, get_shared_browser
+import  values_expected 
 
 
 ## This module is automatically called by pytest before start executing tests.
@@ -40,8 +40,8 @@ def noaddon():
     return get_shared_noaddon()
 
 @pytest.fixture(scope="session", autouse=True)
-def jsrun():
-    return get_shared_jsrun()
+def addonRun():
+    return get_shared_addonRun()
 
 @pytest.fixture(scope="session", autouse=True)
 def browser():
@@ -52,13 +52,15 @@ def browser():
 #  expected values are selected based on testing jsr_level.
 @pytest.fixture(scope="session", autouse=True)
 def expected():
-    if get_shared_level() == 0:
-        return values_expected.level0
-    elif get_shared_level() == 1:
-        return values_expected.level1
-    elif get_shared_level() == 2:
-        return values_expected.level2
-    elif get_shared_level() == 3:
-        return values_expected.level3
-    else:
-        return values_expected.level3
+    addonsTested = get_shared_addonsInstalled()
+    return getattr(values_expected, addonsTested, None)
+    #if get_shared_level() == 0:
+    #    return values_expected.level0
+    #elif get_shared_level() == 1:
+    #    return values_expected.level1
+    #elif get_shared_level() == 2:
+    #   return values_expected.level2
+    #elif get_shared_level() == 3:
+    #    return values_expected.level3
+    #else:
+    #    return values_expected.level3
