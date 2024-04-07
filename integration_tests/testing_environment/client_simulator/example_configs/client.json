@@ -1,15 +1,10 @@
 {
     "experiment_name": "exp06",
-    "oses": ["Windows"],
-    "configs": { 
-                "Windows": ["None"]
-                },
-    "browsers": ["chrome", "firefox"],
+    "browsers": ["chrome=beta", "firefox=esr"],
     "pets": {
-        "chrome":   [ ["None"], ["JS_2"], ["JS_3", "uo"], ["uo"]],
-        "firefox":   [ ["None"], ["JS_2"], ["JS_3", "uo"], ["uo"]]   
+        "chrome=beta":   [ ["None"], ["JS_userSettings"], ["JS_2", "uo"]],
+        "firefox=esr":   [["None"], ["JS_userSettings"] , ["JS_2", "uo"]]   
         },
-    "repeats": 1, 
-    "test_behaviors": ["cross_reload"],
+
     "integration_testing": true
 }

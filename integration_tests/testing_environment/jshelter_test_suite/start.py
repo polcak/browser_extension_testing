@@ -23,6 +23,7 @@
 
 import pytest
 import re
+import os
 
 from store_values import create_browser_data
 from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled, get_shared_addonsInstalled
@@ -32,38 +33,51 @@ from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level
 #  To start testing call this module from PowerShell, CommandPrompt, Terminal or Bash: python start.py
 #  For every browser and for every jsr_level defined in configuration.py set of all tests is run.
 def main():
-    browser_data = create_browser_data()  
+    subfolders = [f for f in os.listdir("/usr/app/src/fingerprinting_server/outputs") if os.path.isdir(os.path.join("/usr/app/src/fingerprinting_server/outputs", f))]
+    
+    for subfolder in subfolders:
+        print('=' * os.get_terminal_size().columns)
 
-    if not browser_data:
-        print("Integration testing skipped.")
-        exit(0)
 
-    print("Integration testing for JShelter starting.")
-    print("===============================================================================================================================================================================================================================================================================")
+        browser_name = subfolder.split('_')[-1]
+        browser_data = create_browser_data(subfolder)  
 
-    for browser, values in browser_data.items():
-        no_addon = values[0]
-        set_shared_browser(browser)
+        if not browser_data:
+            print("Integration testing skipped.")
+            exit(0)
+
+        print("Integration testing for JShelter starting.")
+        print("Testing log files in directory: ", subfolder)
+        print('=' * os.get_terminal_size().columns)
+        print("Browser currently tested:", browser_name)
+
+        if "special" in browser_name:
+            browser_name = "special"
+        else:
+            browser_name = browser_name.split("=")[0]
+
+        
+        no_addon = browser_data[0]
+        set_shared_browser(browser_name)
         set_shared_noaddon(no_addon)
-        
-        
-        for value in values[1:]:
-            print("Browser currently tested:", browser)
-            set_shared_addonsInstalled(value.addons)
             
-            if "JS" in value.addons:
-                js_level = re.search(r'\d+', value.addons).group(0)
-                print("JShelter level tested:", js_level)
-                set_shared_level(js_level)
+            
+        for value in browser_data[1:]:
                 
-            set_shared_addonRun(value)
-            
-            
-            print(get_shared_addonsInstalled())
-            pytest.main(['-s'])
+                set_shared_addonsInstalled(value.addons)
+                
+                if "JS" in value.addons:
+                    js_level = re.search(r'\d+', value.addons).group(0)
+                    print("JShelter level tested:", js_level)
+                    set_shared_level(js_level)
+                    
+                set_shared_addonRun(value)
+           
+                print("Addons installed this run: ", get_shared_addonsInstalled())
+                pytest.main(['-s'])
 
 
 if __name__ == "__main__":
     main()
-    print("===============================================================================================================================================================================================================================================================================")
+    print('=' * os.get_terminal_size().columns)
     print("Integration testing for JShelter ended.")

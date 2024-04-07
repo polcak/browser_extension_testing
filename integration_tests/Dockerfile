@@ -46,6 +46,9 @@ RUN pip3 install output
 RUN pip3 install regex
 RUN pip3 install numpy
 
+RUN pip3 install ndg-httpsclient
+RUN pip3 install pyasn1
+
 ENV DISPLAY=host.docker.internal:0.0
 
 

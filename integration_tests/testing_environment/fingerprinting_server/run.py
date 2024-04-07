@@ -15,6 +15,7 @@ import hashlib
 import sys
 import os
 import time
+import re
 
 
 ###### App
@@ -38,6 +39,26 @@ definitions = get_definitions(attributes_folder, tested_attr)
 acceptableChecker = AcceptableChecker()
 unspecifiedValue = "-"
 
+_latest_timestamp = None
+_subfolder = None
+
+def change_latest_timestamp(ts):
+    global _latest_timestamp
+    _latest_timestamp = ts
+
+def change_subfolder(sf):
+    global _subfolder
+    _subfolder = sf
+
+def get_latest_timestamp():
+    global _latest_timestamp
+    return _latest_timestamp
+
+def get_subfolder():
+    global _subfolder
+    return _subfolder
+
+
 def get_locale():
     return 'en'
 
@@ -46,19 +67,16 @@ def home():
     print("home")
     time.sleep(5)
     exp = request.args.get('exp')
-    os1 = request.args.get('os')
-    config = request.args.get('config')
     browser = request.args.get('browser')
     pet = request.args.get('pet')
-    sess = request.args.get('sess')
-    params = [['_exp', exp], ['_os', os1], ['_config', config], ['_browser', browser], ['_pet', pet], ['_session', sess]]
+    params = [['_exp', exp], ['_browser', browser], ['_pet', pet]]
     time.sleep(5)
     return render_template('fp.html', files=files, variables=variables, headers=request.headers, params=params)
 
 @app.route('/store', methods=['POST'])
 def store():
     print("store")
-    time.sleep(10)
+    time.sleep(12)
     return json.dumps(out.storeFP(request, request.data,True))
 
 
@@ -74,30 +92,38 @@ class Output(object):
     def storeFP(self, request, fingerprint,decode):
         try:
             # Create an output file whose name is the time when the browser loads 
-            output_dir = os.path.join(cwd, "outputs/")
+            
             generated_time = str(datetime.utcnow())
-            output_fn = output_dir+"log"
-            
-    
-            PATH="./"+output_fn
-            if os.path.isfile(PATH) and os.access(PATH, os.R_OK):
-                response = raw_input("This will overwrite file %s... Continue? (Y/n)" % output_fn)
-                if response == 'n':
-                    sys.exit(0)
-            fo = open(output_fn, "w")
-            fo.close() 
-            
-            #'fingerprint' is the raw output
+            outfile_time = generated_time.replace(" ", "--").replace(":", "-").replace(".", "-")
+
             if decode :
                 parsedFP = json.loads(fingerprint.decode('utf-8'))
             else :
                 parsedFP = fingerprint
+
             parsedFP = self.parse(request, parsedFP)
             parsedFP["generated_time"] = generated_time
             browserused = parsedFP["_browser"]
             addonsused = parsedFP["_pet"]
-            outfile_time = generated_time.replace(" ", "--").replace(":", "-").replace(".", "-")
+
+            start_pattern = r"\d{4}-\d{2}-\d{2}--\d{2}-\d{2}-\d{2}"
+            start_timestamp = re.search(start_pattern, outfile_time).group(0)
+
+            if "None" in addonsused:
+                change_latest_timestamp(start_timestamp)
+                latest_timestamp = get_latest_timestamp()
+                subfolder =  "outputs/" + latest_timestamp + "_" + browserused
+                change_subfolder(subfolder)
+                output_dir = os.path.join(cwd, get_subfolder())
+                os.mkdir(output_dir) 
+            else:
+                output_dir = os.path.join(cwd, get_subfolder())
+
+
+            output_fn = os.path.join(output_dir, "log")
+
             output_fn = output_fn + "--" + outfile_time + "_" + browserused + "_" + addonsused + "_" + '.txt' 
+
             # Write the fingerprint report to a file
             with open(output_fn, "w+") as out:
                json.dump(parsedFP, out, indent=4)

@@ -3,10 +3,12 @@ import sys                                  # some prints, exit
 import os                                   # for running  os
 import json                                 # for reading configuration files
 from selenium import webdriver              # for running the driver on websites
-from selenium.webdriver.common.keys import Keys     # for pressing enter on Chrome and Tor
 
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
+
+from .client_side_tests.domain_level_settings_test import *
+from .client_side_tests.NBS_settings_test import *
 
 def create_webdriver(firefox_options):
     try:
@@ -106,18 +108,24 @@ class PetConfig:
         JSlevel = None
 
         for oneAddon in my_pets:
-            
+
             oneAddon, *testing_level = oneAddon.split('_')
+            
             if testing_level: JSlevel = testing_level[0]
 
             if oneAddon in self.petco[my_browser].keys(): 
                 pets_to_test.append(self.petco[my_browser][oneAddon])
+        
         pathList = []
+ 
         for oneAddon in pets_to_test:
             pathList.append(self.pet[my_browser][oneAddon])
+
         totalPaths = []
-        for oA in pathList:
-            if oA != "":  totalPaths.append(os.path.join(cwd, self.addons_path[my_browser], oA))
+
+        for oA in pathList:      
+                if oA != "":  totalPaths.append(os.path.join(cwd, self.addons_path[my_browser], oA))
+        
         if JSlevel:
                 print("JSlevel being tested is " + JSlevel)
                 return totalPaths, None, JSlevel
@@ -127,7 +135,7 @@ class PetConfig:
     
 class Browser:
     
-    def __init__(self, config, browser, pet, proxy_setting):
+    def __init__(self, browser, pet, proxy_setting):
 
         """
         If given valid proxy settings, this function will configure socks5 proxy properly on chrome (brave) and firefox.
@@ -160,7 +168,8 @@ class Browser:
 
         print("----------------------------------------------------------------------")
 
-        totalPaths, pref, *JSlevel = pet_config.getPetBrowserDriverPath(pet,browser)
+        totalPaths, config, *JSlevel = pet_config.getPetBrowserDriverPath(pet,browser)
+        
 
         if JSlevel:
             print("JSlevel to test is " + JSlevel[0])
@@ -173,8 +182,6 @@ class Browser:
             if version:
                 firefox_options.browser_version=str(version[0])
             
-            if pref != None:
-                fp.set_preference(pref[0],pref[1])
             fp.set_preference("geo.enabled", True)
             fp.set_preference('geo.prompt.testing', True)
             fp.set_preference('geo.prompt.testing.allow', True)
@@ -188,10 +195,11 @@ class Browser:
             self.driver = create_webdriver(firefox_options)
 
 
-            if (totalPaths):
+            if (totalPaths != "No addons to install"):
                 for addon in totalPaths:                    
                     self.driver.install_addon(addon)   
                     print("addon located at" + addon + " installed")  
+
 
             if JSlevel:
                 self.driver.get("about:debugging#/runtime/this-firefox")
@@ -200,8 +208,15 @@ class Browser:
                 parent_li = element.find_element("xpath", "./..")
                 uuid_element = parent_li.find_element("xpath","./section/dl/div[@class='fieldpair'][2]/dd")
                 uuid = uuid_element.text
+                options_page = f"moz-extension://{uuid}/options.html"
 
-                self.driver.get(f"moz-extension://{uuid}/options.html")
+                if JSlevel[0] == "userSettings":
+                    test_setting_domain_level(self.driver, options_page)
+                    test_change_domain_level(self.driver, options_page)
+                    test_switching_NBS(self.driver, options_page, browser_type)
+                    return
+
+                self.driver.get(options_page)
                 time.sleep(1)
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
                 select_level.click()
@@ -217,8 +232,7 @@ class Browser:
                 for addon in totalPaths:
                     chrome_options.add_extension(addon)
                     print("addon located at" + addon + " installed")
-            if pref != None:
-                chrome_options.add_experimental_option(pref[0],pref[1])
+
 
             if version:
                 chrome_options.browser_version=str(version[0])
@@ -231,8 +245,16 @@ class Browser:
             chrome_options.add_argument("enable-automation")
             self.driver = webdriver.Chrome(options=chrome_options)
 
+  
+
             if JSlevel:
-                self.driver.get("chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html")
+                options_page = "chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html"
+                if JSlevel[0] == "userSettings":
+                    test_setting_domain_level(self.driver, options_page)
+                    test_change_domain_level(self.driver, options_page)
+                    test_switching_NBS(self.driver, options_page, browser_type)
+                    return
+                self.driver.get(options_page)
                 time.sleep(1)
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
                 select_level.click()
@@ -248,7 +270,7 @@ class Browser:
             self.driver.close() 
 
 
-    def visit_sites(self, site_list, delay=15): 
+    def visit_sites(self, site_list, delay=20): 
         """Visits all pages in site_list with delay"""
         for site in site_list:
             self.driver.set_page_load_timeout(20)
@@ -263,7 +285,7 @@ class Browser:
             except TimeoutException:
                  print("Page load timed out. retrying.")
                  self.driver.switch_to.new_window('window')
-                 self.visit_sites((site_list[(site_list.index(site)):]), delay=15)
+                 self.visit_sites((site_list[(site_list.index(site)):]), delay=20)
 
             except KeyboardInterrupt:
                 print("Interrupted by keyboard, shutting down.")
