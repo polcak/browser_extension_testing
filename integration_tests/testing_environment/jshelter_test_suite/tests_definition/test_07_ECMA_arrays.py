@@ -1,7 +1,10 @@
-from shared_set import get_shared_browser
+from shared_set import get_shared_browser, get_shared_addonRun
 import pytest
 
+
 def test_crypto_getRandomValues(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     random_crypto_values = addonRun.ECMAarrays['cryptoGetRandomValues']
 
     for array_type in random_crypto_values:
@@ -15,100 +18,154 @@ def test_crypto_getRandomValues(addonRun):
             pytest.fail("No random value generated (%s). Probable JavaScript error: Crypto.getRandomValues: Argument 1 does not implement interface ArrayBufferView." + array_type)
 
 def test_ArrayBufferViews(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['arrayBufferViews']
     for array in arrays:
         assert arrays[array] == True
 	
 def test_TypedArraysInit(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysInt'] == True
 
 def test_TypedArraysParams32(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['typedArraysParams32']
     for array in arrays:
         assert arrays[array] == True
 	
 def test_TypedArraysInitByLength(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysInitByLenght'] == True
 
 def test_TypedArraysOverwriteElement(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysOverwriteElement'] == True
 
 def test_TypedArraysOverwriteFull(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysOverwriteFull'] == True 
 
 def test_TypedArraysParams8(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['typedArraysParams8']
     for array in arrays:
         assert arrays[array] == True
 
 def test_TypedArrayFromBuffer(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['typedArrayFromBuffer']
     for array in arrays:
         assert arrays[array] == True
 
 def test_TypedArraysMethods_set(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsSet'] == True
 
 def test_TypedArraysMethods_reverse(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsReverse'] == True
 
 def test_TypedArraysMethods_sort(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsSort'] == True
 
 def test_TypedArraysMethods_fill(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsFill'] == True
 
 def test_TypedArraysMethods_copyWithin(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsCopyWithin'] == True
 
 def test_TypedArraysMethods_subarray(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['typedArrayMethodsSubarray']
     for array in arrays:
         assert arrays[array] == True
 	
 def test_TypedArraysMethods_slice(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['typedArraysMethodsSlice']
     for array in arrays:
         assert arrays[array] == True
 
 def test_TypedArraysMethods_map(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsMap'] == True
 
 def test_TypedArraysMethods_filter(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArrayMethodsFilter'] == True
 
 def test_TypedArraysMethods_reduce(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArrayMethodsReduce'] == True
 
 def test_TypedArraysMethods_reduceR(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsReduceR'] == True
 
 def test_TypedArraysMethods_lastIndexOf(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsLastIndexOf'] == True
 
 def test_TypedArraysMethods_forEach(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsForEach'] == True
 
 def test_TypedArraysMethods_find(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsFind'] == True
 	
 def test_TypedArraysMethods_join(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArraysMethodsJoin'] == True
 	
 def test_TypedArraysMethods_entrieskeysvalues(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['typedArraysMethodsEntriesKeysValues']
     for array in arrays:
         assert arrays[array] == True
 	
 def test_TypedArraysMethods_from(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['typedArrayMethodsFrom'] == True
 
 def test_DataViewInit(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['dataViewInit']
     for array in arrays:
         assert arrays[array] == True
 
 def test_DataViewAccessors(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     arrays = addonRun.ECMAarrays['dataViewAccessors']
     for array in arrays['loopSetGet']:
         assert array == True
@@ -117,10 +174,14 @@ def test_DataViewAccessors(addonRun):
     assert arrays['bigSet'] == True
 
 def test_OneBufferMoreViews(addonRun):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['oneBufferMoreViews'] == True
 
 @pytest.mark.xfail(("chrome" in get_shared_browser()), reason="See https://pagure.io/JShelter/webextension/issue/80")
 def test_worker_basic(addonRun, expected):
+    if get_shared_addonRun().ECMAarrays is None:
+        pytest.skip("ECMA arrays not tested.")
     if expected.worker == "REMOVED":
         assert addonRun.worker['workerBasics']['isWorkerRemoved'] == True
         return

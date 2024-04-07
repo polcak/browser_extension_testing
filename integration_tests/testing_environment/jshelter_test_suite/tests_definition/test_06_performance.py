@@ -23,9 +23,13 @@
 
 from math_operations import is_in_accuracy
 
+import pytest
+from shared_set import get_shared_addonRun
 
 ## Test performance.
 def test_performance(addonRun, expected):
+    if get_shared_addonRun().performance is None:
+        pytest.skip("Performance  not tested.")
     is_performance_rounded = True
     performance = addonRun.performance
     # Make 3 measurement.

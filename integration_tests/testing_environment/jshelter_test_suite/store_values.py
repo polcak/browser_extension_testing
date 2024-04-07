@@ -24,6 +24,7 @@ def read_data(file_path):
         canvas = data.get('canvas', {})
         webgl = data.get('WebGL', {})
 
+
         test_case = TestedValues(data.get('_pet'),
                                  navigator.get('userAgent'),
                                  navigator.get('appVersion'),

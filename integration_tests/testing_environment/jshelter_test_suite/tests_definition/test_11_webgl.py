@@ -19,10 +19,14 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
+
+import pytest
+from shared_set import get_shared_addonRun
 
 # Test WebGLRenderingContext.getParameter for unmaskedVendor
 def test_unmasked_vendor(noaddon, addonRun, expected):
+    if get_shared_addonRun().webglParameters is None:
+        pytest.skip("WebGL not tested.")
     if expected.webglParameters == 'REAL VALUE':
         assert addonRun.webglParameters['webglVendor'] == noaddon.webglParameters['webglVendor']
     else:
@@ -33,6 +37,8 @@ def test_unmasked_vendor(noaddon, addonRun, expected):
 
 # Test WebGLRenderingContext.getParameter for unmaskedRenderer
 def test_unmasked_renderer(noaddon, addonRun, expected):
+    if get_shared_addonRun().webglParameters is None:
+        pytest.skip("WebGL not tested.")
     if expected.webglParameters == 'REAL VALUE':
         assert addonRun.webglParameters['webglRenderer'] == noaddon.webglParameters['webglRenderer']
     else:
@@ -40,6 +46,8 @@ def test_unmasked_renderer(noaddon, addonRun, expected):
 
 # Test WebGLRenderingContext.getParameter
 def test_other_parameters(noaddon, addonRun, expected):
+    if get_shared_addonRun().webglParameters is None:
+        pytest.skip("WebGL not tested.")
     if expected.webglParameters == 'SPOOF VALUE':
         spoof_sum = 0
         if noaddon.webglParameters['maxVertexUniformComponents'] != None:
@@ -143,6 +151,8 @@ def test_other_parameters(noaddon, addonRun, expected):
 
 # Test WebGLRenderingContext.getShaderPrecisionFormat
 def test_webgl_precisions(noaddon, addonRun, expected):
+    if get_shared_addonRun().webglPrecisions is None:
+        pytest.skip("WebGL not tested.")
     if expected.webglPrecisions == 'ZERO VALUE':
         assert addonRun.webglPrecisions != noaddon.webglPrecisions
     else:
@@ -150,6 +160,8 @@ def test_webgl_precisions(noaddon, addonRun, expected):
 
 # Test WebGLRenderingContext.readPixels
 def test_webgl_read_pixels(noaddon, addonRun, expected):
+    if get_shared_addonRun().webglPixels is None:
+        pytest.skip("WebGL not tested.")
     if addonRun.webglPixels == "ERROR":
         print("\nWebGLRenderingContext.readPixels failed.")
         assert False
@@ -160,6 +172,8 @@ def test_webgl_read_pixels(noaddon, addonRun, expected):
 
 # Test HTMLCanvasElement.toDataURL on webgl canvas
 def test_webgl_to_data_URL(noaddon, addonRun, expected):
+    if get_shared_addonRun().webglDataURL is None:
+        pytest.skip("WebGL not tested.")
     if expected.webglDataURL == 'SPOOF VALUE':
         assert addonRun.webglDataURL != noaddon.webglDataURL
     else:

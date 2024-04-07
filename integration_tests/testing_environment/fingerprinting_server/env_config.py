@@ -33,11 +33,10 @@ debug = env_bool('DEBUG', debug)
 #db_dbname = env_str('DB_DBNAME', db_dbname)
 #db_port = env_int('DB_PORT', db_port)
 
-#Available languages
 LANGUAGES = {
-    'en': 'English',
-    'fr': 'Français'
+    'en': 'English'
 }
+
 
 tested_attributes = {
     "encoding",

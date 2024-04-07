@@ -26,10 +26,13 @@
 #  This setup method initialize variable device that contains current data about device and
 #  this variable is provided to device tests and values in device variable are compared with expected values.
 
-
+import pytest
+from shared_set import get_shared_addonRun
 
 ## Test device memory.
 def test_device_memory(noaddon, addonRun, expected, browser):
+	if get_shared_addonRun().device.deviceMemory is None:
+		pytest.skip("Device attributes not tested.")
 	if noaddon.device.deviceMemory == "null" and addonRun.device.deviceMemory == "null":
 		return # This browser does not support deviceMemory so JShelter should not spoof that value
 	elif noaddon.device.deviceMemory == "null":
@@ -43,6 +46,8 @@ def test_device_memory(noaddon, addonRun, expected, browser):
 
 ## Test hardware concurrency.
 def test_hardware_concurrency(noaddon, addonRun, expected):
+	if get_shared_addonRun().device.hardwareConcurrency is None:
+		pytest.skip("Device attributes not tested.")
 	if expected.device.hardwareConcurrency['value'] == 'REAL VALUE':
 		assert addonRun.device.hardwareConcurrency == noaddon.device.hardwareConcurrency
 	elif expected.device.hardwareConcurrency['value'] == 'SPOOF VALUE':
@@ -56,6 +61,8 @@ def test_hardware_concurrency(noaddon, addonRun, expected):
 
 ## Test IOdevices.
 def test_IOdevices(noaddon, addonRun, expected):
+	if get_shared_addonRun().device.IOdevices is None:
+		pytest.skip("Device attributes not tested.")
 	if expected.device.IOdevices == 'REAL VALUE':
 		assert len(addonRun.device.IOdevices) == len(noaddon.device.IOdevices)
 		for i in range(len(addonRun.device.IOdevices)):

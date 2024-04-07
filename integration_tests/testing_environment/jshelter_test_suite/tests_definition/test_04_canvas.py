@@ -27,7 +27,13 @@
 ## This test fails in Google Chrome on JShelter level 3 - expected failure because of known bug:
 ## selenium.common.exceptions.JavascriptException: Message: javascript error:
 ## Failed to execute 'getRandomValues' on 'Crypto': parameter 1 is not of type 'ArrayBufferView'.
+
+import pytest
+from shared_set import get_shared_addonRun
+
 def test_canvas(addonRun, expected):
+    if get_shared_addonRun().protectCanvas is None:
+        pytest.skip("Canvas attributes not tested.")
     is_spoofed = addonRun.protectCanvas
     if is_spoofed == "ERROR":
         print("\nCan not read Canvas data.")
@@ -39,6 +45,8 @@ def test_canvas(addonRun, expected):
             assert is_spoofed ==  False
 
 def test_getImageData(noaddon, addonRun, expected):
+    if get_shared_addonRun().canvasImageData is None:
+        pytest.skip("Canvas attributes not tested.")
     if addonRun.canvasImageData == "ERROR":
         print("\n getImageData error.")
         assert False
@@ -50,6 +58,8 @@ def test_getImageData(noaddon, addonRun, expected):
 
 
 def test_to_data_URL(noaddon, addonRun, expected):
+    if get_shared_addonRun().canvasDataURL is None:
+        pytest.skip("Canvas attributes not tested.")
     if addonRun.canvasDataURL == "ERROR":
         print("\n toDataURL error.")
         assert False
@@ -61,6 +71,8 @@ def test_to_data_URL(noaddon, addonRun, expected):
 
 
 def test_to_blob(noaddon, addonRun, expected):
+    if get_shared_addonRun().canvasBlob is None:
+        pytest.skip("Canvas blob not tested.")
     if addonRun.canvasBlob == "ERROR":
         print("\n toBlob error.")
         assert False
@@ -71,6 +83,8 @@ def test_to_blob(noaddon, addonRun, expected):
             assert addonRun.canvasBlob == noaddon.canvasBlob
 
 def test_is_point_in_path(addonRun, expected):
+    if get_shared_addonRun().canvasPointPath is None:
+        pytest.skip("Canvas attributes not tested.")
     if addonRun.canvasPointPath == "ERROR":
         print("\n isPointInPath error.")
         assert False
@@ -81,6 +95,8 @@ def test_is_point_in_path(addonRun, expected):
             assert addonRun.canvasPointPath == True
 
 def test_is_point_in_stroke(addonRun, expected):
+    if get_shared_addonRun().canvasPointStroke is None:
+        pytest.skip("Canvas attributes not tested.")
     if addonRun.canvasPointStroke == "ERROR":
         print("\n isPointInStroke error.")
         assert False

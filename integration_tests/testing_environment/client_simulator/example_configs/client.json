@@ -2,8 +2,8 @@
     "experiment_name": "exp06",
     "browsers": ["chrome=beta", "firefox=esr"],
     "pets": {
-        "chrome=beta":   [ ["None"], ["JS_userSettings"], ["JS_2", "uo"]],
-        "firefox=esr":   [["None"], ["JS_userSettings"] , ["JS_2", "uo"]]   
+        "chrome=beta":   [ ["None"], ["JS_userSettings"], ["JS_2", "uo"], ["JS_3"]],
+        "firefox=esr":   [["None"], ["JS_userSettings"] , ["JS_2", "uo"], ["JS_3"]]   
         },
 
     "integration_testing": true

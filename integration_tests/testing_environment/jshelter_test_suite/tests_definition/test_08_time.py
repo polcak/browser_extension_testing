@@ -23,7 +23,9 @@
 
 
 from math_operations import is_in_accuracy
+from shared_set import get_shared_addonRun
 
+import pytest
 
 ## Setup method - it is run before time tests execution starts.
 #
@@ -36,6 +38,8 @@ from math_operations import is_in_accuracy
 
 ## Test time accuracy.
 def test_accuracy(addonRun, expected):
+    if get_shared_addonRun().time is None:
+        pytest.skip("Time  not tested.")
     #Suppose time is rounded.
     is_time_rounded = True
     time = addonRun.time

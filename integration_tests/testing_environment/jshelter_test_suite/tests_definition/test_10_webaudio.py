@@ -23,7 +23,7 @@
 #
 import pytest
 import numpy as np
-from shared_set import get_shared_level
+from shared_set import get_shared_level, get_shared_addonRun
 
 ## AudioContext and AnalyserNode tests
 ##
@@ -48,6 +48,8 @@ def assertNotEqualNumbersInTexts(spoofed, orig, max_similarity = 0.05):
 
 ## Test AudioContext.getChannelData
 def test_channel_data(noaddon, addonRun, expected):
+    if get_shared_addonRun().audio.get_channel is None:
+        pytest.skip("Audio not tested.")
     if addonRun.audio:
         if expected.audio.get_channel == 'SPOOF VALUE':
             assert addonRun.audio.get_channel != noaddon.audio.get_channel
@@ -59,10 +61,14 @@ def test_channel_data(noaddon, addonRun, expected):
 
 ## Test that repeated calls of getChannelData (interleaved with copyFromChannel) return the same data
 def test_multiple_get_channel_data(addonRun):
+    if get_shared_addonRun().audio.get_channel is None:
+        pytest.skip("Audio not tested.")
     assert addonRun.audio.get_channel == addonRun.audio.get_channel2
 
 ## Test AudioContext.copyFromChannel
 def test_copy_channel(noaddon, addonRun, expected):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     if addonRun.audio:
         if expected.audio.copy_channel == 'SPOOF VALUE':
             assert addonRun.audio.copy_channel != noaddon.audio.copy_channel
@@ -74,6 +80,8 @@ def test_copy_channel(noaddon, addonRun, expected):
 
 ## Test that repeated calls of copyFromChannel (interleaved with getChannelData) return the same data
 def test_multiple_copy_channel(addonRun):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     js_level = get_shared_level()
     if js_level == 3 or js_level == "Experiment":
         # Note that it is not possible to use xfail as decorator as those are evaluated during
@@ -83,6 +91,8 @@ def test_multiple_copy_channel(addonRun):
 
 ## Test that getChannelData and copyFromChannel return the same data
 def test_get_channel_equal_copy_channel(addonRun):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     js_level = get_shared_level()
     if js_level == 3 or js_level == "Experiment":
         # Note that it is not possible to use xfail as decorator as those are evaluated during
@@ -92,6 +102,8 @@ def test_get_channel_equal_copy_channel(addonRun):
 
 ## Test AnalyserNode.getByteTimeDomainData
 def test_byte_time_domain(noaddon, addonRun, expected, browser):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     js_level = get_shared_level()
     if js_level == 3 == "Experiment":
         # Note that it is not possible to use xfail as decorator as those are evaluated during
@@ -113,6 +125,8 @@ def test_byte_time_domain(noaddon, addonRun, expected, browser):
 
 ## Test AnalyserNode.getFloatTimeDomainData
 def test_float_time_domain(noaddon, addonRun, expected, browser):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     js_level = get_shared_level()
     if js_level == 3 == "Experiment":
         # Note that it is not possible to use xfail as decorator as those are evaluated during
@@ -131,6 +145,8 @@ def test_float_time_domain(noaddon, addonRun, expected, browser):
 
 ## Test AnalyserNode.getByteFrequencyData
 def test_byte_frequency(noaddon, addonRun, expected, browser):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     if browser == "firefox" or browser == "firefox=esr":
         pytest.skip("Firefox byte_frequency not working as of now.")
     if addonRun.audio:
@@ -146,6 +162,8 @@ def test_byte_frequency(noaddon, addonRun, expected, browser):
 
 ## Test AnalyserNode.getFloatFrequencyData
 def test_float_frequency(noaddon, addonRun, expected, browser):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     if browser == "firefox" or browser == "firefox=esr":
         pytest.skip("Firefox float_frequency not working as of now.")
     if addonRun.audio:
@@ -159,6 +177,8 @@ def test_float_frequency(noaddon, addonRun, expected, browser):
 
 ## Test little lies farbling
 def test_little_lies(noaddon, addonRun):
+    if get_shared_addonRun().audio.copy_channel is None:
+        pytest.skip("Audio not tested.")
     js_level = get_shared_level()
     if js_level != 2:
         pytest.skip("Apply the test to the little lies level only")

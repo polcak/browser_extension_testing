@@ -24,11 +24,6 @@
 from time import sleep
 
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.by import By
 
 from web_browser_type import BrowserType
 from configuration import Config

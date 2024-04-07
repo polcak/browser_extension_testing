@@ -26,6 +26,13 @@
 #  This setup method initialize variable methods_toString that contains methods.toString() and
 #  this variable is provided to methods_toString test and the methods.toString() in the variable are compared with real values.
 ## Test methods.toString(). They should be always unchanged by JShelter.
+
+from shared_set import get_shared_addonRun
+import pytest
+
+
 def test_methods_toString(noaddon, addonRun):
-	for method in addonRun.methods_toString:
-		assert addonRun.methods_toString[method] == noaddon.methods_toString[method]
+    if get_shared_addonRun().methods_toString is None:
+        pytest.skip("Methods to string not tested.")
+    for method in addonRun.methods_toString:
+        assert addonRun.methods_toString[method] == noaddon.methods_toString[method]

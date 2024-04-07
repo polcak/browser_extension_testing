@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from flask import Flask,render_template,Blueprint,request,make_response,jsonify
+from flask import Flask,render_template,Blueprint,request,jsonify
 from flask import request                   # for reading url parameters
 from fingerprint.attributes_manager import *
 #from fingerprint.tags_manager import *
 from fingerprint.acceptable_manager import *
 from flask_babel import Babel
-from datetime import datetime, timedelta
+from datetime import datetime
 from functools import wraps
-from pprint import pprint
+
 import env_config as config
 import json
 import hashlib
@@ -78,7 +78,6 @@ def store():
     print("store")
     time.sleep(12)
     return json.dumps(out.storeFP(request, request.data,True))
-
 
 ###### Babel
 babel = Babel(app)

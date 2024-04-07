@@ -51,6 +51,8 @@ def main():
         print('=' * os.get_terminal_size().columns)
         print("Browser currently tested:", browser_name)
 
+        
+
         if "special" in browser_name:
             browser_name = "special"
         else:
@@ -61,6 +63,9 @@ def main():
         set_shared_browser(browser_name)
         set_shared_noaddon(no_addon)
             
+        print(no_addon.geolocation.accuracy)   
+        print(no_addon.geolocation.altitude)   
+        print(no_addon.geolocation.valid)  
             
         for value in browser_data[1:]:
                 
@@ -72,6 +77,10 @@ def main():
                     set_shared_level(js_level)
                     
                 set_shared_addonRun(value)
+                print(value.geolocation.accuracy)   
+                print(value.geolocation.altitude)   
+                print(value.geolocation.valid) 
+                
            
                 print("Addons installed this run: ", get_shared_addonsInstalled())
                 pytest.main(['-s'])

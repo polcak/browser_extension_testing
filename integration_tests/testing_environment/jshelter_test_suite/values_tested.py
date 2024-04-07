@@ -28,17 +28,17 @@
 ## Variables about navigator that are checked during testing.
 class Navigator:
     def __init__(self,
-                 userAgent,
-                 appVersion,
-                 platform,
-                 vendor,
-                 language,
-                 languages,
-                 doNotTrack,
-                 cookieEnabled,
-                 oscpu,
-                 plugins,
-                 mimeTypes):
+                 userAgent=None,
+                 appVersion=None,
+                 platform=None,
+                 vendor=None,
+                 language=None,
+                 languages=None,
+                 doNotTrack=None,
+                 cookieEnabled=None,
+                 oscpu=None,
+                 plugins=None,
+                 mimeTypes=None):
         self.userAgent = userAgent
         self.appVersion = appVersion
         self.platform = platform
@@ -57,15 +57,15 @@ class Navigator:
         
 class Geolocation:
     def __init__(self,
-                 accuracy,
-                 altitude,
-                 altitudeAccurac,
-                 heading,
-                 latitude,
-                 longitude,
-                 speed,
-                 timestamp,
-                 valid):
+                 accuracy=None,
+                 altitude=None,
+                 altitudeAccurac=None,
+                 heading=None,
+                 latitude=None,
+                 longitude=None,
+                 speed=None,
+                 timestamp=None,
+                 valid=None):
         self.accuracy = accuracy
         self.altitude = altitude
         self.altitudeAccurac = altitudeAccurac
@@ -81,9 +81,9 @@ class Geolocation:
 
 class Device:
     def __init__(self,
-                 deviceMemory,
-                 hardwareConcurrency,
-                 IOdevices):
+                 deviceMemory=None,
+                 hardwareConcurrency=None,
+                 IOdevices=None):
         self.deviceMemory = deviceMemory
         self.hardwareConcurrency = hardwareConcurrency
         self.IOdevices = IOdevices
@@ -91,14 +91,14 @@ class Device:
 
 class Audio:
     def __init__(self,
-                 get_channel,
-                 get_channel2,
-                 copy_channel,
-                 copy_channel2,
-                 byte_time_domain,
-                 float_time_domain,
-                 byte_frequency,
-                 float_frequency):
+                 get_channel=None,
+                 get_channel2=None,
+                 copy_channel=None,
+                 copy_channel2=None,
+                 byte_time_domain=None,
+                 float_time_domain=None,
+                 byte_frequency=None,
+                 float_frequency=None):
         self.get_channel = get_channel
         self.get_channel2 = get_channel2
         self.copy_channel = copy_channel
