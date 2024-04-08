@@ -100,9 +100,12 @@ def create_differences_img(site):
     screen_with_jsr = cv2.imread("../data/screenshots/" + site + "/with_jsr.png")
     if screen_without_jsr is None or screen_with_jsr is None:
         return None
-    differences = cv2.subtract(screen_with_jsr, screen_without_jsr)
-    cv2.imwrite("../data/screenshots/" + site + "/differences.png", differences)
-    return cv2.cvtColor(differences, cv2.COLOR_BGR2GRAY)
+    try:
+        differences = cv2.subtract(screen_with_jsr, screen_without_jsr)
+        cv2.imwrite("../data/screenshots/" + site + "/differences.png", differences)
+        return cv2.cvtColor(differences, cv2.COLOR_BGR2GRAY)
+    except:
+        return None
 
 
 ## Get mean pixel value of given image.

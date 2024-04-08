@@ -78,11 +78,11 @@ class Config(metaclass=MetaConfig):
     # Relative or absolute path to top sites csv file.
     _sites_to_test_csv_path = './top_sites/tranco.csv'
     # Number of sites from beggining of the top sites list taken for testing.
-    _number_of_sites_for_testing = 5
+    _number_of_sites_for_testing = 50
     # Run tests in this browsers.
     _tested_browsers = [BrowserType.CHROME]
     # Run tests with JShelter on this level.
-    _jsr_level = 3
+    _jsr_level = 2
     # Perform this tests for every website.
     _perform_tests = [TestType.LOGS, TestType.SCREENSHOTS]
 

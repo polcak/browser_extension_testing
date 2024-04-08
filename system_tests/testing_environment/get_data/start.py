@@ -32,6 +32,7 @@ import grid
 import driver
 from web_browser_type import BrowserType
 from test_type import TestType
+import datetime
 
 
 ## If JShelter is active and set to level 3, close JS alerts if any is open.
@@ -200,6 +201,8 @@ def main():
     if Config.grid_server_ip_address == '172.17.0.1':
         server = grid.start_server()
     nodes = grid.start_nodes()
+
+    timestamp = datetime.now().strftime("%d:%m:%H:%M").replace(":", "-")
 
     if Config.grid_server_ip_address == '172.17.0.1':
         try:
