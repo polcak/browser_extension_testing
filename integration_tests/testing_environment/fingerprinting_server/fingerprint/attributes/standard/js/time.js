@@ -26,11 +26,11 @@ async function startIterations() {
                     };
                     resolve(result);
                 }).catch(error => {
-                    reject("error" + error);
+                    resolve("error" + error);
                 });
             } catch (e) {
                 console.log(e)
-                reject("error" + e);
+                resolve("error" + e);
             }
         });
     });

@@ -19,7 +19,6 @@ async function startPerformanceIterations() {
     api.register("performance", function () {
         return new Promise((resolve, reject) => {
             try {
-
                 startPerformanceIterations().then(performance => {
                     var result = {
                         'name': 'performance',
@@ -27,11 +26,11 @@ async function startPerformanceIterations() {
                     };
                     resolve(result);
                 }).catch(error => {
-                    reject("error" + error);
+                    resolve("error" + error);
                 });
             } catch (e) {
                 console.log(e)
-                reject("error" + e);
+                resolve("error" + e);
             }
         });
     });

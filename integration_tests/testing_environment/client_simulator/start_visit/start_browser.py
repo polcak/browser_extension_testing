@@ -1,11 +1,12 @@
 import time                                 # for sleeping for a given duration
 import sys                                  # some prints, exit
 import os                                   # for running  os
-import json                                 # for reading configuration files
 from selenium import webdriver              # for running the driver on websites
 
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from .client_side_tests.domain_level_settings_test import *
 from .client_side_tests.NBS_settings_test import *
@@ -19,25 +20,12 @@ def create_webdriver(firefox_options):
         print("Retrying in 5 seconds...")
         time.sleep(5) 
         return create_webdriver(firefox_options)
-    
-
-def get_display_parameters(config):
-    config_file = "../client/vm/configs/"+config+".config.json"
-    with open(config_file) as json_data:
-        d = json.load(json_data)
-        if("displaywidth" in d):
-            width = d["displaywidth"]
-        if("displayheight" in d):
-            height = d["displayheight"]
-        if("displaydepth" in d):
-            depth = d["displaydepth"]
-        return width, height, depth
 
 class PetConfig:
     def __init__(self):
         print("configuring")
 
-        self.petfco={"gh": "ghostery_f",
+        self.petfco={
                 "uo": "uBlock_Origin_f",
                 "PB": "Privacy_Badger_f",
                 "NS": "NoScript_f",
@@ -47,7 +35,7 @@ class PetConfig:
                 "DE": "Decentraleyes_f",
                 "JS": "JShelter_f"}
 
-        self.petcco={"gh": "ghostery_c",
+        self.petcco={
                 "uo": "uBlock_Origin_c",
                 "PB": "Privacy_Badger_c",
                 "NS": "NoScript_c",
@@ -66,8 +54,6 @@ class PetConfig:
                 "NetCraft_f": "Net_Craft.xpi",
                 "Decentraleyes_f": "Decentraleyes.xpi",
                 "JShelter_f": "jsr@javascriptrestrictor.xpi",
-                
-                "fprandom": "fprandom/firefox",
                 "tracking_protection":"", "cookie_blocking":""}
 
         self.petc = {"None":"", 
@@ -93,10 +79,6 @@ class PetConfig:
         self.addons_path = {"firefox" : os.path.join("addons","firefox"),
                             "chrome" : os.path.join("addons","chrome") }
                          
-
-        self.unsupported = [("windows","firefox","fprandom"), ("windows", "chrome", "fprandom"), ("darwin", "chrome", "fprandom"), ("darwin", "firefox", "fprandom")]
-
-
 
     def getPetBrowserDriverPath(self,my_pets,my_browser):
 
@@ -170,6 +152,7 @@ class Browser:
 
         totalPaths, config, *JSlevel = pet_config.getPetBrowserDriverPath(pet,browser)
         
+        ghostery_tested = False
 
         if JSlevel:
             print("JSlevel to test is " + JSlevel[0])
@@ -196,14 +179,30 @@ class Browser:
 
 
             if (totalPaths != "No addons to install"):
-                for addon in totalPaths:                    
+                for addon in totalPaths:     
+                    if "ghostery" in addon.lower():      
+                        ghostery_tested = True    
                     self.driver.install_addon(addon)   
                     print("addon located at" + addon + " installed")  
 
 
+            if ghostery_tested:
+                time.sleep(0.5)
+                for window_handle in self.driver.window_handles:
+                    self.driver.switch_to.window(window_handle)
+                    if self.driver.title == "Welcome to Ghostery":
+                        try:
+                            element = self.driver.find_element("xpath", "/html/body/ui-onboarding-short/ui-onboarding-layout/ui-onboarding-short-main-view/ui-onboarding-card/div[2]/div[2]/ui-button")
+                            element.click()
+                            self.driver.close()
+                            self.driver.switch_to.window(self.driver.window_handles[0])
+                            break
+                        except Exception as e:
+                            print("error ", e)
+
             if JSlevel:
                 self.driver.get("about:debugging#/runtime/this-firefox")
-                time.sleep(1)
+                time.sleep(0.5)
                 element = self.driver.find_element("xpath", "//span[@title='JShelter']")
                 parent_li = element.find_element("xpath", "./..")
                 uuid_element = parent_li.find_element("xpath","./section/dl/div[@class='fieldpair'][2]/dd")
@@ -217,26 +216,30 @@ class Browser:
                     return
 
                 self.driver.get(options_page)
-                time.sleep(1)
+                time.sleep(0.5)
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
                 select_level.click()
                 print("selected JSlevel: " + JSlevel[0])
 
+
+
+
+
         elif "chrome" in browser.lower():
             browser_type, *version = browser.split('=')
             chrome_options = webdriver.ChromeOptions()
-            #chrome_options = webdriver.ChromeOptions() #https://github.com/SeleniumHQ/selenium/issues/5966
             setup_socks5_proxy("chrome", chrome_options, proxy_setting)
 
             if (totalPaths):
                 for addon in totalPaths:
+                    if "ghostery" in addon.lower():      
+                        ghostery_tested = True    
                     chrome_options.add_extension(addon)
                     print("addon located at" + addon + " installed")
 
-
             if version:
                 chrome_options.browser_version=str(version[0])
-            #chrome_options.add_argument("--headless=new")
+
             chrome_options.add_argument("--disable-gpu")
             chrome_options.add_argument("--no-sandbox")
             chrome_options.add_argument('--disable-dev-shm-usage')   
@@ -245,7 +248,19 @@ class Browser:
             chrome_options.add_argument("enable-automation")
             self.driver = webdriver.Chrome(options=chrome_options)
 
-  
+            if ghostery_tested:
+                time.sleep(0.5)
+                for window_handle in self.driver.window_handles:
+                    self.driver.switch_to.window(window_handle)
+                    if self.driver.title == "Welcome to Ghostery":
+                        try:
+                            element = self.driver.find_element("xpath", "/html/body/ui-onboarding/ui-onboarding-layout/ui-onboarding-main-view/ui-onboarding-card/div[2]/div[2]/ui-button[1]")
+                            element.click()
+                            self.driver.close()
+                            self.driver.switch_to.window(self.driver.window_handles[0])
+                            break
+                        except Exception as e:
+                            print("error ", e)
 
             if JSlevel:
                 options_page = "chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html"
@@ -255,10 +270,12 @@ class Browser:
                     test_switching_NBS(self.driver, options_page, browser_type)
                     return
                 self.driver.get(options_page)
-                time.sleep(1)
+                time.sleep(0.5)
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
                 select_level.click()
                 print("selected JSlevel: " + JSlevel[0])
+
+
         else:
             print("Unsupported Browser")
             sys.exit(0)
@@ -270,10 +287,10 @@ class Browser:
             self.driver.close() 
 
 
-    def visit_sites(self, site_list, delay=20): 
+    def visit_sites(self, site_list, delay=30): 
         """Visits all pages in site_list with delay"""
         for site in site_list:
-            self.driver.set_page_load_timeout(20)
+            self.driver.set_page_load_timeout(30)
             sys.stdout.write(".")
             sys.stdout.flush()
             try:              
@@ -285,7 +302,7 @@ class Browser:
             except TimeoutException:
                  print("Page load timed out. retrying.")
                  self.driver.switch_to.new_window('window')
-                 self.visit_sites((site_list[(site_list.index(site)):]), delay=20)
+                 self.visit_sites((site_list[(site_list.index(site)):]), delay=30)
 
             except KeyboardInterrupt:
                 print("Interrupted by keyboard, shutting down.")

@@ -65,7 +65,7 @@
                         });
                     },
                     {   
-                        timeout: 10000, // Timeout value in milliseconds (5 seconds)
+                        timeout: 10000, 
                         maximumAge: 0
                     }
                 );

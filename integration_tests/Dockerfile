@@ -1,11 +1,4 @@
-#FROM ubuntu:latest
-
-#ARG DEBIAN_FRONTEND=noninteractive
 ARG OS_TYPE
-
-
-#RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-#RUN sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 
 FROM ubuntu:latest
 
@@ -20,14 +13,7 @@ RUN echo "===> Installing system dependencies..." && \
     $BUILD_DEPS \
     xvfb 
 
-#RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-#RUN apt-get install -y --fix-missing ./google-chrome-stable_current_amd64.deb
-
 RUN  apt install -yq software-properties-common 
-     #&& add-apt-repository ppa:mozillateam/ppa \
-     #&& apt-get update \
-     #&& apt-get install -y firefox-esr \
-     #&& rm -rf /var/lib/apt/lists/*
 
 RUN apt install openssl
 
@@ -49,6 +35,8 @@ RUN pip3 install numpy
 RUN pip3 install ndg-httpsclient
 RUN pip3 install pyasn1
 
+RUN pip3 install urllib3
+
 ENV DISPLAY=host.docker.internal:0.0
 
 
@@ -58,7 +46,5 @@ COPY testing_environment ./
 RUN ["chmod", "+x", "./start_testing.sh"]
 
 ENTRYPOINT ["/usr/app/src/start_testing.sh"]
-
-#ENTRYPOINT ["python3", "./fingerprinting_server/run.py", ">", "log.txt"]
 
 

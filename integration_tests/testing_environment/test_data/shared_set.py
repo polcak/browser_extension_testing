@@ -46,7 +46,6 @@ def set_shared_level(level):
     global _level
     _level = level
 
-
 def set_shared_browser(browser):
     global _browser
     _browser = browser
@@ -55,8 +54,6 @@ def set_shared_addonsInstalled(addonsInstalled):
     global _addonsInstalled
     _addonsInstalled = addonsInstalled
 
-
-## Getter for _shared_browser.
 def get_shared_noaddon():
     global _noaddon
     return _noaddon   

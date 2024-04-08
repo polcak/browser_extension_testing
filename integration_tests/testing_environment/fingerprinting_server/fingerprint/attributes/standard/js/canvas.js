@@ -24,7 +24,6 @@
 
             var img = document.getElementById("fp-image");
 		    
-
             var canvasx = document.getElementById('canvasx');
             var canvas1 = document.getElementById('canvas1');
 

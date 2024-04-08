@@ -4,7 +4,7 @@ from flask import Flask,render_template,Blueprint,request,jsonify
 from flask import request                   # for reading url parameters
 from fingerprint.attributes_manager import *
 #from fingerprint.tags_manager import *
-from fingerprint.acceptable_manager import *
+#from fingerprint.acceptable_manager import *
 from flask_babel import Babel
 from datetime import datetime
 from functools import wraps
@@ -34,9 +34,6 @@ files,variables = get_files_and_variables(attributes_folder, tested_attr)
 variablesWithHTTP = [["User-Agent"],["Accept"],["Accept-Language"],["Accept-Encoding"],["Connection"]]
 variablesWithHTTP.extend(variables)
 definitions = get_definitions(attributes_folder, tested_attr)
-#tagChecker = TagChecker()
-#tags = tagChecker.getTagList()
-acceptableChecker = AcceptableChecker()
 unspecifiedValue = "-"
 
 _latest_timestamp = None
@@ -76,7 +73,7 @@ def home():
 @app.route('/store', methods=['POST'])
 def store():
     print("store")
-    time.sleep(12)
+    time.sleep(15)
     return json.dumps(out.storeFP(request, request.data,True))
 
 ###### Babel
@@ -229,9 +226,4 @@ def jsonResponse(func):
     return wrapper
 
 if __name__ == '__main__':
-    if len(sys.argv)>1 and sys.argv[1] == "updateTags":
-        #Update the list of tags of all fingerprints
-        out.updateTags()
-    else:
-        #Launch application
-        app.run(threaded=True, ssl_context='adhoc')
+    app.run(threaded=True, ssl_context='adhoc')

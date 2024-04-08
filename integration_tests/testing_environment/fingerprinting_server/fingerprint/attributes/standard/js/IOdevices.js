@@ -14,7 +14,7 @@
                         name: 'io_devices',
                         data: 'ERROR'
                     };
-                    reject(result);
+                    resolve(result);
                 });
 
             setTimeout(() => {
@@ -22,7 +22,7 @@
                     name: 'io_devices',
                     data: 'ERROR'
                 };
-                reject(result);
+                resolve(result);
             }, 10000);
         });
     });

@@ -6,7 +6,7 @@ function get_blob_canvas(name) {
                 if (blob) {
                     resolve(blob.arrayBuffer().then(a => Array.from(new Int8Array(a))));
                 } else {
-                    reject("Blob is null or undefined");
+                    resolve("Blob is null or undefined");
                 }
             });
         });

@@ -60,7 +60,7 @@
             }
 
             waitForPlayButton().catch(error => {
-                reject(error); 
+                resolve(error); 
             });
         });
     });
