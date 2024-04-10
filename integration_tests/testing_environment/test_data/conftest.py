@@ -34,7 +34,7 @@ import  values_expected
 #  Here is defined variables browser and expected that are given to tests as a parameter.
 
 
-## Setup method. browser provide shared browser to all tests.
+## Setup method. Provides shared browser, run without any extensions and run with extensions to all tests.
 @pytest.fixture(scope="session", autouse=True)
 def noaddon():
     return get_shared_noaddon()
@@ -48,20 +48,9 @@ def browser():
     return get_shared_browser()
 
 ## Setup method: expected provide expected values to all tests.
-#
-#  expected values are selected based on testing jsr_level.
+
 @pytest.fixture(scope="session", autouse=True)
 def expected():
     addonsTested = get_shared_addonsInstalled()
     return getattr(values_expected, addonsTested, None)
-    #if get_shared_level() == 0:
-    #    return values_expected.level0
-    #elif get_shared_level() == 1:
-    #    return values_expected.level1
-    #elif get_shared_level() == 2:
-    #   return values_expected.level2
-    #elif get_shared_level() == 3:
-    #    return values_expected.level3
-    #else:
-    #    return values_expected.level3
 
