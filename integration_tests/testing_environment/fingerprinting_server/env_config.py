@@ -3,12 +3,6 @@
 import os
 import distutils.util
 
-try:
-    from config import *
-except ImportError:
-    from config_example import *
-
-
 def env_bool(env, default):
     if os.environ.get(env):
         return distutils.util.strtobool(os.environ.get(env))
@@ -26,7 +20,7 @@ def env_int(env, default):
     else:
         return default
 
-debug = env_bool('DEBUG', debug)
+debug = env_bool('DEBUG', True)
 #db_host = env_str('DB_HOST', db_host)
 #db_username = env_str('DB_USERNAME', db_username)
 #db_password = env_str('DB_PASSWORD', db_password)
@@ -37,7 +31,7 @@ LANGUAGES = {
     'en': 'English'
 }
 
-
+#Add or remove tested attributes here. It enough to just list the name (common for both .js and .json file).
 tested_attributes = {
     "encoding",
     "headersList",

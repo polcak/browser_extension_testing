@@ -5,12 +5,14 @@ from selenium import webdriver              # for running the driver on websites
 
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 
 from .client_side_tests.domain_level_settings_test import *
 from .client_side_tests.NBS_settings_test import *
 
+
+"""
+In case Selenium Manager times out, try to downlaod the browser driver again.
+"""
 def create_webdriver(firefox_options):
     try:
         driver = webdriver.Firefox(options=firefox_options)
@@ -21,9 +23,18 @@ def create_webdriver(firefox_options):
         time.sleep(5) 
         return create_webdriver(firefox_options)
 
+"""
+Names and locations of extensions are configured through this class. 
+If you'd like to add another extension to the program, you have to add it to the dictionary here.
+
+"""
 class PetConfig:
     def __init__(self):
         print("configuring")
+
+        #These two dictionaries represent key-value pairs of extension abbreviation-extension name. Each dictionary represents one possible browser to set up.
+        #In order to add a new extension you must create a new key-value pair in both dictionaries. 
+        #The key will be used to recognize the extension inside the client configuration file, the value represents the extension name.
 
         self.petfco={
                 "uo": "uBlock_Origin_f",
@@ -45,6 +56,10 @@ class PetConfig:
                 "DE": "Decentraleyes_c",
                 "JS": "JShelter_c"}
 
+        #These two dictionaries represent key-value pairs of extension name-extension file. Each dictionary represents one possible browser to set up.
+        ##In order to add a new extension you must create a new key-value pair in both dictionaries. 
+        #The key will be used to recognize the extension name from the previous dictionaries, the value will represent the extension file.
+
         self.petf = {"None":"", 
                 "uBlock_Origin_f": "uBlock0@raymondhill.net.xpi",
                 "Privacy_Badger_f": "PrivacyBadger@jetpack.xpi",
@@ -53,8 +68,7 @@ class PetConfig:
                 "Ghostery_f": "firefox@ghostery.com.xpi", 
                 "NetCraft_f": "Net_Craft.xpi",
                 "Decentraleyes_f": "Decentraleyes.xpi",
-                "JShelter_f": "jsr@javascriptrestrictor.xpi",
-                "tracking_protection":"", "cookie_blocking":""}
+                "JShelter_f": "jsr@javascriptrestrictor.xpi"}
 
         self.petc = {"None":"", 
                 "do_not_track":"", 
@@ -70,17 +84,15 @@ class PetConfig:
         self.pet = {"firefox":self.petf,"chrome":self.petc}
         self.petco = {"firefox":self.petfco,"chrome":self.petcco}
 
-        self.petpf = {"tracking_protection": ["privacy.trackingprotection.enabled",True],
-                    "cookie_blocking":  ["network.cookie.cookieBehavior", 2]} 
-        self.petpc = {"do_not_track" : ["prefs", {"enable_do_not_track": True}]}
-
-        self.petp = {"firefox":self.petpf,"chrome":self.petpc} 
-
         self.addons_path = {"firefox" : os.path.join("addons","firefox"),
                             "chrome" : os.path.join("addons","chrome") }
                          
 
-    def getPetBrowserDriverPath(self,my_pets,my_browser):
+    """
+    Retrieve the extension files so they could be installed. Also check if JShelter is being tested, so it could be set up later. This could be configured
+    by developers to activate their own extension settings.
+    """
+    def getExtensionsPath(self,my_pets,my_browser):
 
         cwd = os.path.dirname(os.path.abspath(__file__))
 
@@ -90,11 +102,10 @@ class PetConfig:
         JSlevel = None
 
         for oneAddon in my_pets:
-
             oneAddon, *testing_level = oneAddon.split('_')
-            
+            #If you'd like to configure you extension, you can save the settings variable here. The variable will be saved as anything after _.
+            #For example in case of JShelter - either JS_0, JS_1, JS_2, JS_3 or JS_userSettings can be tested.
             if testing_level: JSlevel = testing_level[0]
-
             if oneAddon in self.petco[my_browser].keys(): 
                 pets_to_test.append(self.petco[my_browser][oneAddon])
         
@@ -120,7 +131,7 @@ class Browser:
     def __init__(self, browser, pet, proxy_setting):
 
         """
-        If given valid proxy settings, this function will configure socks5 proxy properly on chrome (brave) and firefox.
+        If given valid proxy settings, this function will configure socks5 proxy properly on chrome and firefox.
         """
         def setup_socks5_proxy(browser, profile, proxy_setting):
             if proxy_setting is not None:
@@ -148,14 +159,16 @@ class Browser:
         print("Browser:", browser, "PET:", pet)
         pet_config = PetConfig()
 
-        print("----------------------------------------------------------------------")
+        print("--------------------------------------------------------------------------------------------------------------------------")
 
-        totalPaths, config, *JSlevel = pet_config.getPetBrowserDriverPath(pet,browser)
+        #The set up for individual extensions on individual browsers can vary immensely, it's not really possible to create a uniform function.
+        #This is due to the set up being executed client-side, different set up pages can have different DOM model on different browsers. 
+        #Also the way browsers name installed extensions is inconsistent. 
+        #So its up to the developer to do his own set up.
+
+        totalPaths, config, *JSlevel = pet_config.getExtensionsPath(pet,browser)
         
         ghostery_tested = False
-
-        if JSlevel:
-            print("JSlevel to test is " + JSlevel[0])
 
         if "firefox" in browser.lower():
             browser_type, *version = browser.split('=')
@@ -185,6 +198,8 @@ class Browser:
                     self.driver.install_addon(addon)   
                     print("addon located at" + addon + " installed")  
 
+            #At this point all listed extensions are installed. If you wish to configure them you can do so from this point on till the end of the 
+            #object class.
 
             if ghostery_tested:
                 time.sleep(0.5)
@@ -201,6 +216,7 @@ class Browser:
                             print("error ", e)
 
             if JSlevel:
+                print("JSlevel to test is " + JSlevel[0])
                 self.driver.get("about:debugging#/runtime/this-firefox")
                 time.sleep(0.5)
                 element = self.driver.find_element("xpath", "//span[@title='JShelter']")
@@ -220,10 +236,6 @@ class Browser:
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
                 select_level.click()
                 print("selected JSlevel: " + JSlevel[0])
-
-
-
-
 
         elif "chrome" in browser.lower():
             browser_type, *version = browser.split('=')
@@ -248,6 +260,9 @@ class Browser:
             chrome_options.add_argument("enable-automation")
             self.driver = webdriver.Chrome(options=chrome_options)
 
+            #At this point all listed extensions are installed. If you wish to configure them you can do so from this point on till the end of the 
+            #object class.
+
             if ghostery_tested:
                 time.sleep(0.5)
                 for window_handle in self.driver.window_handles:
@@ -263,6 +278,7 @@ class Browser:
                             print("error ", e)
 
             if JSlevel:
+                print("JSlevel to test is " + JSlevel[0])
                 options_page = "chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html"
                 if JSlevel[0] == "userSettings":
                     test_setting_domain_level(self.driver, options_page)
@@ -300,7 +316,7 @@ class Browser:
 
                 time.sleep(delay)
             except TimeoutException:
-                 print("Page load timed out. retrying.")
+                 print("Page load timed out, retrying.")
                  self.driver.switch_to.new_window('window')
                  self.visit_sites((site_list[(site_list.index(site)):]), delay=30)
 

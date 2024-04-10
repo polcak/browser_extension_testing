@@ -27,8 +27,6 @@ RUN pip3 install webdriver-manager
 RUN pip3 install pytest
 
 RUN pip3 install pyopenssl
-RUN pip3 install output
-
 RUN pip3 install regex
 RUN pip3 install numpy
 

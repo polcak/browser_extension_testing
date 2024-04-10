@@ -15,9 +15,8 @@ The definition file includes:
 * the name of the attribute
 * the description of the attribute
 * the name of the stored variables in an array. This way, one script can store more than a single value.
-* the name of the test files in an array. If this attribute is collected on the server side, the array must be empty.
-* (Optional) the computation of a hash for this attribute (this is needed to improve the server performance
- when dealing with complex or large attributes)
+* the name of the test files in an array,
+* (Optional) the computation of a hash for this attribute,
 * (Optional) an URL to a webpage with more information on the attribute or
 to a bug tracker page with an insight on what is studied
 

@@ -2,9 +2,7 @@ from .start_browser import Browser
 import sys                  # for command line arguments
 import time                 # for sleeping for some duration
 import json
-import ast
 import os as oslib
-from time import localtime, strftime
 
 
 def test_pet(exp, browser, pet, server_config):
@@ -46,8 +44,6 @@ def test_pet(exp, browser, pet, server_config):
         print("exit")
         cleanup_browser(unit)
     except Exception as e:
-        if pet == "tor":
-            print("If native, first launch Tor application locally before running the script.\n This is to get SOCKS host running on port 9150.")
         print(e)
 
 def sim_browser(browser, pet, proxy_setting):
@@ -65,8 +61,8 @@ if __name__ == '__main__':
         print("Call as follows: python start_pet.py <exp> <browser> <pet> <server_config>")
         sys.exit(0)
     EXP = sys.argv[1]
-    BROWSER = sys.argv[2] # "firefox" or "chrome"
+    BROWSER = sys.argv[2]
     PET = sys.argv[3]
-    SERVER_CONFIG = sys.argv[4] # "vm_server.json" etc
+    SERVER_CONFIG = sys.argv[4] 
 
     test_pet(EXP, BROWSER, PET, SERVER_CONFIG)

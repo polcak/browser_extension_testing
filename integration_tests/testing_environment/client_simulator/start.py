@@ -16,8 +16,7 @@ def get_experiment_attributes(data):
 
 if __name__ == '__main__':
     if(len(sys.argv) != 3):
-        print("Call as follows: python start.py experiment_config_file server_config_file")
-        print("An example: python start.py example_configs/vm_all.json example_configs/vm_server.json \n Or python start.py example_configs/native_mac.json example_configs/native_server.json")
+        print("Call as follows: python3 start.py experiment_config_file server_config_file")
         sys.exit(0)
 
     experiment_config = sys.argv[1]
@@ -27,9 +26,9 @@ if __name__ == '__main__':
 
     server_config = sys.argv[2]
 
-    #try:
-    start_native(exp, browsers, pets, server_config)
-    #except:
-    #    print("Please give valid json files as input. See vm_all.json and vm_server.json as the template.")
-    #    sys.exit(0)
+    try:
+        start_native(exp, browsers, pets, server_config)
+    except:
+        print("Please give valid json files as input. See vm_all.json and vm_server.json as the template.")
+        sys.exit(0)
 

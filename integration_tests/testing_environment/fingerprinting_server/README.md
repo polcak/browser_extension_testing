@@ -1,51 +1,25 @@
-#Fingerprint folder
-You will find here three different folders associated with three different features 
-of FP Central. 
-The "attributes" folder contains all the tests that are run on the collection page.
-The "tags" folder has the list of tags defined in the application with the associated
-logic of each tag.
-Finally, the "acceptable" folder has a list of acceptable values for different tags. 
+# Fingerprinting server
+This folder contains the code base to deploy a *Flask* server serving as a potential fingerprinting risk. The server gathers visiting user's data and stores them inside a JSON file. The server is deployed immediately after the container starts. From then on it runs continuously till the container is stopped.
 
-## Attributes
-### Description
-Attributes are at the core of a fingerprint.
-They reveal information on several layers of user's device from the browser to the operating system and
-even the hardware.
-They can be collected through HTTP header, JavaScript or plugins if they are available.
+## Static folder
+This folder contains data needed to create the fingerprinting website, including *CSS selectors*, *fonts*, *images* and *scripts*. If you wish to edit the look, layout or JavaScript of the website run by fingerprinting server, you can do so from here. If you are interested in modifying the website at all, you should pay special attention to the `/static/js/clientAPI.js` file.
 
-### How it works
-All attributes are present in the **attributes** folder.
-Depending on a fingerprint's tag, not all the tests are run and not all attributes are collected.
+## Templates folder
+This folder similarly contains *HTML* files used by the site.
 
+## Fingerprint folder
+Used to gather users data collected during their visit. All the fingerprint logic is stored here.
 
-## Tags
-### Description
-A tag is a classification of a fingerprint in a specific category.
-Based on the analysis of standard attributes, a fingerprint will go through a series of tests
-to determine which tags apply to it.
-These tags can be on the browser itself like "Firefox" or "Chrome" but they can also be much broader
-and indicate the type of the device like "Desktop" or "Mobile".
+## Outputs folder
+This folder stores all JSON data gathered by the server. The server creates subfolders named after the timestamp of the first run performed with no extensions installed and the name of browser used - that means a run with "None" set as extensions in its name. When a visit with no extensions installed occurs, a new subfolder is created. Due to this, you must *ALWAYS* perform a "None" run first on the client's side in order to store data correctly.
 
-The tags are a simple way to manage groups of fingerprints and it leverages the power of MongoDB
-to calculate statistics on the collected fingerprints without having to deal with complex logic.
+## `env_config.py` file
+This file contains the environment configuration of the server. It also lists all the fingerprinting techniquest that will be used after the servers deployment in `tested_attributes`. If you wish not to test an attribute, you can simply comment it out. If you add a new testing attribute, you must also add its name to the `tested_attributes` inside this file.
 
-### How it works
-Each tag has its own set of rules.
-If a fingerprint respects all of the rules for a given tag, it will earn the tag in its collection.
-
-The role of the **tag_manager.py** file is to check all the tags defined in the **tags** folder
-against all collected fingerprints.
-A fingerprint can have any number of tags as long as they are compatible with each other.
-
-
-##Attributes
-### Description
-In order to find out if values sent by browsers around the world are common and not that different
-between devices, we check for each collected attribute if the sent values are "expected" or 
-"acceptable" ones.
-
-###How it works
-Each JSON file located in the **acceptable** folder defines for one tag the acceptable values 
-for any number of attributes.
-When the statistics are computed for a fingerprint, the **acceptable_manager.py** script
-will verify for each attribute if the collected value is acceptable.
+---
+### How to run
+You can deploy the server using this command:
+```
+python3 run.py
+```
+But note that it is deployed defaultly through the `start_testing.py` script after running the container.

@@ -1,3 +1,26 @@
+#
+#  JShelter is a browser extension which increases level
+#  of security, anonymity and privacy of the user while browsing the
+#  internet.
+#
+#  Copyright (C) 2022  Martin Bednar, 2024 Jana Petranova
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+
 import random 
 from selenium.webdriver.support.select import Select
 
@@ -30,8 +53,8 @@ def get_domain_level(driver, options_page, domain):
     selected_option = select.first_selected_option
     return selected_option.get_attribute("value")
 
-
 	
+## Test setting a level for the selected domains.	
 def test_setting_domain_level(driver, options_page):
     for i in range(len(domains)):
         domain = domains[i]
@@ -41,7 +64,9 @@ def test_setting_domain_level(driver, options_page):
             print("Domain level set correctly, test has passed.")
         else:
             print("Failed to set the correct domain level.")
+
 	
+## Test changing a level for the selected domains.	
 def test_change_domain_level(driver, options_page):
     for i in range(len(domains)):
         domain = domains[i]

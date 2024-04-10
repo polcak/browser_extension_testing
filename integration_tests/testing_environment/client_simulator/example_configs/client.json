@@ -1,5 +1,5 @@
 {
-    "experiment_name": "exp06",
+    "experiment_name": "exp01",
     "browsers": ["firefox=esr", "chrome=stable"],
     "pets": {
         "firefox=esr":   [ ["None"], ["JS_3", "Gh"]],

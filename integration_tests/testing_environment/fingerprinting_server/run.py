@@ -3,8 +3,6 @@
 from flask import Flask,render_template,Blueprint,request,jsonify
 from flask import request                   # for reading url parameters
 from fingerprint.attributes_manager import *
-#from fingerprint.tags_manager import *
-#from fingerprint.acceptable_manager import *
 from flask_babel import Babel
 from datetime import datetime
 from functools import wraps
@@ -87,7 +85,6 @@ def get_locale():
 class Output(object):
     def storeFP(self, request, fingerprint,decode):
         try:
-            # Create an output file whose name is the time when the browser loads 
             
             generated_time = str(datetime.utcnow())
             outfile_time = generated_time.replace(" ", "--").replace(":", "-").replace(".", "-")
@@ -115,17 +112,13 @@ class Output(object):
             else:
                 output_dir = os.path.join(cwd, get_subfolder())
 
-
             output_fn = os.path.join(output_dir, "log")
-
             output_fn = output_fn + "--" + outfile_time + "_" + browserused + "_" + addonsused + "_" + '.txt' 
 
-            # Write the fingerprint report to a file
             with open(output_fn, "w+") as out:
                json.dump(parsedFP, out, indent=4)
       
         except Exception as e:
-            # Append the error message to the already-created output file
             with open(output_fn, 'a+') as f:
                 f.write(str(e))
     
@@ -194,8 +187,6 @@ class Output(object):
         return parsedFP
 
    
-
-
     def convert_to(self, old, type):
         if type == "dict":
             result = dict()
