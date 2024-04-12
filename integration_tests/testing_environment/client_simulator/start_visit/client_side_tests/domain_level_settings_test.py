@@ -22,6 +22,7 @@
 #
 
 import random 
+import time
 from selenium.webdriver.support.select import Select
 
 domains = ["www.fsf.org", "gnu.org", "jshelter.org", "www.fit.vutbr.cz"]
@@ -29,6 +30,7 @@ levels = ['0', '2', '3', 'Experiment']
 
 def set_domain_level(driver, options_page, domain, level):
     driver.get(options_page.replace("/options.html", "/options_domains.html"))
+    time.sleep(0.5)
     driver.find_elements('id', 'domain-text')[0].send_keys(domain)
     select = Select(driver.find_elements('id', 'domain-level')[0])
     select.select_by_value(level)
@@ -37,11 +39,13 @@ def set_domain_level(driver, options_page, domain, level):
 	
 def unset_domain_level(driver, options_page, domain):
     driver.get(options_page.replace("/options.html", "/options_domains.html"))
+    time.sleep(0.5)
     driver.find_elements('id', 'delete-dl-' + domain)[0].click()
  
 	
 def change_domain_level(driver, options_page, domain, level):
     driver.get(options_page.replace("/options.html", "/options_domains.html"))
+    time.sleep(0.5)
     select = Select(driver.find_elements('id', 'dl-change-' + domain)[0])
     select.select_by_value(level)
     driver.find_elements('id', 'overwrite-dl-' + domain)[0].click()
@@ -49,6 +53,7 @@ def change_domain_level(driver, options_page, domain, level):
 	
 def get_domain_level(driver, options_page, domain):
     driver.get(options_page.replace("/options.html", "/options_domains.html"))
+    time.sleep(0.5)
     select = Select(driver.find_elements('id', 'dl-change-' + domain)[0])
     selected_option = select.first_selected_option
     return selected_option.get_attribute("value")

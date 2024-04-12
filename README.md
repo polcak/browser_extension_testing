@@ -3,8 +3,8 @@
 This repository contains the source code implemented as part of my master thesis at the University of Technology in Brno in 2023/2024. 
 
 ## Requirements
-- [Docker](https://www.docker.com) must be installed on the host system. The **Docker Engine** must be running before building and deploying any of the containers.
-- In case of a **Windows host machine** you also need to install **X server** software in order to display any browser windows during the execution. None of the tests are performed in `headless` because many of the performed tests are not supported in that mode. During the developement and testing, [X410](https://x410.dev) was used. The **Dockerfiles** are configured to use `DISPLAY=host.docker.internal:0.0` which is supported by X410.
+- [Docker](https://www.docker.com) must be installed on the host system. The **Docker Engine** must be running before building and deploying any of the containers. On Linux host machine, refrain from using *Docker Desktop*.
+- In case of a **Windows host machine** you also need to install **X server** software in order to display any browser windows during the execution. None of the tests are performed in `headless` because many of the performed tests are not supported in that mode. During the developement and testing, [X410](https://x410.dev) was used. The **Dockerfiles** are configured to use `DISPLAY=host.docker.internal:0.0` which is supported by X410. Please note on Windows you need to install *Docker Desktop*.
 - All other individual requirements are installed into the images while building them via Docker.
 
 ---

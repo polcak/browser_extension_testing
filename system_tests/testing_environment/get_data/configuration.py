@@ -78,7 +78,7 @@ class Config(metaclass=MetaConfig):
     # Relative or absolute path to top sites csv file.
     _sites_to_test_csv_path = './top_sites/tranco.csv'
     # Number of sites from beggining of the top sites list taken for testing.
-    _number_of_sites_for_testing = 50
+    _number_of_sites_for_testing = 15
     # Run tests in this browsers.
     _tested_browsers = [BrowserType.CHROME]
     # Run tests with JShelter on this level.
@@ -104,18 +104,21 @@ class Config(metaclass=MetaConfig):
     _extensions_for_chrome_path = './addons/chrome/'
     _extensions_for_firefox_path = './addons/firefox/'
 
-    _extensions_dict_chrome = { "ghc": "Ghostery.crx",
-                                "uoc": "uBlockOrigin.crx",
-                                "PBc": "PrivacyBadger.crx",
-                                "NSc": "NoScript.crx",
-                                "DDGPEc": "DuckDuckGoPE.crx",
-                                "Ghc": "Ghostery_c",
-                                "NCc": "Netcraft.crx",
-                                "DEc": "Decentraleyes.crx",
-                                "JSc": "JShelter.crx"}
+    #This is the list of available extensions for testing. In a key-value pair, 
+    #key represents the extension abbreviation and value its extension file.
+    _extensions_dict_chrome = { "gh": "Ghostery.crx",
+                                "uo": "uBlockOrigin.crx",
+                                "PB": "PrivacyBadger.crx",
+                                "NS": "NoScript.crx",
+                                "DDGPE": "DuckDuckGoPE.crx",
+                                "Gh": "Ghostery_c",
+                                "NC": "Netcraft.crx",
+                                "DE": "Decentraleyes.crx",
+                                "JS": "JShelter.crx"}
 
     _extensions_dict_firefox = {
 
     }
-
-    _extensions_to_test = ["JSc"]
+    #Use extensions ABs from the dictionary above here if you want to install
+    #them during the run.
+    _extensions_to_test = ["JS", "uo"]

@@ -35,7 +35,7 @@ RUN pip3 install pyasn1
 
 RUN pip3 install urllib3
 
-ENV DISPLAY=host.docker.internal:0.0
+#ENV DISPLAY=host.docker.internal:0.0
 
 
 WORKDIR /usr/app/src

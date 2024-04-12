@@ -10,3 +10,52 @@ The original code base has been heavily modified to take advantage of a feature 
 
 
 Please note that this tool does not serve as an evaluation of a browsers extension's ability to protect against fingerprinting. This tool was designed as a way for users and developers to see and analyze the extension's behavior in a controlled, deterministic and transparent settings while also giving them the ability to see how multiple installed extensions affect each other and their outputs. It does not accurately represent the reality of fingerprinting servers, it only simulates their behavior.
+
+## How to build the image and run the container
+### Linux based host
+In order to run the testing you must have `docker engine` installed, NOT `Docker Desktop`. This is due to how it handles display forwarding.
+
+Currently you must keep the envirnoment setting commented out inside the *Dockerfile* while building on Linux host.
+```
+#ENV DISPLAY=host.docker.internal:0.0
+```
+
+Assuming you have installed `docker engine` correctly and it is running, build the image using this command:
+```
+docker build -t IMAGE_NAME .
+```
+Once you have build the image, move inside the `testing_environment` folder and run the container using commands:
+```
+cd testing_environment
+docker run --rm -it -v .:/usr/app/src/ --net=host --env DISPLAY=$DISPLAY --add-host=host.docker.internal:172.17.0.1 IMAGE_NAME
+```
+This will create a mounted volume so all the output files will persist even after the container is deleted. The output files will be stored in the `fingerprinting_server/outputs` folder.
+
+If you run into privileges issues, try giving `start_testing.sh` execution privileges on the local machine.
+
+```
+sudo chmod +x start_testing.sh
+```
+If you run into display issues, try adding *Docker* to *xhost*:
+```
+sudo xhost +local:docker
+```
+
+Note that currently this process is done manually right now but will be made easier using scripts once the testing is done.
+
+### Windows host
+For *Window* host, uncomment the environment variable set up in the *Dockerfile*.
+
+```
+ENV DISPLAY=host.docker.internal:0.0
+```
+
+Assuming *Docker Desktop* and a *Xserver* are running on the host, build the image using this command:
+```
+docker build -t IMAGE_NAME .
+```
+Run the container using commands:
+```
+cd testing_environment
+docker run --rm -it -v .:/usr/app/src/ IMAGE_NAME
+```

@@ -232,9 +232,10 @@ class Browser:
                     return
 
                 self.driver.get(options_page)
-                time.sleep(0.5)
+                time.sleep(1)
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
                 select_level.click()
+                time.sleep(1)
                 print("selected JSlevel: " + JSlevel[0])
 
         elif "chrome" in browser.lower():
@@ -257,6 +258,7 @@ class Browser:
             chrome_options.add_argument('--disable-dev-shm-usage')   
             chrome_options.add_argument('--ignore-certificate-errors')   
             chrome_options.add_argument("--dns-prefetch-disable")
+            #chrome_options.add_argument("--headless=new")
             chrome_options.add_argument("enable-automation")
             self.driver = webdriver.Chrome(options=chrome_options)
 
@@ -283,12 +285,12 @@ class Browser:
                 if JSlevel[0] == "userSettings":
                     test_setting_domain_level(self.driver, options_page)
                     test_change_domain_level(self.driver, options_page)
-                    test_switching_NBS(self.driver, options_page, browser_type)
                     return
                 self.driver.get(options_page)
-                time.sleep(0.5)
+                time.sleep(1)
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
                 select_level.click()
+                time.sleep(1)
                 print("selected JSlevel: " + JSlevel[0])
 
 

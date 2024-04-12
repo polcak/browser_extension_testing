@@ -50,7 +50,7 @@ from configuration import Config
 
 def set_jsr_level_firefox(driver, level):
     driver.get("about:debugging#/runtime/this-firefox")
-    sleep(1)
+    sleep(3)
     element = driver.find_element("xpath", "//span[@title='JShelter']")
 
     parent_li = element.find_element("xpath", "./..")
@@ -58,7 +58,7 @@ def set_jsr_level_firefox(driver, level):
     uuid_element = parent_li.find_element("xpath","./section/dl/div[@class='fieldpair'][2]/dd")
     uuid = uuid_element.text
     driver.get(f"moz-extension://{uuid}/options.html")
-    sleep(1)
+    sleep(3)
     select_level = driver.find_element("id", "level-" + str(level))
     select_level.click()
 
@@ -66,7 +66,7 @@ def set_jsr_level_firefox(driver, level):
 def set_jsr_level_chrome(driver, level):
     #options_page = find_options_jsr_page_url(driver, browser_type)
     driver.get("chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html")
-    sleep(1)
+    sleep(5)
     driver.find_element("id", "level-" + str(level))
 
 

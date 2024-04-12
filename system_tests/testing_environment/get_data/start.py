@@ -202,7 +202,7 @@ def main():
         server = grid.start_server()
     nodes = grid.start_nodes()
 
-    timestamp = datetime.now().strftime("%d:%m:%H:%M").replace(":", "-")
+    #timestamp = datetime.now().strftime("%d:%m:%H:%M").replace(":", "-")
 
     if Config.grid_server_ip_address == '172.17.0.1':
         try:
