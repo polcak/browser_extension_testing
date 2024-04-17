@@ -51,5 +51,5 @@ docker build -t IMAGE_NAME .
 Run the container using commands:
 ```
 cd testing_environment
-docker run --rm -it --net=host -v .\testing_environment\:/usr/app/src/ IMAGE_NAME
+docker run --rm -it --net=host -v .:/usr/app/src/ IMAGE_NAME
 ```
