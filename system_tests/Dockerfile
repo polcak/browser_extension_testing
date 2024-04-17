@@ -31,7 +31,7 @@ RUN pip3 install nltk
 RUN pip3 install python-Levenshtein
 
 
-#ENV DISPLAY=host.docker.internal:0.0
+ENV DISPLAY=host.docker.internal:0.0
 
 WORKDIR /usr/app/src
 COPY testing_environment ./
