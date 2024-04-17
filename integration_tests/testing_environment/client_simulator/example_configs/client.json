@@ -1,9 +1,9 @@
 {
     "experiment_name": "exp01",
-    "browsers": [ "chrome=stable", "firefox=esr"],
+    "browsers": ["firefox=120.0b4"],
     "pets": {
-        "chrome=stable":   [ ["None"], ["JS_userSettings"], ["JS_3"], ["JS_2"], ["uo"], ["JS_2", "uo"]],
-        "firefox=esr":   [ ["None"],["JS_userSettings"], ["JS_3"], ["JS_2"], ["uo"], ["JS_2", "uo"]]
+
+        "firefox=120.0b4":   [ ["None"]]
         },
 
     "integration_testing": true

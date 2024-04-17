@@ -216,7 +216,7 @@ def test_speed(noaddon, addonRun, expected):
 ## Test timestamp.
 def test_timestamp(addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.timestamp is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.timestamp['value'] == 'REAL VALUE':
