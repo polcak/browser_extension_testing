@@ -82,8 +82,7 @@ def test_copy_channel(noaddon, addonRun, expected):
 def test_multiple_copy_channel(addonRun):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
-    js_level = get_shared_level()
-    if js_level == 3 or js_level == "Experiment":
+    if get_shared_level() == 3:
         # Note that it is not possible to use xfail as decorator as those are evaluated during
         # module import and the module is not reimported for different levels
         pytest.xfail("JShelter creates different white noise during each copyFromChannel() call. As we do not care about fingerprintability in this level, we do not care that the noise is different")
@@ -93,8 +92,7 @@ def test_multiple_copy_channel(addonRun):
 def test_get_channel_equal_copy_channel(addonRun):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
-    js_level = get_shared_level()
-    if js_level == 3 or js_level == "Experiment":
+    if get_shared_level() == 3:
         # Note that it is not possible to use xfail as decorator as those are evaluated during
         # module import and the module is not reimported for different levels
         pytest.xfail("JShelter creates different white noise during each copyFromChannel() call. As we do not care about fingerprintability in this level, we do not care that the noise is different")
@@ -104,11 +102,11 @@ def test_get_channel_equal_copy_channel(addonRun):
 def test_byte_time_domain(noaddon, addonRun, expected, browser):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
-    js_level = get_shared_level()
-    if js_level == 3 == "Experiment":
+    #js_level = get_shared_level()
+    #if js_level == 3:
         # Note that it is not possible to use xfail as decorator as those are evaluated during
         # module import and the module is not reimported for different levels
-        pytest.xfail("This test will work only after Array Wrappers are fixed in Firefox")
+    #    pytest.xfail("This test will work only after Array Wrappers are fixed in Firefox")
     if browser == "firefox" or browser == "firefox=esr":
         pytest.skip("Firefox byte_time_domain not working as of now.")
 
@@ -127,11 +125,11 @@ def test_byte_time_domain(noaddon, addonRun, expected, browser):
 def test_float_time_domain(noaddon, addonRun, expected, browser):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
-    js_level = get_shared_level()
-    if js_level == 3 == "Experiment":
+    #js_level = get_shared_level()
+    #if js_level == 3:
         # Note that it is not possible to use xfail as decorator as those are evaluated during
         # module import and the module is not reimported for different levels
-        pytest.xfail("This test will work only after Array Wrappers are fixed in Firefox")
+    #    pytest.xfail("This test will work only after Array Wrappers are fixed in Firefox")
     if browser == "firefox" or browser == "firefox=esr":
         pytest.skip("Firefox float_time_domain not working as of now.")
     if addonRun.audio:
@@ -179,8 +177,7 @@ def test_float_frequency(noaddon, addonRun, expected, browser):
 def test_little_lies(noaddon, addonRun):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
-    js_level = get_shared_level()
-    if js_level != 2:
+    if get_shared_level() != 2:
         pytest.skip("Apply the test to the little lies level only")
     def assertNumberesSimilar(spoofed, orig, epsilon):
         assert len(spoofed) == len(orig)

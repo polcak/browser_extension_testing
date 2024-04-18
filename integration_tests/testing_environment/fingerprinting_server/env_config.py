@@ -31,7 +31,7 @@ LANGUAGES = {
     'en': 'English'
 }
 
-#Add or remove tested attributes here. It enough to just list the name (common for both .js and .json file).
+#Add or remove tested attributes here. Its enough to just list the name (common for both .js and .json file).
 tested_attributes = {
     "encoding",
     "headersList",
