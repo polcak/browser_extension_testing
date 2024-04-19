@@ -50,16 +50,20 @@
     }
 
     api.register("math", function () {
-        return {
-            "asinh(1)": asinh(1),
-            "acosh(1e300)": (acosh(1e300) == "Infinity") ? "Infinity" : acosh(1e300),
-            "atanh(05)": atanh(0.5),
-            "expm1(1)": expm1(1),
-            "cbrt(100)": cbrt(100),
-            "log1p(10)": log1p(10),
-            "sinh(1)": sinh(1),
-            "cosh(10)": cosh(10),
-            "tanh(1)": tanh(1)
+        try {
+            return {
+                "asinh(1)": asinh(1),
+                "acosh(1e300)": (acosh(1e300) == "Infinity") ? "Infinity" : acosh(1e300),
+                "atanh(05)": atanh(0.5),
+                "expm1(1)": expm1(1),
+                "cbrt(100)": cbrt(100),
+                "log1p(10)": log1p(10),
+                "sinh(1)": sinh(1),
+                "cosh(10)": cosh(10),
+                "tanh(1)": tanh(1)
+            }
+        } catch(e){
+            return "js blocked";
         }
     });
 })();

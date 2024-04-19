@@ -1,5 +1,11 @@
 (function() {
     api.register("color depth", function () {
-        return window.screen.colorDepth;
+        try {
+            return window.screen.colorDepth;
+        }
+        catch(e) {
+            return "js blocked";
+        }
+        
     });
 })();

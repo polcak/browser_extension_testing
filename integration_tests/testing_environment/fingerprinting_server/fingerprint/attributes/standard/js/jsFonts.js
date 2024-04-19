@@ -204,6 +204,12 @@ function getKeyJavascript() {
 (function() {
     api.register("hash of fonts detected by javascript", function () {
 //         return x64hash128(getKeyJavascript());
-        return getKeyJavascript();
+        try {
+            return getKeyJavascript();
+        }
+        catch(e) {
+            return "js_blocked";
+        }
+        
     });
 })();

@@ -1,5 +1,9 @@
 (function() {
     api.register("openDB", function () {
-        return !!window.openDatabase ? "yes" : "no";
+        try {
+            return !!window.openDatabase ? "yes" : "no";
+        } catch(e){ 
+            return "js blocked";
+        }
     });
 })();

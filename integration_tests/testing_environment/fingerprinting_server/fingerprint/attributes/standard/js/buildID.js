@@ -1,5 +1,11 @@
 (function() {
     api.register("buildID", function () {
-        return window.navigator.buildID;
+        try{
+            return window.navigator.buildID; }
+
+        catch(e) {
+            return "js blocker";
+        }
+        
     });
 })();

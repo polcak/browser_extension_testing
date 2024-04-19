@@ -12,7 +12,7 @@
                 .catch(error => {
                     const result = {
                         name: 'io_devices',
-                        data: 'ERROR'
+                        data: 'ERROR' + error
                     };
                     resolve(result);
                 });
@@ -20,7 +20,7 @@
             setTimeout(() => {
                 const result = {
                     name: 'io_devices',
-                    data: 'ERROR'
+                    data: 'ERROR timeout'
                 };
                 resolve(result);
             }, 10000);

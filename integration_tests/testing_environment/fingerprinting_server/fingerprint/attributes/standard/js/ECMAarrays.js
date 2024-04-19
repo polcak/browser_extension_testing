@@ -462,85 +462,90 @@ function test_OneBufferMoreViews(){
 
 (function() {
     api.register("ECMAarrays", function () {
-        var cryptoGetRandomValues = test_crypto_getRandomValues();
+        try {
+            var cryptoGetRandomValues = test_crypto_getRandomValues();
 
-        var arrayBufferViews = test_ArrayBufferViews();
-        var typedArraysInt = test_TypedArraysInit();
-        var typedArraysParams32 = test_TypedArraysParams32();
+            var arrayBufferViews = test_ArrayBufferViews();
+            var typedArraysInt = test_TypedArraysInit();
+            var typedArraysParams32 = test_TypedArraysParams32();
 
-        var typedArraysInitByLenght = test_TypedArraysInitByLength();
-        var typedArraysOverwriteElement = test_TypedArraysOverwriteElement();
-        var typedArraysOverwriteFull = test_TypedArraysOverwriteFull();
+            var typedArraysInitByLenght = test_TypedArraysInitByLength();
+            var typedArraysOverwriteElement = test_TypedArraysOverwriteElement();
+            var typedArraysOverwriteFull = test_TypedArraysOverwriteFull();
 
-        var typedArraysParams8 = test_TypedArraysParams8();
-        var typedArrayFromBuffer = test_TypedArrayFromBuffer();
+            var typedArraysParams8 = test_TypedArraysParams8();
+            var typedArrayFromBuffer = test_TypedArrayFromBuffer();
 
-        var typedArraysMethodsSet = test_TypedArraysMethods_set();
-        var typedArraysMethodsReverse = test_TypedArraysMethods_reverse();
+            var typedArraysMethodsSet = test_TypedArraysMethods_set();
+            var typedArraysMethodsReverse = test_TypedArraysMethods_reverse();
 
-        var typedArraysMethodsSort = test_TypedArraysMethods_sort();
-        var typedArraysMethodsFill = test_TypedArraysMethods_fill();
+            var typedArraysMethodsSort = test_TypedArraysMethods_sort();
+            var typedArraysMethodsFill = test_TypedArraysMethods_fill();
 
-        var typedArraysMethodsCopyWithin = test_TypedArraysMethods_copyWithin();
-        var typedArrayMethodsSubarray = test_TypedArraysMethods_subarray();
+            var typedArraysMethodsCopyWithin = test_TypedArraysMethods_copyWithin();
+            var typedArrayMethodsSubarray = test_TypedArraysMethods_subarray();
 
-        var typedArraysMethodsSlice = test_TypedArraysMethods_slice();
-        var typedArraysMethodsMap = test_TypedArraysMethods_map();
+            var typedArraysMethodsSlice = test_TypedArraysMethods_slice();
+            var typedArraysMethodsMap = test_TypedArraysMethods_map();
 
-        var typedArrayMethodsFilter = test_TypedArraysMethods_filter();
-        var typedArrayMethodsReduce = test_TypedArraysMethods_reduce();
+            var typedArrayMethodsFilter = test_TypedArraysMethods_filter();
+            var typedArrayMethodsReduce = test_TypedArraysMethods_reduce();
 
-        var typedArraysMethodsReduceR = test_TypedArraysMethods_reduceR();
-        var typedArraysMethodsLastIndexOf = test_TypedArraysMethods_lastIndexOf();
+            var typedArraysMethodsReduceR = test_TypedArraysMethods_reduceR();
+            var typedArraysMethodsLastIndexOf = test_TypedArraysMethods_lastIndexOf();
 
-        var typedArraysMethodsForEach = test_TypedArraysMethods_forEach();
-        var typedArraysMethodsFind = test_TypedArraysMethods_find();
+            var typedArraysMethodsForEach = test_TypedArraysMethods_forEach();
+            var typedArraysMethodsFind = test_TypedArraysMethods_find();
 
-        var typedArraysMethodsJoin = test_TypedArraysMethods_join();
-        var typedArraysMethodsEntriesKeysValues = test_TypedArraysMethods_entrieskeysvalues();
+            var typedArraysMethodsJoin = test_TypedArraysMethods_join();
+            var typedArraysMethodsEntriesKeysValues = test_TypedArraysMethods_entrieskeysvalues();
 
-        var typedArrayMethodsFrom = test_TypedArraysMethods_from();
-        var typedArrayMethodsOf = test_TypedArraysMethods_of();
+            var typedArrayMethodsFrom = test_TypedArraysMethods_from();
+            var typedArrayMethodsOf = test_TypedArraysMethods_of();
 
-        var dataViewInit = test_DataViewInit();
-        var dataViewAccessors = test_DataViewAccessors();
+            var dataViewInit = test_DataViewInit();
+            var dataViewAccessors = test_DataViewAccessors();
 
-        var oneBufferMoreViews = test_OneBufferMoreViews();
+            var oneBufferMoreViews = test_OneBufferMoreViews();
 
-        const result = {
-            "cryptoGetRandomValues": cryptoGetRandomValues,
-            "arrayBufferViews": arrayBufferViews,
-            "typedArraysInt": typedArraysInt,
-            "typedArraysParams32": typedArraysParams32,
-            "typedArraysInitByLenght": typedArraysInitByLenght,
-            "typedArraysOverwriteElement":typedArraysOverwriteElement,
-            "typedArraysOverwriteFull": typedArraysOverwriteFull,
-            "typedArraysParams8": typedArraysParams8,
-            "typedArrayFromBuffer": typedArrayFromBuffer,
-            "typedArraysMethodsSet" : typedArraysMethodsSet,
-            "typedArraysMethodsReverse": typedArraysMethodsReverse, 
-            "typedArraysMethodsSort": typedArraysMethodsSort,
-            "typedArraysMethodsFill": typedArraysMethodsFill,
-            "typedArraysMethodsCopyWithin": typedArraysMethodsCopyWithin,
-            "typedArrayMethodsSubarray": typedArrayMethodsSubarray,
-            "typedArraysMethodsSlice": typedArraysMethodsSlice,
-            "typedArraysMethodsMap": typedArraysMethodsMap,
-            "typedArrayMethodsFilter": typedArrayMethodsFilter,
-            "typedArrayMethodsReduce": typedArrayMethodsReduce, 
-            "typedArraysMethodsReduceR": typedArraysMethodsReduceR,
-            "typedArraysMethodsLastIndexOf" : typedArraysMethodsLastIndexOf,
-            "typedArraysMethodsForEach": typedArraysMethodsForEach,
-            "typedArraysMethodsFind": typedArraysMethodsFind,
-            "typedArraysMethodsJoin": typedArraysMethodsJoin,
-            "typedArraysMethodsEntriesKeysValues": typedArraysMethodsEntriesKeysValues,
-            "typedArrayMethodsFrom": typedArrayMethodsFrom,
-            "typedArrayMethodsOf": typedArrayMethodsOf,
-            "dataViewInit": dataViewInit,
-            "dataViewAccessors":dataViewAccessors,
-            "oneBufferMoreViews": oneBufferMoreViews
+            const result = {
+                "cryptoGetRandomValues": cryptoGetRandomValues,
+                "arrayBufferViews": arrayBufferViews,
+                "typedArraysInt": typedArraysInt,
+                "typedArraysParams32": typedArraysParams32,
+                "typedArraysInitByLenght": typedArraysInitByLenght,
+                "typedArraysOverwriteElement":typedArraysOverwriteElement,
+                "typedArraysOverwriteFull": typedArraysOverwriteFull,
+                "typedArraysParams8": typedArraysParams8,
+                "typedArrayFromBuffer": typedArrayFromBuffer,
+                "typedArraysMethodsSet" : typedArraysMethodsSet,
+                "typedArraysMethodsReverse": typedArraysMethodsReverse, 
+                "typedArraysMethodsSort": typedArraysMethodsSort,
+                "typedArraysMethodsFill": typedArraysMethodsFill,
+                "typedArraysMethodsCopyWithin": typedArraysMethodsCopyWithin,
+                "typedArrayMethodsSubarray": typedArrayMethodsSubarray,
+                "typedArraysMethodsSlice": typedArraysMethodsSlice,
+                "typedArraysMethodsMap": typedArraysMethodsMap,
+                "typedArrayMethodsFilter": typedArrayMethodsFilter,
+                "typedArrayMethodsReduce": typedArrayMethodsReduce, 
+                "typedArraysMethodsReduceR": typedArraysMethodsReduceR,
+                "typedArraysMethodsLastIndexOf" : typedArraysMethodsLastIndexOf,
+                "typedArraysMethodsForEach": typedArraysMethodsForEach,
+                "typedArraysMethodsFind": typedArraysMethodsFind,
+                "typedArraysMethodsJoin": typedArraysMethodsJoin,
+                "typedArraysMethodsEntriesKeysValues": typedArraysMethodsEntriesKeysValues,
+                "typedArrayMethodsFrom": typedArrayMethodsFrom,
+                "typedArrayMethodsOf": typedArrayMethodsOf,
+                "dataViewInit": dataViewInit,
+                "dataViewAccessors":dataViewAccessors,
+                "oneBufferMoreViews": oneBufferMoreViews
 
+            }
+        
+            return result;
         }
-       
-        return result;
+        catch(e) {
+            return "js blocked";
+        }
     });
 })();

@@ -1,10 +1,15 @@
 {
     "experiment_name": "exp01",
-    "browsers": ["firefox=stable", "chrome=stable"],
+    "browsers": [ "firefox=90.0", "firefox=115.5.0esr", "firefox=17.0.4esr", "firefox=38.0", "firefox=91.2.0esr", "chrome=112" ],
     "pets": {
 
-        "firefox=stable":  [ ["None"], ["JS_0", "uo"], ["JS_0", "PB"],["JS_0", "DDGPE"],["JS_0", "Gh"],["JS_0", "NC"],["JS_0", "DE"],["JS_1", "uo"], ["JS_1", "PB"],["JS_1", "DDGPE"],["JS_1", "Gh"],["JS_1", "NC"],["JS_1", "DE"],["JS_2", "uo"], ["JS_2", "PB"],["JS_2", "DDGPE"],["JS_2", "Gh"],["JS_2", "NC"],["JS_2", "DE"], ["JS_3", "uo"], ["JS_3", "PB"],["JS_3", "DDGPE"],["JS_3", "Gh"],["JS_3", "NC"],["JS_3", "DE"]],
-        "chrome=stable":   [ ["None"], ["JS_0", "uo"], ["JS_0", "PB"],["JS_0", "DDGPE"],["JS_0", "Gh"],["JS_0", "NC"],["JS_0", "DE"],["JS_1", "uo"], ["JS_1", "PB"],["JS_1", "DDGPE"],["JS_1", "Gh"],["JS_1", "NC"],["JS_1", "DE"],["JS_2", "uo"], ["JS_2", "PB"],["JS_2", "DDGPE"],["JS_2", "Gh"],["JS_2", "NC"],["JS_2", "DE"], ["JS_3", "uo"], ["JS_3", "PB"],["JS_3", "DDGPE"],["JS_3", "Gh"],["JS_3", "NC"],["JS_3", "DE"]]
+        "firefox=90.0":  [ ["None"]],
+        "firefox=115.5.0esr":  [ ["None"]],
+       
+        "firefox=17.0.4esr":  [ ["None"]],
+        "firefox=38.0":  [ ["None"]],
+        "firefox=91.2.0esr":  [ ["None"]],
+        "chrome=112":   [ ["None"]]
         },
 
     "integration_testing": true

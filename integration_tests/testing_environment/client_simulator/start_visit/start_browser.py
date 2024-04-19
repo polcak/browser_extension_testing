@@ -238,6 +238,8 @@ class Browser:
                 time.sleep(1)
                 print("selected JSlevel: " + JSlevel[0])
 
+            
+
         elif "chrome" in browser.lower():
             browser_type, *version = browser.split('=')
             chrome_options = webdriver.ChromeOptions()
@@ -311,8 +313,10 @@ class Browser:
             self.driver.set_page_load_timeout(30)
             sys.stdout.write(".")
             sys.stdout.flush()
-            try:              
+            try:        
+                    
                 self.driver.get(site)
+                self.driver.switch_to.window(self.driver.window_handles[0])  
                 time.sleep(2)
                 self.driver.find_element("id", "play").click()
 

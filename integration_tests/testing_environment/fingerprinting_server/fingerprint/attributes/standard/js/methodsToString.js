@@ -143,7 +143,12 @@ function getAPIStrings () {
 
 (function() {
     api.register("methodsToString", function () {
-        var toString = getAPIStrings();
-        return toString;
+        try {
+            var toString = getAPIStrings();
+            return toString;
+        }
+        catch(e) {
+            return "js blocked";
+        }
     });
 })();

@@ -178,9 +178,10 @@ def test_OneBufferMoreViews(addonRun):
         pytest.skip("ECMA arrays not tested.")
     assert addonRun.ECMAarrays['oneBufferMoreViews'] == True
 
-@pytest.mark.xfail(("chrome" in get_shared_browser()), reason="See https://pagure.io/JShelter/webextension/issue/80")
 def test_worker_basic(addonRun, expected):
-    if get_shared_addonRun().ECMAarrays is None:
+    if "chrome" in get_shared_browser():
+        pytest.xfail("See https://pagure.io/JShelter/webextension/issue/80")
+    if get_shared_addonRun().worker is None:
         pytest.skip("ECMA arrays not tested.")
     if expected.worker == "REMOVED":
         assert addonRun.worker['workerBasics']['isWorkerRemoved'] == True
