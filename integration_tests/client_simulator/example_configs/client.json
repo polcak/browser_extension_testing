@@ -1,0 +1,12 @@
+{
+    "experiment_name": "exp01",
+    "browsers": [ "firefox=stable",  "chrome=stable"],
+    "pets": {
+
+        "firefox=stable":  [ ["None"], ["JS_2"]],
+
+        "chrome=stable":   [ ["None"], ["JS_2"]]
+        },
+
+    "integration_testing": true
+}

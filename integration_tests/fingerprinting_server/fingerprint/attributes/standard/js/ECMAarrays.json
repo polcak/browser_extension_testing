@@ -1,0 +1,8 @@
+{
+    "name" : "ECMA arrays",
+    "description" : "Testing ECMA arrays.",
+    "files" : ["ECMAarrays.js"],
+    "variables" : [],
+    "hash" : "False"
+  }
+  
