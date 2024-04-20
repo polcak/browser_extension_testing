@@ -5,6 +5,8 @@ from selenium import webdriver              # for running the driver on websites
 
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from .client_side_tests.domain_level_settings_test import *
 from .client_side_tests.NBS_settings_test import *
@@ -219,7 +221,9 @@ class Browser:
                 print("JSlevel to test is " + JSlevel[0])
                 self.driver.get("about:debugging#/runtime/this-firefox")
                 time.sleep(0.5)
-                element = self.driver.find_element("xpath", "//span[@title='JShelter']")
+                element = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(("xpath", "//span[@title='JShelter']"))
+                )
                 parent_li = element.find_element("xpath", "./..")
                 uuid_element = parent_li.find_element("xpath","./section/dl/div[@class='fieldpair'][2]/dd")
                 uuid = uuid_element.text
