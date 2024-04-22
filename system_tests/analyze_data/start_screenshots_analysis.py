@@ -27,6 +27,10 @@ import numpy as np
 
 import io_funcs as io
 
+import sys
+sys.path.append("/usr/app/src/get_data")
+from configuration import Config
+
 
 ## Build header of output HTML file.
 def html_header():
@@ -86,8 +90,10 @@ def html_footer():
 
 ## Build table with screenshots and diferences of screenshots for one site. Insert to output HTML file.
 def build_site_screenshots_comparison(site, site_name, site_number, average_color_of_differences):
+    ext_names = [Config.extensions_dict_names_chrome.get(ext, ext) for ext in Config._extensions_to_test]
+    ext_names  = ' '.join(ext_names)
     output = '<table class="site-container visible" mean_pixel_value_of_diff="' + str(average_color_of_differences) + '"><tr class="site-container-header"><td class="site-container-td"><h2>' + str(site_number) +\
-             ") "  + site_name + '</h2></td><td class="site-container-td"><h3>Mean pixel value in Differences image: ' + str(average_color_of_differences) + '</h3></td></tr><tr><td colspan="2" class="site-container-td"><table><tr><th>Without addon</th><th>With addon</th></tr>'
+             ") "  + site_name + '</h2></td><td class="site-container-td"><h3>Mean pixel value in Differences image: ' + str(average_color_of_differences) + '</h3></td></tr><tr><td colspan="2" class="site-container-td"><table><tr><th>Without addon</th><th>With ' + ext_names  + ' </th></tr>'
     output += '<tr><td><img src="' + site + '/without_addon.png"></td><td><img src="' + site + '/with_addon.png"></td></tr></table>'
     output += '<table class="differences-table"><tr><th>Differences</th></tr><tr><td><img src="' + site + '/differences.png"></td></tr></table></td></tr></table>'
     return output

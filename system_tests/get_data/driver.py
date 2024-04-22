@@ -25,7 +25,6 @@ from time import sleep
 
 from selenium import webdriver
 
-from web_browser_type import BrowserType
 from configuration import Config
 
 
@@ -72,9 +71,10 @@ def set_jsr_level_chrome(driver, level):
 
 ## Create web browser driver and start web browser.
 def create_driver(browser_type, addon_driver):
+    browser, *version = browser_type.split('=')
     with_js = False
     tested_extensions = Config._extensions_to_test
-    if browser_type == BrowserType.CHROME:
+    if "chrome" in browser_type:   
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument('--disable-dev-shm-usage')   
@@ -83,49 +83,56 @@ def create_driver(browser_type, addon_driver):
         chrome_options.add_argument("--enable-javascript")
         chrome_options.add_argument("--allow-insecure-localhost")
         chrome_options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
-        chrome_options.browserName = 'chrome'
-
-    if browser_type == BrowserType.FIREFOX:
-        fp = webdriver.FirefoxProfile()
-        firefox_options = webdriver.FirefoxOptions()
-        fp.set_preference("javascript.enabled", True)
-        firefox_options.browserName = 'firefox'
-        firefox_options.log.level = "TRACE"
-        firefox_options.profile = fp
-        firefox_options.add_argument("--no-sandbox")
-
-    if addon_driver:
-        if browser_type == BrowserType.CHROME:
+        #chrome_options.browserName = 'chrome'
+        if version:
+            chrome_options.browser_version=str(version[0])
+        if addon_driver:
             extension_paths = Config._extensions_dict_chrome
             for extension in tested_extensions:
                 print("installed ", Config._extensions_for_chrome_path + extension_paths[extension])
                 chrome_options.add_extension(Config._extensions_for_chrome_path + extension_paths[extension])
                 if "JS" in extension:
                     with_js = True
-                    
-    if browser_type == BrowserType.CHROME:
         driver = webdriver.Remote(
             command_executor='http://' + Config.grid_server_ip_address + ':4444/wd/hub',
             #desired_capabilities=d,
             options=chrome_options)
-    elif browser_type == BrowserType.FIREFOX:
-            driver = webdriver.Remote(
-            command_executor='http://' + Config.grid_server_ip_address + ':4444/wd/hub',
-            #desired_capabilities=d,
-            options=firefox_options)
+        print("driver created")
+        
+        if with_js:
+            set_jsr_level_chrome(driver, Config.js_level)
+        print("driver created, returning")
 
-            if addon_driver:
-                extension_paths = Config._extensions_dict_firefox
-                for extension in tested_extensions:
-                    print("installed ", Config._extensions_for_firefox_path + extension_paths[extension])
-                    webdriver.Firefox.install_addon(driver, Config._extensions_for_firefox_path + extension_paths[extension])   
-                    if "JS" in extension:
-                        with_js = True
+    if "firefox" in browser_type:
+        print("shouldnt happen")
+        fp = webdriver.FirefoxProfile()
+        firefox_options = webdriver.FirefoxOptions()
+        if version:
+                firefox_options.browser_version=str(version[0])
+        fp.set_preference("javascript.enabled", True)
+        firefox_options.browserName = 'firefox'
+        firefox_options.log.level = "TRACE"
+        firefox_options.profile = fp
+        firefox_options.add_argument("--no-sandbox")
 
-    if with_js and browser_type == BrowserType.FIREFOX:
-        set_jsr_level_firefox(driver, Config.js_level)
-    
-    if with_js and browser_type == BrowserType.CHROME:
-        set_jsr_level_chrome(driver, Config.js_level)
+        driver = webdriver.Remote(
+        command_executor='http://' + Config.grid_server_ip_address + ':4444/wd/hub',
+        #desired_capabilities=d,
+        options=firefox_options)
 
+        if addon_driver:
+            extension_paths = Config._extensions_dict_firefox
+            for extension in tested_extensions:
+                print("installed ", Config._extensions_for_firefox_path + extension_paths[extension])
+                webdriver.Firefox.install_addon(driver, Config._extensions_for_firefox_path + extension_paths[extension])   
+                if "JS" in extension:
+                    with_js = True
+
+        if with_js:
+            set_jsr_level_firefox(driver, Config.js_level)
+
+    driver.switch_to.window(driver.window_handles[0]) 
     return driver
+
+
+   

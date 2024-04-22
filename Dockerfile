@@ -14,8 +14,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     default-jre \
     libu2f-udev \
     xvfb
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt-get install -y --fix-missing ./google-chrome-stable_current_amd64.deb
 RUN pip3 install opencv-python scikit-learn nltk python-Levenshtein
 WORKDIR /usr/app/src
 COPY system_tests ./

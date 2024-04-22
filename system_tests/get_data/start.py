@@ -30,7 +30,6 @@ from website import Logs
 import io_funcs as io
 import grid
 import driver
-from web_browser_type import BrowserType
 from test_type import TestType
 import datetime
 
@@ -203,7 +202,6 @@ def main():
     if Config.grid_server_ip_address == '172.17.0.1':
         server = grid.start_server()
     nodes = grid.start_nodes()
-
     #timestamp = datetime.now().strftime("%d:%m:%H:%M").replace(":", "-")
 
     if Config.grid_server_ip_address == '172.17.0.1':
@@ -211,6 +209,8 @@ def main():
             io.init_output_files()
             run_getting_logs_threads()
             io.finish_output_files()
+        except Exception as e:
+            print(e)
         finally:
             sleep(3)
             io.terminate_zombie_processes()

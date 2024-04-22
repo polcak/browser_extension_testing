@@ -21,7 +21,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-from web_browser_type import BrowserType
 from test_type import TestType
 
 ## Static MetaConfig class contains declaration of basic variables used during testing.
@@ -66,8 +65,17 @@ class MetaConfig(type):
     def extensions_for_chrome_path(self):
         return self._extensions_for_chrome_path  
     @property
+    def extensions_for_firefox_path(self):
+        return self._extensions_for_firefox_path  
+    @property
     def extensions_dict_chrome(self):
         return self._extensions_dict_chrome
+    @property
+    def extensions_dict_firefox(self):
+        return self._extensions_dict_firefox
+    @property
+    def extensions_dict_names_chrome(self):
+        return self._extensions_dict_names_chrome
     @property
     def extensions_to_test(self):
         return self._extensions_to_test
@@ -80,7 +88,7 @@ class Config(metaclass=MetaConfig):
     # Number of sites from beggining of the top sites list taken for testing.
     _number_of_sites_for_testing = 10
     # Run tests in this browsers.
-    _tested_browsers = [BrowserType.CHROME]
+    _tested_browsers = ["chrome=stable"]
     # Run tests with JShelter on this level.
     _js_level = 2
     # Perform this tests for every website.
@@ -114,6 +122,15 @@ class Config(metaclass=MetaConfig):
                                 "NC": "Netcraft.crx",
                                 "DE": "Decentraleyes.crx",
                                 "JS": "JShelter.crx"}
+    
+    _extensions_dict_names_chrome = {   "Gh": "Ghostery",
+                                        "uo": "uBlockOrigin",
+                                        "PB": "PrivacyBadger",
+                                        "NS": "NoScript",
+                                        "DDGPE": "DuckDuckGoPE",
+                                        "NC": "Netcraft",
+                                        "DE": "Decentraleyes",
+                                        "JS": "JShelter"}
 
     _extensions_dict_firefox = {"gh": "firefox@ghostery.com.xpi",
                                 "uo": "uBlock0@raymondhill.net.xpi",

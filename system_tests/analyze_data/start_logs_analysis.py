@@ -26,6 +26,10 @@ import cosine_similarity as cosine
 import simple_comparison as simple
 import io_funcs as io
 
+import sys
+sys.path.append("/usr/app/src/get_data")
+from configuration import Config
+
 
 ## Build header of output HTML file.
 def html_header():
@@ -53,7 +57,9 @@ def html_footer():
 
 ## Build table with logs for one site. Insert to output HTML file.
 def build_site_logs_table(site, site_number):
-    output = "<br><h2>" + str(site_number) + ") " + site['site'] + "</h2><table><tr><th>Without addon</th><th>With addon</th></tr>"
+    ext_names = [Config.extensions_dict_names_chrome.get(ext, ext) for ext in Config._extensions_to_test]
+    ext_names  = ' '.join(ext_names)
+    output = "<br><h2>" + str(site_number) + ") " + site['site'] + "</h2><table><tr><th>Without addon</th><th>With " + ext_names  + " </th></tr>"
     i = 0
     max_lenght = 0
     if site['logs_with_addon'] != "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":

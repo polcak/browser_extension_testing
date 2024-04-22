@@ -171,9 +171,10 @@ class Browser:
         totalPaths, config, *JSlevel = pet_config.getExtensionsPath(pet,browser)
         
         ghostery_tested = False
+        browser_type, *version = browser.split('=')
 
         if "firefox" in browser.lower():
-            browser_type, *version = browser.split('=')
+            
             fp = webdriver.FirefoxProfile()
             firefox_options = webdriver.FirefoxOptions()
             setup_socks5_proxy("firefox", fp, proxy_setting)
@@ -245,7 +246,6 @@ class Browser:
             
 
         elif "chrome" in browser.lower():
-            browser_type, *version = browser.split('=')
             chrome_options = webdriver.ChromeOptions()
             setup_socks5_proxy("chrome", chrome_options, proxy_setting)
 
