@@ -23,6 +23,16 @@ app.debug = config.debug
 cwd = os.path.dirname(os.path.abspath(__file__))
 attributes_folder = os.path.join(cwd, "fingerprint/attributes")
 
+outputs_folder = os.path.join(cwd, "outputs")
+generated_t = str(datetime.utcnow())
+server_start = generated_t.replace(" ", "--").replace(":", "-").replace(".", "-")
+start_pattern_month = r"\d{4}-\d{2}-\d{2}"
+server_start_timestamp = re.search(start_pattern_month, server_start).group(0)
+
+subfolder_path = os.path.join(outputs_folder, server_start_timestamp)
+os.makedirs(subfolder_path, exist_ok=True)
+
+
 attributes = Blueprint('site', __name__, static_url_path='', static_folder='fingerprint/attributes',url_prefix='')
 
 tested_attr = config.tested_attributes
@@ -100,15 +110,19 @@ class Output(object):
             addonsused = parsedFP["_pet"]
 
             start_pattern = r"\d{4}-\d{2}-\d{2}--\d{2}-\d{2}-\d{2}"
+            
             start_timestamp = re.search(start_pattern, outfile_time).group(0)
+            
+            month_day_pattern = r"(\d{4}-\d{2}-\d{2})"
+            month_day_folder = re.search(month_day_pattern, start_timestamp).group(0)
 
             if "None" in addonsused:
                 change_latest_timestamp(start_timestamp)
                 latest_timestamp = get_latest_timestamp()
-                subfolder =  "outputs/" + latest_timestamp + "_" + browserused
+                subfolder =  "outputs/" + month_day_folder + "/" + latest_timestamp + "_" + browserused
                 change_subfolder(subfolder)
                 output_dir = os.path.join(cwd, get_subfolder())
-                os.mkdir(output_dir) 
+                os.makedirs(output_dir, exist_ok=True) 
             else:
                 output_dir = os.path.join(cwd, get_subfolder())
 
