@@ -3,9 +3,9 @@
     "browsers": [ "firefox=stable",  "chrome=stable"],
     "pets": {
 
-        "firefox=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["JS_2", "uo"], ["DDGPE"]],
+        "firefox=stable":  [ ["None"], ["JS_2", "CB"], ["JS_3", "CB"]],
 
-        "chrome=stable":   [ ["None"], ["JS_2"], ["JS_3"], ["JS_2", "uo"],  ["DDGPE"]]
+        "chrome=stable":   [ ["None"], ["JS_2", "CB"], ["JS_3", "CB"]]
         },
 
     "integration_testing": true

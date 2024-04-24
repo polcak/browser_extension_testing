@@ -46,7 +46,9 @@ class PetConfig:
                 "Gh": "Ghostery_f",
                 "NC": "NetCraft_f",
                 "DE": "Decentraleyes_f",
-                "JS": "JShelter_f"}
+                "JS": "JShelter_f",
+                "CB": "CanvasBlocker_f"
+                }
 
         self.petcco={
                 "uo": "uBlock_Origin_c",
@@ -56,7 +58,8 @@ class PetConfig:
                 "Gh": "Ghostery_c",
                 "NC": "NetCraft_c",
                 "DE": "Decentraleyes_c",
-                "JS": "JShelter_c"}
+                "JS": "JShelter_c",
+                "CB": "CanvasBlocker_c"}
 
         #These two dictionaries represent key-value pairs of extension name-extension file. Each dictionary represents one possible browser to set up.
         ##In order to add a new extension you must create a new key-value pair in both dictionaries. 
@@ -70,10 +73,10 @@ class PetConfig:
                 "Ghostery_f": "firefox@ghostery.com.xpi", 
                 "NetCraft_f": "Net_Craft.xpi",
                 "Decentraleyes_f": "Decentraleyes.xpi",
-                "JShelter_f": "jsr@javascriptrestrictor.xpi"}
+                "JShelter_f": "jsr@javascriptrestrictor.xpi",
+                "CanvasBlocker_f" : "CanvasBlocker@kkapsner.de.xpi"}
 
-        self.petc = {"None":"", 
-                "do_not_track":"", 
+        self.petc = {"None":"",  
                 "uBlock_Origin_c": "uBlockOrigin.crx",
                 "Privacy_Badger_c": "PrivacyBadger.crx",
                 "NoScript_c": "NoScript.crx",
@@ -81,7 +84,8 @@ class PetConfig:
                 "Ghostery_c": "Ghostery.crx", 
                 "NetCraft_c": "Netcraft.crx",
                 "Decentraleyes_c": "Decentraleyes.crx",
-                "JShelter_c": "JShelter.crx"}
+                "JShelter_c": "JShelter.crx",
+                "CanvasBlocker_c": "CanvasBlocker.crx"}
 
         self.pet = {"firefox":self.petf,"chrome":self.petc}
         self.petco = {"firefox":self.petfco,"chrome":self.petcco}
