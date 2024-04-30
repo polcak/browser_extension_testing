@@ -191,8 +191,16 @@ class Browser:
             fp.set_preference("geo.provider.testing", True)
             fp.set_preference("geo.provider.network.url", "https://location.services.mozilla.com/v1/geolocate?key=test")
             fp.set_preference("accept_insecure_certs", True)
+            fp.set_preference("media.navigator.enabled", True)
+            fp.set_preference("media.navigator.permission.disabled", True)
+            fp.set_preference("media.autoplay.ask-permission", False)
+            fp.set_preference("media.autoplay.blocking_policy", 2)
+            fp.set_preference("media.navigator.streams.fake", True)
+            fp.set_preference("services.sync.prefs.sync.media.autoplay.default", True)
+            fp.set_preference("media.autoplay.default", 0)
             firefox_options.profile = fp
             firefox_options.add_argument("--no-sandbox")
+            firefox_options.add_argument("--use-fake-ui-for-media-stream")
 
 
             self.driver = create_webdriver(firefox_options)
@@ -234,10 +242,13 @@ class Browser:
                 uuid = uuid_element.text
                 options_page = f"moz-extension://{uuid}/options.html"
 
-                if JSlevel[0] == "userSettings":
+                if JSlevel[0] == "NBS":
+                    test_switching_NBS(self.driver, options_page, browser_type)
+                    return
+                
+                if JSlevel[0] == "DLS":
                     test_setting_domain_level(self.driver, options_page)
                     test_change_domain_level(self.driver, options_page)
-                    test_switching_NBS(self.driver, options_page, browser_type)
                     return
 
                 self.driver.get(options_page)
@@ -270,6 +281,7 @@ class Browser:
             chrome_options.add_argument("--dns-prefetch-disable")
             #chrome_options.add_argument("--headless=new")
             chrome_options.add_argument("enable-automation")
+            chrome_options.add_argument("--use-fake-ui-for-media-stream")
             self.driver = webdriver.Chrome(options=chrome_options)
 
             #At this point all listed extensions are installed. If you wish to configure them you can do so from this point on till the end of the 
@@ -292,10 +304,12 @@ class Browser:
             if JSlevel:
                 print("JSlevel to test is " + JSlevel[0])
                 options_page = "chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html"
-                if JSlevel[0] == "userSettings":
+
+                if JSlevel[0] == "DLS":
                     test_setting_domain_level(self.driver, options_page)
                     test_change_domain_level(self.driver, options_page)
                     return
+                
                 self.driver.get(options_page)
                 time.sleep(1)
                 select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))

@@ -54,12 +54,13 @@ The configuration file must look like this:
 ```
 The extension name abbreviations are defined in a dictionary inside the `start_browser.py` file. They can be changed at any time. New extensions can also be added there. If you are interested in adding a new extension, you must also add an extension file inside the `addon` folder in its respective browser folder. More information can be found inside the `start_browser.py` file. All available extensions and their abbreviation as of now are:
 
-- *JShelter* - `JS_0`, `JS_1`, `JS_2`, `JS_3` or `JS_userSettings` (the `JS_userSettings` extension setting is mutually exclusive with any other extension)
+- *JShelter* - `JS_0`, `JS_1`, `JS_2`, `JS_3`, `JS_NBS` or `JS_DLS` (the `JS_DLS` and `JS_NBS` extension settings are mutually exclusive with any other extension)
 - *Ghostery* - `Gh`
 - *Decentraleyes* - `DE`
 - *DuckDuckGo Privacy Essentials* - `DDGPE`
 - *NetCraft* - `NC`
 - *NoScript* - `NS`
+- *CanvasBlocker* for *Mozilla Firefox* - `CB`
 - and *Privacy Badger* - `PB`
 - also for a run with no extensions installed - `None` (the `None` extension setting is mutually exclusive with any other extension).
 
