@@ -1,5 +1,6 @@
 (function() {
     api.register("WebGL", function () {
+        var startTime = performance.now();
         var device = {
             'webglVendor': null,
             'webglRenderer': null,
@@ -24,7 +25,8 @@
             'maxArrayTextureLayers': 0,
             'webGLpixels': 0,
             'webGLdataURL': 0,
-            'webGLpercisions': []
+            'webGLpercisions': [],
+            'timeTaken': null
         };
         try {
             var canvas = document.getElementById('webglCanvas');
@@ -126,11 +128,16 @@
                     }
                 }
                 device.webGLpercisions = arr
+                var endTime = performance.now();
+                device.timeTaken = endTime - startTime;
             } catch (e) {
                 device.webGLpercisions = []
             }
+
             return device;
         } catch (e) {
+            var endTime = performance.now();
+            device.timeTaken = endTime - startTime;
             console.log("error occured at webgl");
             return device;
         }

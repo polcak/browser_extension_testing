@@ -1,12 +1,15 @@
 (function() {
     api.register("canvas",  function () {
         try {
+            var startTime = performance.now();
             var canvasData = {
                 'dataURL': '0',
                 'imageData': '0',
                 'spoof': false,
                 'pointInPath': null,
-                'pointInStroke': null};
+                'pointInStroke': null,
+                'timeTaken': null
+            };
 
             const buttonsContainer = document.getElementById('canvas1-buttons-wrap');
 
@@ -63,6 +66,7 @@
                     ret = ret && ctx5.isPointInStroke(ellipse, 100, 25)
                 }
                 canvasData.pointInStroke = ret;
+  
 
             } catch(e) {
                 canvasData.pointInStroke = "error";
@@ -71,6 +75,8 @@
         } catch(e){
             canvasData = "Not supported";
         }
+        var endTime = performance.now();
+        canvasData.timeTaken = endTime - startTime;
         return canvasData;
     });
 })();

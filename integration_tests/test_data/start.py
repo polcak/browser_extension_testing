@@ -24,7 +24,7 @@
 import pytest
 import re
 import os
-from datetime import datetime
+import datetime
 
 from store_values import create_browser_data
 from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled, get_shared_addonsInstalled
@@ -35,7 +35,7 @@ from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level
 #  For every browser and for every jsr_level defined in configuration.py set of all tests is run.
 def main():
 
-    generated_t = str(datetime.utcnow())
+    generated_t = str(datetime.datetime.now(datetime.timezone.utc))
     test_start = generated_t.replace(" ", "--").replace(":", "-").replace(".", "-")
     test_date = r"\d{4}-\d{2}-\d{2}"
     test_date_timestamp = re.search(test_date, test_start).group(0)
