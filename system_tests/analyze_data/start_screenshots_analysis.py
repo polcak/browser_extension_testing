@@ -26,6 +26,7 @@ import cv2
 import numpy as np
 
 import io_funcs as io
+import os
 
 import sys
 sys.path.append("/usr/app/src/get_data")
@@ -91,7 +92,7 @@ def html_footer():
 ## Build table with screenshots and diferences of screenshots for one site. Insert to output HTML file.
 def build_site_screenshots_comparison(site, site_name, site_number, average_color_of_differences):
     ext_names = [Config.extensions_dict_names_chrome.get(ext, ext) for ext in Config._extensions_to_test]
-    ext_names  = ' '.join(ext_names)
+    ext_names  = ', '.join(ext_names)
     output = '<table class="site-container visible" mean_pixel_value_of_diff="' + str(average_color_of_differences) + '"><tr class="site-container-header"><td class="site-container-td"><h2>' + str(site_number) +\
              ") "  + site_name + '</h2></td><td class="site-container-td"><h3>Mean pixel value in Differences image: ' + str(average_color_of_differences) + '</h3></td></tr><tr><td colspan="2" class="site-container-td"><table><tr><th>Without addon</th><th>With ' + ext_names  + ' </th></tr>'
     output += '<tr><td><img src="' + site + '/without_addon.png"></td><td><img src="' + site + '/with_addon.png"></td></tr></table>'
@@ -102,15 +103,24 @@ def build_site_screenshots_comparison(site, site_name, site_number, average_colo
 ## Create difference image between screenshot with JShelter and screenshot without JShelter by substracting
 #  one image from another.
 def create_differences_img(site):
-    screen_without_addon = cv2.imread("../data/screenshots/" + site + "/without_addon.png")
-    screen_with_addon = cv2.imread("../data/screenshots/" + site + "/with_addon.png")
-    if screen_without_addon is None or screen_with_addon is None:
-        return None
-    try:
-        differences = cv2.subtract(screen_with_addon, screen_without_addon)
-        cv2.imwrite("../data/screenshots/" + site + "/differences.png", differences)
-        return cv2.cvtColor(differences, cv2.COLOR_BGR2GRAY)
-    except:
+    file_without_addon = "../data/screenshots/" + site + "/without_addon.png"
+    file_with_addon = "../data/screenshots/" + site + "/with_addon.png"
+    
+    if os.path.exists(file_without_addon) and os.path.exists(file_with_addon):      
+        try:
+            screen_without_addon = cv2.imread("../data/screenshots/" + site + "/without_addon.png")
+            screen_with_addon = cv2.imread("../data/screenshots/" + site + "/with_addon.png")
+        except:
+            return None
+        if screen_without_addon is None or screen_with_addon is None:
+            return None
+        try:
+            differences = cv2.subtract(screen_with_addon, screen_without_addon)
+            cv2.imwrite("../data/screenshots/" + site + "/differences.png", differences)
+            return cv2.cvtColor(differences, cv2.COLOR_BGR2GRAY)
+        except:
+            return None
+    else:
         return None
 
 
@@ -136,12 +146,16 @@ def main():
     if sites_number == 0:
         print("No screenshots for analysis found. Please, include getting screenshots to configuration and run getting data first.")
     for site in sites:
-        site_name = site.split('_', 1)[1]
-        print("Site " + str(j) + " of " + str(sites_number) + ": " + site_name)
-        differences_gray = create_differences_img(site)
-        mean_pixel_value_of_difference = get_rounded_mean_pixel_value(differences_gray, 3)
-        output += build_site_screenshots_comparison(site, site_name, j, mean_pixel_value_of_difference)
-        j += 1
+        file_without_addon = "../data/screenshots/" + site + "/without_addon.png"
+        file_with_addon = "../data/screenshots/" + site + "/with_addon.png"
+    
+        if os.path.exists(file_without_addon) and os.path.exists(file_with_addon): 
+            site_name = site.split('_', 1)[1]
+            print("Site " + str(j) + " of " + str(sites_number) + ": " + site_name)
+            differences_gray = create_differences_img(site)
+            mean_pixel_value_of_difference = get_rounded_mean_pixel_value(differences_gray, 3)
+            output += build_site_screenshots_comparison(site, site_name, j, mean_pixel_value_of_difference)
+            j += 1
 
     output += html_footer()
     io.write_file("../data/screenshots/screenshots_comparison.html", output)

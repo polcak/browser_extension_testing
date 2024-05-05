@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     default-jre \
     libu2f-udev \
     xvfb
-RUN pip3 install opencv-python scikit-learn nltk python-Levenshtein
+RUN pip3 install opencv-python scikit-learn nltk python-Levenshtein --break-system-packages
 WORKDIR /usr/app/src
 COPY system_tests ./
 RUN ["chmod", "+x", "./start_testing.sh"]

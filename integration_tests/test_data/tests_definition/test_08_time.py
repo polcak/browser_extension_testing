@@ -32,10 +32,6 @@ import pytest
 #  This setup method open testing page - it is necessary in Mozilla Firefox.
 #  In Mozilla Firefox: Time is spoofed only when page is opened.
 
-
-## Test hours.
-#  Hours should be real value. Maximal deviation should be 1 (change hour during command execution or another timezone).
-
 ## Test time accuracy.
 def test_accuracy(addonRun, expected):
     if get_shared_addonRun().time is None:

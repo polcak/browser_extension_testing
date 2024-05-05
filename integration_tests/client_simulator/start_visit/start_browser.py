@@ -39,7 +39,7 @@ class PetConfig:
         #The key will be used to recognize the extension inside the client configuration file, the value represents the extension name.
 
         self.petfco={
-                "uo": "uBlock_Origin_f",
+                "UO": "uBlock_Origin_f",
                 "PB": "Privacy_Badger_f",
                 "NS": "NoScript_f",
                 "DDGPE": "DuckDuckGoPE_f",
@@ -51,7 +51,7 @@ class PetConfig:
                 }
 
         self.petcco={
-                "uo": "uBlock_Origin_c",
+                "UO": "uBlock_Origin_c",
                 "PB": "Privacy_Badger_c",
                 "NS": "NoScript_c",
                 "DDGPE": "DuckDuckGoPE_c",
@@ -222,7 +222,9 @@ class Browser:
                     self.driver.switch_to.window(window_handle)
                     if self.driver.title == "Welcome to Ghostery":
                         try:
-                            element = self.driver.find_element("xpath", "/html/body/ui-onboarding-short/ui-onboarding-layout/ui-onboarding-short-main-view/ui-onboarding-card/div[2]/div[2]/ui-button")
+                            element = WebDriverWait(self.driver, 10).until(
+                                EC.presence_of_element_located(("xpath", "/html/body/ui-onboarding-short/ui-onboarding-layout/ui-onboarding-short-main-view/ui-onboarding-card/div[2]/div[2]/ui-button"))
+                            )
                             element.click()
                             self.driver.close()
                             self.driver.switch_to.window(self.driver.window_handles[0])
@@ -230,7 +232,7 @@ class Browser:
                         except Exception as e:
                             print("error ", e)
 
-            if JSlevel:
+            if JSlevel:           
                 print("JSlevel to test is " + JSlevel[0])
                 self.driver.get("about:debugging#/runtime/this-firefox")
                 time.sleep(0.5)
@@ -252,13 +254,13 @@ class Browser:
                     return
 
                 self.driver.get(options_page)
-                time.sleep(1)
-                select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
+                select_level = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(("id", "level-" + str(JSlevel[0])))
+                    )
                 select_level.click()
                 time.sleep(1)
                 print("selected JSlevel: " + JSlevel[0])
 
-            
 
         elif "chrome" in browser.lower():
             chrome_options = webdriver.ChromeOptions()
@@ -293,7 +295,9 @@ class Browser:
                     self.driver.switch_to.window(window_handle)
                     if self.driver.title == "Welcome to Ghostery":
                         try:
-                            element = self.driver.find_element("xpath", "/html/body/ui-onboarding/ui-onboarding-layout/ui-onboarding-main-view/ui-onboarding-card/div[2]/div[2]/ui-button[1]")
+                            element = WebDriverWait(self.driver, 10).until(
+                                EC.presence_of_element_located(("xpath", "/html/body/ui-onboarding/ui-onboarding-layout/ui-onboarding-main-view/ui-onboarding-card/div[2]/div[2]/ui-button[1]"))
+                            )
                             element.click()
                             self.driver.close()
                             self.driver.switch_to.window(self.driver.window_handles[0])
@@ -302,8 +306,31 @@ class Browser:
                             print("error ", e)
 
             if JSlevel:
+        
+                extension_id = None
                 print("JSlevel to test is " + JSlevel[0])
-                options_page = "chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html"
+                self.driver.get("chrome://extensions/")
+                manager = WebDriverWait(self.driver, 10).until(
+                                EC.presence_of_element_located(("xpath", "/html/body/extensions-manager"))
+                            )
+                manager_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', manager)
+                toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
+                toggle_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', toolbar)
+                dev_mode_toggle = toggle_shadow_root.find_element("css selector",'cr-toggle#devMode')
+                dev_mode_toggle.click()
+                time.sleep(1)
+                container = manager_shadow_root.find_element("css selector", "#container")
+                view = container.find_element("css selector", "#viewManager")
+                items = view.find_element("css selector", "#items-list")
+                items_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', items)
+                items_container = items_shadow_root.find_element("css selector", "#content-wrapper > div:nth-child(4)")
+                extensions_items = items_container.find_elements("tag name","extensions-item")
+                for item in extensions_items:
+                    item_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', item)
+                    item_text_content = item_shadow_root.find_element("css selector", "#name")    
+                    if item_text_content.get_attribute('innerHTML') == "JShelter":
+                        extension_id = item.get_attribute("id")
+                options_page = f"chrome-extension://{extension_id}/options.html"
 
                 if JSlevel[0] == "DLS":
                     test_setting_domain_level(self.driver, options_page)
@@ -312,11 +339,12 @@ class Browser:
                 
                 self.driver.get(options_page)
                 time.sleep(1)
-                select_level = self.driver.find_element("id", "level-" + str(JSlevel[0]))
+                select_level = WebDriverWait(self.driver, 10).until(
+                    EC.presence_of_element_located(("id", "level-" + str(JSlevel[0])))
+                    )
                 select_level.click()
                 time.sleep(1)
                 print("selected JSlevel: " + JSlevel[0])
-
 
         else:
             print("Unsupported Browser")

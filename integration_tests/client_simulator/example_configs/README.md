@@ -48,13 +48,14 @@ The configuration file must look like this:
 ```
     "browsers": ["chrome=canary", "firefox=esr"],
     "pets": {
-        "chrome=stable":   [ ["None"], ["JS_2", "uo"], ["DDGPE", "JS_3", "Gh"], ["DE"]],
+        "chrome=stable":   [ ["None"], ["JS_2", "UO"], ["DDGPE", "JS_3", "Gh"], ["DE"]],
         "firefox=esr": [ ["None"], ["JS_2", "PB"], ["Gh"] ]
         },
 ```
 The extension name abbreviations are defined in a dictionary inside the `start_browser.py` file. They can be changed at any time. New extensions can also be added there. If you are interested in adding a new extension, you must also add an extension file inside the `addon` folder in its respective browser folder. More information can be found inside the `start_browser.py` file. All available extensions and their abbreviation as of now are:
 
 - *JShelter* - `JS_0`, `JS_1`, `JS_2`, `JS_3`, `JS_NBS` or `JS_DLS` (the `JS_DLS` and `JS_NBS` extension settings are mutually exclusive with any other extension)
+- *uBlockOrigin* - `UO`
 - *Ghostery* - `Gh`
 - *Decentraleyes* - `DE`
 - *DuckDuckGo Privacy Essentials* - `DDGPE`

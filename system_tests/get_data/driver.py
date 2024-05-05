@@ -24,33 +24,17 @@
 from time import sleep
 
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from configuration import Config
 
 
-## Find URL of JShelter option page after JShelter was installed to browser.
-#def find_options_jsr_page_url(driver, browser_type):
-#    sleep(1)
-    # KNOWN ISSUE: Tab in browser is sometimes not switched by this command.
-    # And it leads to error and stopping execution of script. It is driver's issue.
-    # Workaround for this issue is wait a while before and after tabs switching.
-#    driver.switch_to.window(driver.window_handles[-1])
-#    sleep(1)
-#    if browser_type == BrowserType.CHROME:
-        #driver.get('chrome://system/')
-#        driver.get("chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html")
-        #WebDriverWait(driver, 60).until(
-        #    ec.presence_of_element_located((By.ID, 'extensions-value-btn'))
-        #)
-#        driver.find_element_by_id('extensions-value-btn').click()
-#        for elem in driver.find_element_by_id('extensions-value').text.splitlines():
-#            if 'JavaScript Restrictor' in elem:
-#                return "chrome-extension://" + elem.split(':')[0][:-1] + "/options.html"
-
 def set_jsr_level_firefox(driver, level):
     driver.get("about:debugging#/runtime/this-firefox")
-    sleep(3)
-    element = driver.find_element("xpath", "//span[@title='JShelter']")
+    element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located(("xpath", "//span[@title='JShelter']"))
+                )
 
     parent_li = element.find_element("xpath", "./..")
 
@@ -63,10 +47,35 @@ def set_jsr_level_firefox(driver, level):
 
 ## Set JShelter level in web browser.
 def set_jsr_level_chrome(driver, level):
-    #options_page = find_options_jsr_page_url(driver, browser_type)
-    driver.get("chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/options.html")
-    sleep(5)
-    driver.find_element("id", "level-" + str(level))
+    extension_id = None
+
+    driver.get("chrome://extensions/")
+    manager = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located(("xpath", "/html/body/extensions-manager"))
+                )
+    manager_shadow_root = driver.execute_script('return arguments[0].shadowRoot', manager)
+    toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
+    toggle_shadow_root = driver.execute_script('return arguments[0].shadowRoot', toolbar)
+    dev_mode_toggle = toggle_shadow_root.find_element("css selector",'cr-toggle#devMode')
+    dev_mode_toggle.click()
+    sleep(1)
+    container = manager_shadow_root.find_element("css selector", "#container")
+    view = container.find_element("css selector", "#viewManager")
+    items = view.find_element("css selector", "#items-list")
+    items_shadow_root = driver.execute_script('return arguments[0].shadowRoot', items)
+    items_container = items_shadow_root.find_element("css selector", "#content-wrapper > div:nth-child(4)")
+    extensions_items = items_container.find_elements("tag name","extensions-item")
+    for item in extensions_items:
+        item_shadow_root = driver.execute_script('return arguments[0].shadowRoot', item)
+        item_text_content = item_shadow_root.find_element("css selector", "#name")    
+        if item_text_content.get_attribute('innerHTML') == "JShelter":
+             extension_id = item.get_attribute("id")
+    options_page = f"chrome-extension://{extension_id}/options.html"
+    driver.get(options_page)
+    select_level = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located(("id", "level-" + str(level)))
+                    )
+    select_level.click()
 
 
 ## Create web browser driver and start web browser.
@@ -83,7 +92,7 @@ def create_driver(browser_type, addon_driver):
         chrome_options.add_argument("--enable-javascript")
         chrome_options.add_argument("--allow-insecure-localhost")
         chrome_options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
-        #chrome_options.browserName = 'chrome'
+        chrome_options.browserName = 'chrome'
         if version:
             chrome_options.browser_version=str(version[0])
         if addon_driver:
@@ -97,14 +106,11 @@ def create_driver(browser_type, addon_driver):
             command_executor='http://' + Config.grid_server_ip_address + ':4444/wd/hub',
             #desired_capabilities=d,
             options=chrome_options)
-        print("driver created")
-        
+                
         if with_js:
             set_jsr_level_chrome(driver, Config.js_level)
-        print("driver created, returning")
 
     if "firefox" in browser_type:
-        print("shouldnt happen")
         fp = webdriver.FirefoxProfile()
         firefox_options = webdriver.FirefoxOptions()
         if version:

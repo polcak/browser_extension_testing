@@ -62,13 +62,9 @@ def build_site_logs_table(site, site_number):
     output = "<br><h2>" + str(site_number) + ") " + site['site'] + "</h2><table><tr><th>Without addon</th><th>With " + ext_names  + " </th></tr>"
     i = 0
     max_lenght = 0
-    if site['logs_with_addon'] != "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":
-        max_lenght = max(len(site['logs_without_addon']), len(site['logs_with_addon']))
-    else:
-        if site['logs_without_addon'] != "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":
-            max_lenght = len(site['logs_without_addon'])
-        else:
+    if site['logs_without_addon'] == "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":
             output += "<tr><td>"
+            output += "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE"
             output += "</td><td"
             output_tmp = "><tr>"
             output += '><table class="colored-results-table"'
@@ -77,6 +73,11 @@ def build_site_logs_table(site, site_number):
             output += "</td></tr>"
             output += "</table>"
             return output
+    if site['logs_with_addon'] != "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":
+        max_lenght = max(len(site['logs_without_addon']), len(site['logs_with_addon']))
+    else:
+        if site['logs_without_addon'] != "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":
+            max_lenght = len(site['logs_without_addon'])
 
     while i < max_lenght:
         output += "<tr><td>"
@@ -90,24 +91,22 @@ def build_site_logs_table(site, site_number):
         if site['logs_with_addon'] != "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":
             if i < len(site['logs_with_addon']):
                 output_tmp += "<td"
-                if (not ("polcak.github.io" in site['logs_with_addon'][i]['message'])) and (not("chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/" in site['logs_with_addon'][i]['message'])):
-                    if simple.was_log_added(site['logs_with_addon'][i], site['logs_without_addon']):
-                        output_tmp += ' class="method">Simple comparison</td><td'
-                        colored_results_table_visible = True
-                    else:
-                        output_tmp += "></td><td"
-                    if levenshtein.was_log_added(site['logs_with_addon'][i], site['logs_without_addon']):
-                        output_tmp += ' class="method">Levenshtein distance</td><td'
-                        colored_results_table_visible = True
-                    else:
-                        output_tmp += "></td><td"
-                    if cosine.was_log_added(site['logs_with_addon'][i], site['logs_without_addon']):
-                        output_tmp += ' class="method">Cosine similarity</td>'
-                        colored_results_table_visible = True
-                    else:
-                        output_tmp += "></td>"
+                if simple.was_log_added(site['logs_with_addon'][i], site['logs_without_addon']):
+                    output_tmp += ' class="method">Simple comparison</td><td'
+                    colored_results_table_visible = True
+                else:
+                    output_tmp += "></td><td"
+                if levenshtein.was_log_added(site['logs_with_addon'][i], site['logs_without_addon']):
+                    output_tmp += ' class="method">Levenshtein distance</td><td'
+                    colored_results_table_visible = True
+                else:
+                    output_tmp += "></td><td"
+                if cosine.was_log_added(site['logs_with_addon'][i], site['logs_without_addon']):
+                    output_tmp += ' class="method">Cosine similarity</td>'
+                    colored_results_table_visible = True
                 else:
                     output_tmp += "></td>"
+
         if colored_results_table_visible:
             output += ' class="added-log"><table class="colored-results-table-visible"'
         else:
@@ -115,7 +114,6 @@ def build_site_logs_table(site, site_number):
         output += output_tmp + '</tr></table>'
         if site['logs_with_addon'] != "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE":
             if i < len(site['logs_with_addon']):
-                 if (not ("polcak.github.io" in site['logs_with_addon'][i]['message'])) and (not("chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/" in site['logs_with_addon'][i]['message'])):
                     output += "Level: " + site['logs_with_addon'][i]['level'] + "<br>"
                     output += "Source: " + site['logs_with_addon'][i]['source'] + "<br>"
                     output += "Message: " + site['logs_with_addon'][i]['message']

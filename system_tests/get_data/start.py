@@ -33,6 +33,15 @@ import driver
 from test_type import TestType
 import datetime
 
+#Edit this if you are not interested in certain logs.
+filter_log_strings = [
+    "polcak.github.io",
+    "chrome-extension://ammoloihpcbognfddfjcljgembpibcmb/",
+    "chrome-extension://pkehgijcmpdhfbdbbnkijodmdjhbjlgp/skin/firstRun.html",
+    "duckduckgo.com/extension-success",
+    "chrome://extensions/"
+]
+
 
 ## If JShelter is active and set to level 3, close JS alerts if any is open.
 def confirm_alerts_if_open(my_driver, with_js, time):
@@ -84,11 +93,15 @@ def get_page_data_thread(my_driver, with_addon, site, site_number, logs_ready, r
     except:
         print("An exception occurred while loading page: " + site)
         logs = "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE"
+        logs_ready.value = 1
+        ret_logs.send(logs)
+        return
     else:
         if TestType.LOGS in Config.perform_tests:
             try:
                 confirm_alerts_if_open(my_driver, with_addon, 20)
                 logs = my_driver.get_log('browser')
+                logs = [log for log in logs if all(string not in log['message'] for string in filter_log_strings)]
             except:
                 print("An exception occurred while getting page logs: " + site)
                 logs = "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE"

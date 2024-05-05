@@ -25,6 +25,8 @@ import pytest
 import re
 import os
 import datetime
+import sys
+import logging
 
 from store_values import create_browser_data
 from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled, get_shared_addonsInstalled
@@ -34,6 +36,8 @@ from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level
 #  To start testing call this module from PowerShell, CommandPrompt, Terminal or Bash: python start.py
 #  For every browser and for every jsr_level defined in configuration.py set of all tests is run.
 def main():
+
+
 
     generated_t = str(datetime.datetime.now(datetime.timezone.utc))
     test_start = generated_t.replace(" ", "--").replace(":", "-").replace(".", "-")
@@ -65,7 +69,20 @@ def main():
         no_addon = browser_data[0]
         set_shared_browser(browser_name)
         set_shared_noaddon(no_addon)
-    
+
+        test_start = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        log_file_path = f"./outputs/{test_start + "_" + browser_name}.log"
+
+        logging.basicConfig(
+                    level=logging.DEBUG, 
+                    format="%(asctime)s - %(levelname)s - %(message)s",  
+                    handlers=[
+                        logging.FileHandler(log_file_path),  
+                        logging.StreamHandler(sys.stdout)  
+                    ]
+                )
+        logging.info("Test message")
+
         for value in browser_data[1:]:           
                 set_shared_addonsInstalled(value.addons)           
                 if "JS" in value.addons:
@@ -76,7 +93,9 @@ def main():
                     set_shared_level(0)               
                 set_shared_addonRun(value)     
                 print("Addons installed this run: ", get_shared_addonsInstalled())
-                pytest.main(['-s'])
+                      
+                pytest.main(['--capture=tee-sys', '--log-file=' + log_file_path ])                  
+
 
 
 if __name__ == "__main__":

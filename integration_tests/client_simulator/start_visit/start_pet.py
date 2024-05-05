@@ -26,7 +26,7 @@ def test_pet(exp, browser, pet, server_config):
         print("configure the browser")
         unit = sim_browser(browser, pet, proxy_setting)
 
-        if "userSettings" in pet[0]:
+        if "NBS" in pet[0] or "DLS" in pet[0]:
             sys.stdout.write("\n")
             sys.stdout.flush()
             print("exit")

@@ -31,6 +31,5 @@ sudo xhost +local:docker
 Assuming *Docker Desktop* and a *Xserver* are running on the host, run the container using command:
 
 ```
-cd testing_environment
 docker run --rm -it --net=host --env DISPLAY=host.docker.internal:0.0 -v .:/usr/app/src/ testing_system
 ```

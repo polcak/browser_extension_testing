@@ -58,9 +58,6 @@ class MetaConfig(type):
     @property
     def selenium_server_jar_path(self):
         return self._selenium_server_jar_path
-    #@property
-    #def chrome_driver_path(self):
-    #    return self._chrome_driver_path
     @property
     def extensions_for_chrome_path(self):
         return self._extensions_for_chrome_path  
@@ -86,7 +83,7 @@ class Config(metaclass=MetaConfig):
     # Relative or absolute path to top sites csv file.
     _sites_to_test_csv_path = './top_sites/tranco.csv'
     # Number of sites from beggining of the top sites list taken for testing.
-    _number_of_sites_for_testing = 10
+    _number_of_sites_for_testing = 80
     # Run tests in this browsers.
     _tested_browsers = ["chrome=stable"]
     # Run tests with JShelter on this level.
@@ -103,45 +100,47 @@ class Config(metaclass=MetaConfig):
 
     # Timeout during loading one site in seconds.
     _get_page_data_timeout = 240
-    # Waiting in seconds between checking website if is alreadz loaded.
+    # Waiting in seconds between checking website if is already loaded.
     _wait_between_checks_if_page_data_loaded = 10
 
     # Paths to files neccessary for testing.
     _selenium_server_jar_path = './selenium/selenium-server-standalone.jar'
-    #_chrome_driver_path = '../../common_files/webbrowser_drivers/chromedriver.exe'
     _extensions_for_chrome_path = './addons/chrome/'
     _extensions_for_firefox_path = './addons/firefox/'
 
     #This is the list of available extensions for testing. In a key-value pair, 
     #key represents the extension abbreviation and value its extension file.
     _extensions_dict_chrome = { "Gh": "Ghostery.crx",
-                                "uo": "uBlockOrigin.crx",
+                                "UO": "uBlockOrigin.crx",
                                 "PB": "PrivacyBadger.crx",
                                 "NS": "NoScript.crx",
                                 "DDGPE": "DuckDuckGoPE.crx",
                                 "NC": "Netcraft.crx",
                                 "DE": "Decentraleyes.crx",
-                                "JS": "JShelter.crx"}
+                                "JS": "JShelter.crx",
+                                "CB":"CanvasBlocker.crx"}
     
     _extensions_dict_names_chrome = {   "Gh": "Ghostery",
-                                        "uo": "uBlockOrigin",
+                                        "UO": "uBlockOrigin",
                                         "PB": "PrivacyBadger",
                                         "NS": "NoScript",
                                         "DDGPE": "DuckDuckGoPE",
                                         "NC": "Netcraft",
                                         "DE": "Decentraleyes",
-                                        "JS": "JShelter"}
+                                        "JS": "JShelter",
+                                        "CB":"CanvasBlocker"}
 
-    _extensions_dict_firefox = {"gh": "firefox@ghostery.com.xpi",
-                                "uo": "uBlock0@raymondhill.net.xpi",
+    _extensions_dict_firefox = {"Gh": "firefox@ghostery.com.xpi",
+                                "UO": "uBlock0@raymondhill.net.xpi",
                                 "PB": "PrivacyBadger@jetpack.xpi",
                                 "NS": "NoScript.xpi",
                                 "DDGPE": "DuckDuckGoPE.xpi",
                                 "NC": "Net_Craft.xpi",
                                 "DE": "Decentraleyes.xpi",
-                                "JS": "jsr@javascriptrestrictor.xpi"
+                                "JS": "jsr@javascriptrestrictor.xpi",
+                                "CB" : "CanvasBlocker@kkapsner.de.xpi"
 
     }
     #Use extensions ABs from the dictionary above here if you want to install
     #them during the run.
-    _extensions_to_test = ["JS", "uo", "PB" ]
+    _extensions_to_test = ["JS", "DDGPE"]
