@@ -23,6 +23,9 @@
 #
 
 import pytest
+import logging
+import datetime
+import sys
 
 from shared_set import get_shared_noaddon, get_shared_addonRun, get_shared_addonsInstalled, get_shared_browser
 import  values_expected 

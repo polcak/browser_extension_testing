@@ -93,9 +93,6 @@ def get_page_data_thread(my_driver, with_addon, site, site_number, logs_ready, r
     except:
         print("An exception occurred while loading page: " + site)
         logs = "ERROR_WHILE_LOADING_THIS_OR_PREVIOUS_PAGE"
-        logs_ready.value = 1
-        ret_logs.send(logs)
-        return
     else:
         if TestType.LOGS in Config.perform_tests:
             try:

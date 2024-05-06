@@ -143,4 +143,4 @@ class Config(metaclass=MetaConfig):
     }
     #Use extensions ABs from the dictionary above here if you want to install
     #them during the run.
-    _extensions_to_test = ["JS", "DDGPE"]
+    _extensions_to_test = ["JS", "DE"]

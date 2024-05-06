@@ -147,9 +147,8 @@ def main():
         print("No screenshots for analysis found. Please, include getting screenshots to configuration and run getting data first.")
     for site in sites:
         file_without_addon = "../data/screenshots/" + site + "/without_addon.png"
-        file_with_addon = "../data/screenshots/" + site + "/with_addon.png"
     
-        if os.path.exists(file_without_addon) and os.path.exists(file_with_addon): 
+        if os.path.exists(file_without_addon): 
             site_name = site.split('_', 1)[1]
             print("Site " + str(j) + " of " + str(sites_number) + ": " + site_name)
             differences_gray = create_differences_img(site)
