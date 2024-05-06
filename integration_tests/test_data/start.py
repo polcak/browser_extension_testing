@@ -31,6 +31,12 @@ import logging
 from store_values import create_browser_data
 from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled, get_shared_addonsInstalled
 
+def sort_extensions(addonsTested):
+    extensions = addonsTested.split("-")
+    sorted_extensions = sorted(extensions)
+    sorted_addonsTested = '_'.join(sorted_extensions)
+    return sorted_addonsTested
+
 ## Main module - it starts and control testing.
 #
 #  To start testing call this module from PowerShell, CommandPrompt, Terminal or Bash: python start.py
@@ -69,10 +75,11 @@ def main():
         set_shared_noaddon(no_addon)
 
 
-        for value in browser_data[1:]:           
-                set_shared_addonsInstalled(value.addons)           
-                if "JS" in value.addons:
-                    js_level = re.search(r'\d+', value.addons).group(0)
+        for value in browser_data[1:]:     
+                sorted_addonsTested = sort_extensions(value.addons)      
+                set_shared_addonsInstalled(sorted_addonsTested)           
+                if "JS" in sorted_addonsTested:
+                    js_level = re.search(r'\d+', sorted_addonsTested).group(0)
                     print("JShelter level tested:", js_level)
                     set_shared_level(js_level)
                 else:

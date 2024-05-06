@@ -27,7 +27,7 @@ import logging
 import datetime
 import sys
 
-from shared_set import get_shared_noaddon, get_shared_addonRun, get_shared_addonsInstalled, get_shared_browser
+from shared_set import get_shared_noaddon, get_shared_addonRun, get_shared_addonsInstalled, get_shared_browser, get_shared_level
 import  values_expected 
 
 
@@ -55,5 +55,10 @@ def browser():
 @pytest.fixture(scope="session", autouse=True)
 def expected():
     addonsTested = get_shared_addonsInstalled()
-    return getattr(values_expected, addonsTested, None)
+    if "JS" in addonsTested:
+        js_level = get_shared_level()
+        exp = "JS_" + str(js_level)
+        return getattr(values_expected, exp, None)
+    else:
+        return getattr(values_expected, addonsTested, None)
 

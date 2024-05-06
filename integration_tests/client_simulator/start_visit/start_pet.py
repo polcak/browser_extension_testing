@@ -35,7 +35,7 @@ def test_pet(exp, browser, pet, server_config):
 
         time.sleep(5)
         print("visit sites")
-        html_args = "?exp="+exp+"&browser="+browser+"&pet="+'_'.join(pet)
+        html_args = "?exp="+exp+"&browser="+browser+"&pet="+'-'.join(pet)
         fp_site = fp_sites[0] + html_args
         unit.visit_sites([fp_site])
         sys.stdout.write("\n")

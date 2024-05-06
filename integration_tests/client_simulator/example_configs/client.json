@@ -2,8 +2,8 @@
     "experiment_name": "exp01",
     "browsers": [  "chrome=stable", "firefox=stable"],
     "pets": {
-        "chrome=stable":  [ ["None"], ["JS_2"], ["JS_3"]  ],
-        "firefox=stable":  [ ["None"], ["JS_2"], ["JS_3"]  ]
+        "chrome=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["UO"], ["JS_0", "PB"]  ],
+        "firefox=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["DDGPE"], ["JS_1", "Gh"]  ]
         },
 
     "integration_testing": true

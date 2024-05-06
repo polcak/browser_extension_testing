@@ -62,6 +62,7 @@ The extension name abbreviations are defined in a dictionary inside the `start_b
 - *NetCraft* - `NC`
 - *NoScript* - `NS`
 - *CanvasBlocker* for *Mozilla Firefox* - `CB`
+- *CanvasBlocker* for *Google Chrome* - `CB`
 - and *Privacy Badger* - `PB`
 - also for a run with no extensions installed - `None` (the `None` extension setting is mutually exclusive with any other extension).
 
