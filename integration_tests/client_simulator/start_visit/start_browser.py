@@ -357,10 +357,10 @@ class Browser:
             self.driver.close() 
 
 
-    def visit_sites(self, site_list, delay=30): 
+    def visit_sites(self, site_list, delay): 
         """Visits all pages in site_list with delay"""
         for site in site_list:
-            self.driver.set_page_load_timeout(30)
+            self.driver.set_page_load_timeout(60)
             sys.stdout.write(".")
             sys.stdout.flush()
             try:        
@@ -374,7 +374,7 @@ class Browser:
             except TimeoutException:
                  print("Page load timed out, retrying.")
                  self.driver.switch_to.new_window('window')
-                 self.visit_sites((site_list[(site_list.index(site)):]), delay=30)
+                 self.visit_sites((site_list[(site_list.index(site)):]), delay)
 
             except KeyboardInterrupt:
                 print("Interrupted by keyboard, shutting down.")

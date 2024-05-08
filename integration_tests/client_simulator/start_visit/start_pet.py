@@ -5,7 +5,7 @@ import json
 import os as oslib
 
 
-def test_pet(exp, browser, pet, server_config):
+def test_pet(exp, browser, pet, server_config, delay):
 
     try:
         def get_server_attributes(data):
@@ -37,7 +37,7 @@ def test_pet(exp, browser, pet, server_config):
         print("visit sites")
         html_args = "?exp="+exp+"&browser="+browser+"&pet="+'-'.join(pet)
         fp_site = fp_sites[0] + html_args
-        unit.visit_sites([fp_site])
+        unit.visit_sites([fp_site], delay)
         sys.stdout.write("\n")
         sys.stdout.flush()
 

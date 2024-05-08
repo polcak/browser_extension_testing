@@ -5,6 +5,7 @@
         "chrome=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["UO"], ["JS_0", "PB"]  ],
         "firefox=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["DDGPE"], ["JS_1", "Gh"]  ]
         },
-
+    "delay": 35,
+    "mode": "interactive",
     "integration_testing": true
 }
