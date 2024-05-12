@@ -42,7 +42,7 @@ function run_pxi_fp() {
 			evnt.renderedBuffer.copyFromChannel(channel2, 0); // First, we need to copy data from the channel
 			var channel1 = evnt.renderedBuffer.getChannelData(0); // and afterwards get the buffer directly
 			function displayChannelData(channel, element, output) {
-				for (var i = 4500; 4550 > i; i++) {
+				for (var i = 4500; 5e3 > i; i++) {
 					output += channel[i].toString() + ",";
 				}
 				element.innerHTML = output.substring(0, output.length-1);
@@ -113,10 +113,10 @@ function run_hybrid_fp() {
 		analyser.disconnect();
 		scriptProcessor.disconnect();
 		gain.disconnect();
-		document.getElementById("float_frequency_result").innerHTML = float_result.slice(0, 20).toString();
-		document.getElementById("byte_frequency_result").innerHTML = byte_result.slice(0, 20).toString();
-		document.getElementById("float_time_result").innerHTML = floatTimeData.slice(0, 20).toString();
-		document.getElementById("byte_time_result").innerHTML = byteTimeData.slice(0, 20).toString();
+		document.getElementById("float_frequency_result").innerHTML = float_result.slice(0, 40).toString();
+		document.getElementById("byte_frequency_result").innerHTML = byte_result.slice(0, 40).toString();
+		document.getElementById("float_time_result").innerHTML = floatTimeData.slice(0, 40).toString();
+		document.getElementById("byte_time_result").innerHTML = byteTimeData.slice(0, 40).toString();
 	};
 
 	oscillator.start(0);

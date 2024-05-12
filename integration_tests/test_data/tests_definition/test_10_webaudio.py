@@ -99,7 +99,7 @@ def test_get_channel_equal_copy_channel(addonRun):
     assert addonRun.audio.copy_channel == addonRun.audio.get_channel
 
 ## Test AnalyserNode.getByteTimeDomainData
-def test_byte_time_domain(noaddon, addonRun, expected, browser):
+def test_byte_time_domain(noaddon, addonRun, expected):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
     #js_level = get_shared_level()
@@ -107,8 +107,6 @@ def test_byte_time_domain(noaddon, addonRun, expected, browser):
         # Note that it is not possible to use xfail as decorator as those are evaluated during
         # module import and the module is not reimported for different levels
     #    pytest.xfail("This test will work only after Array Wrappers are fixed in Firefox")
-    if browser == "firefox" or browser == "firefox=esr":
-        pytest.skip("Firefox byte_time_domain not working as of now.")
 
     if addonRun.audio:
         if expected.audio.byte_time_domain == 'SPOOF VALUE':
@@ -122,7 +120,7 @@ def test_byte_time_domain(noaddon, addonRun, expected, browser):
         assert False
 
 ## Test AnalyserNode.getFloatTimeDomainData
-def test_float_time_domain(noaddon, addonRun, expected, browser):
+def test_float_time_domain(noaddon, addonRun, expected):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
     #js_level = get_shared_level()
@@ -130,8 +128,6 @@ def test_float_time_domain(noaddon, addonRun, expected, browser):
         # Note that it is not possible to use xfail as decorator as those are evaluated during
         # module import and the module is not reimported for different levels
     #    pytest.xfail("This test will work only after Array Wrappers are fixed in Firefox")
-    if browser == "firefox" or browser == "firefox=esr":
-        pytest.skip("Firefox float_time_domain not working as of now.")
     if addonRun.audio:
         if expected.audio.float_time_domain == 'SPOOF VALUE':
             assert addonRun.audio.float_time_domain != noaddon.audio.float_time_domain
@@ -142,11 +138,9 @@ def test_float_time_domain(noaddon, addonRun, expected, browser):
         assert False
 
 ## Test AnalyserNode.getByteFrequencyData
-def test_byte_frequency(noaddon, addonRun, expected, browser):
+def test_byte_frequency(noaddon, addonRun, expected):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
-    if browser == "firefox" or browser == "firefox=esr":
-        pytest.skip("Firefox byte_frequency not working as of now.")
     if addonRun.audio:
         if expected.audio.byte_frequency == 'SPOOF VALUE':
             assert addonRun.audio.byte_frequency != noaddon.audio.byte_frequency
@@ -159,11 +153,9 @@ def test_byte_frequency(noaddon, addonRun, expected, browser):
         assert False
 
 ## Test AnalyserNode.getFloatFrequencyData
-def test_float_frequency(noaddon, addonRun, expected, browser):
+def test_float_frequency(noaddon, addonRun, expected):
     if get_shared_addonRun().audio.copy_channel is None:
         pytest.skip("Audio not tested.")
-    if browser == "firefox" or browser == "firefox=esr":
-        pytest.skip("Firefox float_frequency not working as of now.")
     if addonRun.audio:
         if expected.audio.float_frequency == 'SPOOF VALUE':
             assert addonRun.audio.float_frequency != noaddon.audio.float_frequency

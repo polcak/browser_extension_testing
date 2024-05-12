@@ -1,11 +1,12 @@
 {
     "experiment_name": "exp01",
-    "browsers": [  "chrome=stable", "firefox=stable"],
+    "browsers": [   "firefox=stable", "chrome=stable"],
     "pets": {
-        "chrome=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["UO"], ["JS_0", "PB"]  ],
-        "firefox=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["DDGPE"], ["JS_1", "Gh"]  ]
+        "firefox=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["DDGPE"], ["JS_1", "Gh"]  ],
+        "chrome=stable":  [ ["None"], ["JS_2"], ["JS_3"], ["UO"], ["JS_0", "PB"]  ]
+        
         },
     "delay": 35,
-    "mode": "interactive",
-    "integration_testing": true
+    "mode": "threaded",
+    "integration_testing": false
 }

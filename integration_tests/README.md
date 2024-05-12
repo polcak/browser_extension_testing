@@ -30,7 +30,7 @@ In order to run the testing you must have `docker engine` installed, NOT `Docker
 
 Once you have build the image from the **Dockerfile** in the previous folder, run this command from inside this folder:
 ```
-docker run --rm -it -v .:/usr/app/src/ --net=host --env DISPLAY=$DISPLAY --add-host=host.docker.internal:172.17.0.1 testing_integration
+docker run --rm -it -v .:/usr/app/src/ --net=host --env DISPLAY=$DISPLAY --add-host=host.docker.internal:172.17.0.1 --device /dev/snd testing_integration
 ```
 This will create a mounted volume so all the output files will persist even after the container is deleted. The output files will be stored in the `fingerprinting_server/outputs` folder.
 
@@ -48,5 +48,5 @@ sudo xhost +local:docker
 
 Assuming *Docker Desktop* and a *Xserver* are running on the host and you have already built the image, run the container from this folder using command:
 ```
-docker run --rm -it --env DISPLAY=host.docker.internal:0.0 -v .:/usr/app/src/ testing_integration
+docker run --rm -it --env DISPLAY=host.docker.internal:0.0 -v .:/usr/app/src/ --env PULSE_SERVER=tcp:host.docker.internal  testing_integration
 ```
