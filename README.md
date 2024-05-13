@@ -43,7 +43,7 @@ If you run into privileges issues on *Linux*, try giving both `start_testing.sh`
 sudo chmod +x ./integration_testing/start_testing.sh
 sudo chmod +x ./system_testing/start_testing.sh
 ```
-If you run into display issues, try adding *Docker* to *xhost*:
+If you run into display issues on *Linux*, try adding *Docker* to *xhost*:
 ```bash
 sudo xhost +local:docker
 ```
