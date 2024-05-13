@@ -6,6 +6,7 @@ services:
       context: .
       target: system
     network_mode: host
+    privileged: true
     volumes:
       - ./system_tests/data:/usr/app/src/data
 
@@ -16,6 +17,7 @@ services:
     environment:
       - DISPLAY=host.docker.internal:0.0
       - PULSE_SERVER=tcp:host.docker.internal
+    privileged: true
     volumes:
       - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
@@ -30,16 +32,18 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=${DISPLAY}
+    privileged: true
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     devices:
-      - "/dev/snd"
+      - "/dev/snd:/dev/snd"
 
   testing_system_linux:
     build:
       context: .
       target: system
     network_mode: host
+    privileged: true
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     environment:
