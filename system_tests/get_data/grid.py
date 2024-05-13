@@ -40,7 +40,7 @@ def start_nodes():
     nodes = []
     if Config.number_of_grid_nodes_on_this_device == 0:
         # Waiting on distributed environment when all Selenium Grid nodes will be running.
-        input("When all testing nodes will be running, press Enter to start JShelter system testing.")
+        input("When all testing nodes will be running, press Enter to start system testing.")
     else:
         for node_number in range(Config.number_of_grid_nodes_on_this_device):
             nodes.append(subprocess.Popen(["java", "-jar", Config.selenium_server_jar_path, "node", "--hub", "https://" + Config.grid_server_ip_address + ":4444/grid/register/", "--selenium-manager", "true"], text=True))

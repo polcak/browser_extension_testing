@@ -25,7 +25,7 @@ from json import dumps
 
 
 ## From the class Logs object for every website is created. One object contains logs from browsers
-#  with and without JShelter
+#  with and without extensions
 #  when the same page is loaded.
 class Logs:
     site = ''

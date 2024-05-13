@@ -31,7 +31,7 @@ docker-compose run --rm --env DISPLAY=host.docker.internal:0.0 --env PULSE_SERVE
 ### How to build an image and run a container for system testing
 To build the image and run the container on *Linux* host, run the following command:
 ```bash
-docker-compose run --rm --env DISPLAY=$DISPLAY --net=host --add-host=host.docker.internal:172.17.0.1 --service-ports testing_system
+docker-compose run --rm --env DISPLAY=$DISPLAY --add-host=host.docker.internal:172.17.0.1 --service-ports testing_system
 ```
 In order to build an image and run a container for system testing on *Windows* host (assuming *Docker Engine* is running), use this command:
 ```bash

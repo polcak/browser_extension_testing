@@ -16,3 +16,17 @@ services:
     volumes:
       - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
+
+testing_integration_linux:
+    build:
+      context: .
+      target: integration
+    volumes:
+      - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
+      - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
+    environment:
+      - DISPLAY=$DISPLAY
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    devices:
+      - "/dev/snd"
