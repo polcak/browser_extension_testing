@@ -5,6 +5,7 @@
 #
 #  Copyright (C) 2021  Matus Svancar
 #  Copyright (C) 2022  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -41,8 +42,10 @@ from values_tested import TestedValues
 #  This issue is not caused by JShield, but by Selenium.
 #  So until there is a proper fix, we IGNORE the Plugins and mimeTypes tests in Chrome.
 
-# If you are interested in creating your own objects representing expected values, 
-# please keep in mind you need to name the object according to used abbreviations in alphabetical order.
+#  To create your own object, simply name it in this format: "extensionAbbreviation1_extensionAbbreviatio2_..." and configure
+#  the expected values to your liking.
+#  If you are interested in creating your own objects representing expected values, 
+#  please keep in mind you need to name the object according to used abbreviations in alphabetical order.
 
 
 ## Expected values for default level 0 of JShelter.
@@ -80,7 +83,6 @@ JS_0 = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,
@@ -152,7 +154,6 @@ JS_1 = TestedValues(
     hardwareConcurrency={'value':'SPOOF VALUE',
                           'valid_values': "UP TO REAL VALUE"},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 1},
     plugins={'count': {'firefox': 0,
@@ -224,7 +225,6 @@ JS_2 = TestedValues(
     hardwareConcurrency={'value':'SPOOF VALUE',
                           'valid_values': "UP TO REAL VALUE"},
     IOdevices= {0,1,2,3,4,5,6,7,8,9},
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 1},
     plugins={'count': {'firefox': 0,
@@ -289,7 +289,6 @@ JS_3 = TestedValues(
     hardwareConcurrency={'value':'SPOOF VALUE',
                           'valid_values': {2}},
     IOdevices= "EMPTY",
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 1.0},
     plugins={'count': {'firefox': 0,
@@ -356,7 +355,6 @@ UO = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,
@@ -424,7 +422,6 @@ Gh = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,
@@ -491,7 +488,6 @@ NC = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,
@@ -558,7 +554,6 @@ DDGPE = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,
@@ -625,7 +620,6 @@ PB = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,
@@ -686,7 +680,6 @@ NS = TestedValues(
     hardwareConcurrency={'value':'SPOOF VALUE',
                           'valid_values': {2}},
     IOdevices= "EMPTY",
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 1.0},
     plugins={'count': {'firefox': 0,
@@ -753,7 +746,6 @@ DE = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,
@@ -820,7 +812,6 @@ CB = TestedValues(
                  'chrome': 'REAL VALUE'},
     hardwareConcurrency={'value':'REAL VALUE'},
     IOdevices='REAL VALUE',
-    #referrer='REAL VALUE',
     time={'value': 'REAL VALUE',
           'accuracy': 'EXACTLY'},
     plugins={'count': {'firefox': 0,

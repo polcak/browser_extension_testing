@@ -1,9 +1,6 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2021  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -21,16 +18,11 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-## Setup method - it is run before toString tests execution starts.
-#
-#  This setup method initialize variable methods_toString that contains methods.toString() and
-#  this variable is provided to methods_toString test and the methods.toString() in the variable are compared with real values.
-## Test methods.toString(). They should be always unchanged by JShelter.
 
 from shared_set import get_shared_addonRun
 import pytest
 
-
+## Test methods.toString(). They should be always unchanged by JShelter.
 def test_methods_toString(noaddon, addonRun):
     if get_shared_addonRun().methods_toString is None:
         pytest.skip("Methods to string not tested.")

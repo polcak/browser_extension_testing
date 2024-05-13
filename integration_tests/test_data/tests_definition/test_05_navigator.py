@@ -1,10 +1,7 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2021  Matus Svancar
 #  Copyright (C) 2022  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -21,19 +18,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-
-
-## Setup method - it is run before navigator tests execution starts.
-#
-#  This setup method initialize variable navigator that contains current data about navigator and
-#  this variable is provided to navigator tests and values in device variable are compared with expected values.
-#pytest.fixture(scope='module', autouse=True)
-#def noaddon_navigator(run):
-#    return get_navigator(run)
-
-#@pytest.fixture(scope='module', autouse=True)
-##def jshelter_navigator(run):
-#    return get_navigator(run)
 
 import pytest
 from shared_set import get_shared_addonRun

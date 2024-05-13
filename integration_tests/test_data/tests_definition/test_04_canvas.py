@@ -1,10 +1,7 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2020  Martin Bednar
 #  Copyright (C) 2021  Matus Svancar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -22,15 +19,14 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+import pytest
+from shared_set import get_shared_addonRun
+
 ## Test canvas - if canvas is spoofed: Reading from canvas returns white image.
 ##
 ## This test fails in Google Chrome on JShelter level 3 - expected failure because of known bug:
 ## selenium.common.exceptions.JavascriptException: Message: javascript error:
 ## Failed to execute 'getRandomValues' on 'Crypto': parameter 1 is not of type 'ArrayBufferView'.
-
-import pytest
-from shared_set import get_shared_addonRun
-
 def test_canvas(addonRun, expected):
     if get_shared_addonRun().protectCanvas is None:
         pytest.skip("Canvas attributes not tested.")

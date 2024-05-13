@@ -25,6 +25,45 @@ def create_webdriver(firefox_options):
         time.sleep(5) 
         return create_webdriver(firefox_options)
 
+
+"""
+Find JShelter Options Page. Must be done seperately for both Firefox and Chrome.
+"""
+def find_jshelter_options_page(browser, driver):
+    options_page = None
+    if "firefox" in browser:
+        #Change the JShelter level in Firefox.       
+        driver.get("about:debugging#/runtime/this-firefox")
+        time.sleep(0.5)
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(("xpath", "//span[@title='JShelter']"))
+        )
+        parent_li = element.find_element("xpath", "./..")
+        uuid_element = parent_li.find_element("xpath","./section/dl/div[@class='fieldpair'][2]/dd")
+        uuid = uuid_element.text
+        options_page = f"moz-extension://{uuid}/options.html"
+
+    if "chrome" in browser:
+        #Change the JShelter level in Chrome.  
+        driver.get("chrome://extensions/")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
+        manager_shadow_root = driver.execute_script('return document.querySelector("extensions-manager").shadowRoot')
+        toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
+        dev_mode_toggle = driver.execute_script('return arguments[0].shadowRoot.querySelector("#devMode")', toolbar)
+        dev_mode_toggle.click()
+        time.sleep(1)
+        container = manager_shadow_root.find_element("css selector", "#container #viewManager #items-list")
+        items_container = driver.execute_script('return arguments[0].shadowRoot.querySelector("#content-wrapper > div:nth-child(4)")', container)
+        extensions_items = items_container.find_elements("tag name","extensions-item")
+        for item in extensions_items:
+            item_text_content = driver.execute_script('return arguments[0].shadowRoot.querySelector("#name").innerText', item)
+            if item_text_content == "JShelter":
+                extension_id = item.get_attribute("id")
+        options_page = f"chrome-extension://{extension_id}/options.html" 
+    
+    return options_page
+
+
 """
 Names and locations of extensions are configured through this class. 
 If you'd like to add another extension to the program, you have to add it to the dictionary here.
@@ -32,8 +71,6 @@ If you'd like to add another extension to the program, you have to add it to the
 """
 class PetConfig:
     def __init__(self):
-        print("configuring")
-
         #These two dictionaries represent key-value pairs of extension abbreviation-extension name. Each dictionary represents one possible browser to set up.
         #In order to add a new extension you must create a new key-value pair in both dictionaries. 
         #The key will be used to recognize the extension inside the client configuration file, the value represents the extension name.
@@ -110,7 +147,7 @@ class PetConfig:
         for oneAddon in my_pets:
             oneAddon, *testing_level = oneAddon.split('_')
             #If you'd like to configure you extension, you can save the settings variable here. The variable will be saved as anything after _.
-            #For example in case of JShelter - either JS_0, JS_1, JS_2, JS_3 or JS_userSettings can be tested.
+            #For example in case of JShelter - either JS_0, JS_1, JS_2, JS_3, JS_NBS or JS_DLS can be tested.
             if testing_level: JSlevel = testing_level[0]
             if oneAddon in self.petco[my_browser].keys(): 
                 pets_to_test.append(self.petco[my_browser][oneAddon])
@@ -126,8 +163,7 @@ class PetConfig:
                 if oA != "":  totalPaths.append(os.path.join(cwd, self.addons_path[my_browser], oA))
         
         if JSlevel:
-                print("JSlevel being tested is " + JSlevel)
-                return totalPaths, None, JSlevel
+            return totalPaths, None, JSlevel
         else:
             return totalPaths, None 
 
@@ -162,15 +198,11 @@ class Browser:
                     print("socks5 proxy configured on firefox")
 
 
-        print("Browser:", browser, "PET:", pet)
         pet_config = PetConfig()
-
-        print("--------------------------------------------------------------------------------------------------------------------------")
-
         #The set up for individual extensions on individual browsers can vary immensely, it's not really possible to create a uniform function.
         #This is due to the set up being executed client-side, different set up pages can have different DOM model on different browsers. 
         #Also the way browsers name installed extensions is inconsistent. 
-        #So its up to the developer to do his own set up.
+        #So its up to the developer to do their own set up.
 
         totalPaths, config, *JSlevel = pet_config.getExtensionsPath(pet,browser)
         
@@ -211,7 +243,6 @@ class Browser:
                     if "ghostery" in addon.lower():      
                         ghostery_tested = True    
                     self.driver.install_addon(addon)   
-                    print("addon located at" + addon + " installed")  
 
             #At this point all listed extensions are installed. If you wish to configure them you can do so from this point on till the end of the 
             #object class.
@@ -232,17 +263,9 @@ class Browser:
                         except Exception as e:
                             print("error ", e)
 
-            if JSlevel:           
-                print("JSlevel to test is " + JSlevel[0])
-                self.driver.get("about:debugging#/runtime/this-firefox")
-                time.sleep(0.5)
-                element = WebDriverWait(self.driver, 10).until(
-                    EC.presence_of_element_located(("xpath", "//span[@title='JShelter']"))
-                )
-                parent_li = element.find_element("xpath", "./..")
-                uuid_element = parent_li.find_element("xpath","./section/dl/div[@class='fieldpair'][2]/dd")
-                uuid = uuid_element.text
-                options_page = f"moz-extension://{uuid}/options.html"
+            if JSlevel:    
+                #Change the JShelter level in Firefox.       
+                options_page = find_jshelter_options_page(browser.lower(), self.driver)
 
                 if JSlevel[0] == "NBS":
                     test_switching_NBS(self.driver, options_page, browser_type)
@@ -259,7 +282,6 @@ class Browser:
                     )
                 select_level.click()
                 time.sleep(1)
-                print("selected JSlevel: " + JSlevel[0])
 
 
         elif "chrome" in browser.lower():
@@ -271,7 +293,6 @@ class Browser:
                     if "ghostery" in addon.lower():      
                         ghostery_tested = True    
                     chrome_options.add_extension(addon)
-                    print("addon located at" + addon + " installed")
 
             if version:
                 chrome_options.browser_version=str(version[0])
@@ -281,7 +302,6 @@ class Browser:
             chrome_options.add_argument('--disable-dev-shm-usage')   
             chrome_options.add_argument('--ignore-certificate-errors')   
             chrome_options.add_argument("--dns-prefetch-disable")
-            #chrome_options.add_argument("--headless=new")
             chrome_options.add_argument("enable-automation")
             chrome_options.add_argument("--use-fake-ui-for-media-stream")
             self.driver = webdriver.Chrome(options=chrome_options)
@@ -306,31 +326,8 @@ class Browser:
                             print("error ", e)
 
             if JSlevel:
-        
-                extension_id = None
-                print("JSlevel to test is " + JSlevel[0])
-                self.driver.get("chrome://extensions/")
-                manager = WebDriverWait(self.driver, 10).until(
-                                EC.presence_of_element_located(("xpath", "/html/body/extensions-manager"))
-                            )
-                manager_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', manager)
-                toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
-                toggle_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', toolbar)
-                dev_mode_toggle = toggle_shadow_root.find_element("css selector",'cr-toggle#devMode')
-                dev_mode_toggle.click()
-                time.sleep(1)
-                container = manager_shadow_root.find_element("css selector", "#container")
-                view = container.find_element("css selector", "#viewManager")
-                items = view.find_element("css selector", "#items-list")
-                items_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', items)
-                items_container = items_shadow_root.find_element("css selector", "#content-wrapper > div:nth-child(4)")
-                extensions_items = items_container.find_elements("tag name","extensions-item")
-                for item in extensions_items:
-                    item_shadow_root = self.driver.execute_script('return arguments[0].shadowRoot', item)
-                    item_text_content = item_shadow_root.find_element("css selector", "#name")    
-                    if item_text_content.get_attribute('innerHTML') == "JShelter":
-                        extension_id = item.get_attribute("id")
-                options_page = f"chrome-extension://{extension_id}/options.html"
+                # Change the JShelter level in Chrome.
+                options_page = options_page = find_jshelter_options_page(browser.lower(), self.driver)
 
                 if JSlevel[0] == "DLS":
                     test_setting_domain_level(self.driver, options_page)
@@ -344,7 +341,6 @@ class Browser:
                     )
                 select_level.click()
                 time.sleep(1)
-                print("selected JSlevel: " + JSlevel[0])
 
         else:
             print("Unsupported Browser")
@@ -360,16 +356,14 @@ class Browser:
     def visit_sites(self, site_list, delay): 
         """Visits all pages in site_list with delay"""
         for site in site_list:
-            self.driver.set_page_load_timeout(60)
+            self.driver.set_page_load_timeout(delay + 60)
             sys.stdout.write(".")
             sys.stdout.flush()
-            try:        
-                    
+            try:                          
                 self.driver.get(site)
                 self.driver.switch_to.window(self.driver.window_handles[0])  
                 time.sleep(2)
                 self.driver.find_element("id", "play").click()
-
                 time.sleep(delay)
             except TimeoutException:
                  print("Page load timed out, retrying.")

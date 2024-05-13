@@ -1,9 +1,6 @@
 #
-#  JavaScript Restrictor is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2020  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -25,9 +22,6 @@ import pytest
 import re
 import os
 import datetime
-import sys
-import logging
-
 from store_values import create_browser_data
 from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled, get_shared_addonsInstalled
 
@@ -40,7 +34,7 @@ def sort_extensions(addonsTested):
 ## Main module - it starts and control testing.
 #
 #  To start testing call this module from PowerShell, CommandPrompt, Terminal or Bash: python start.py
-#  For every browser and for every jsr_level defined in configuration.py set of all tests is run.
+#  Currently only the data inside a subfolder with todays date is tested. 
 def main():
 
     generated_t = str(datetime.datetime.now(datetime.timezone.utc))
@@ -51,8 +45,6 @@ def main():
     subfolders = [f for f in os.listdir("/usr/app/src/fingerprinting_server/outputs/" + test_date_timestamp) if os.path.isdir(os.path.join("/usr/app/src/fingerprinting_server/outputs/" + test_date_timestamp, f))]
     
     for subfolder in subfolders:
-        print('=' * os.get_terminal_size().columns)
-
         browser_name = subfolder.split('_')[-1]
         browser_data = create_browser_data(test_date_timestamp + "/" + subfolder)  
 
@@ -62,7 +54,6 @@ def main():
 
         print("Integration testing for JShelter starting.")
         print("Testing log files in directory: ", test_date_timestamp + "/" + subfolder)
-        print('=' * os.get_terminal_size().columns)
         print("Browser currently tested:", browser_name)
 
         if "special" in browser_name:
@@ -87,11 +78,8 @@ def main():
                 set_shared_addonRun(value)     
                 print("Addons installed this run: ", get_shared_addonsInstalled())
                       
-                pytest.main(args=['--capture=tee-sys' ])                  
-
-
+                pytest.main(['-s'])                  
 
 if __name__ == "__main__":
     main()
-    print('=' * os.get_terminal_size().columns)
     print("Integration testing ended.")

@@ -37,8 +37,6 @@ def start_server():
 
 ## Start Selenium Grid Nodes as a new processes.
 def start_nodes():
-    #start_node_command = ["java", "-jar", Config.selenium_server_jar_path, "node", "--hub", "https://" + Config.grid_server_ip_address + ":4444/grid/register/", "--selenium-manager true"]
-    #print(start_node_command)
     nodes = []
     if Config.number_of_grid_nodes_on_this_device == 0:
         # Waiting on distributed environment when all Selenium Grid nodes will be running.

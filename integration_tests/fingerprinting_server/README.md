@@ -22,4 +22,4 @@ You can deploy the server using this command:
 ```
 python3 run.py
 ```
-But note that it is deployed defaultly through the `start_testing.py` script after running the container.
+Note that it is deployed defaultly through the `start_testing.py` script after running the container.

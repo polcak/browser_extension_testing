@@ -12,5 +12,5 @@ integration_testing=$(jq -r '.integration_testing' "$client_config")
 
 if [ "$integration_testing" = "true" ]; then
     cd ../test_data
-    python3 start.py
+    unbuffer python3 start.py | tee >(sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" > ./outputs/$(date +'%Y%m%d%H%M%S').log)
 fi

@@ -48,7 +48,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/">FP Central Modified</a>
+              <a class="navbar-brand" href="/">FP Central Modified 2023/2024</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
@@ -56,7 +56,7 @@
                 <li{% if id == active_page %} class="active"{% endif%}><a id="{{ id }}" href="{{ href|e }}">{{ caption|e }}</a></li>
                 {% endfor %}
               </ul>
-              <button type="button" id="pause_button" class="btn btn-default" onclick="toggleExecution()">Pause execution</button>
+
             </div><!--/.nav-collapse -->
         </div>
     </nav>
@@ -69,14 +69,7 @@
         </div>
     </div>
     <script>
-      function toggleExecution() {
-          var button = document.getElementById("pause_button");
-          if (button.innerHTML.trim() === "Pause execution") {
-              button.innerHTML = "Resume execution";
-          } else {
-              button.innerHTML = "Pause execution";
-          }
-      }
+
   </script>
 
     {%- endblock body %}

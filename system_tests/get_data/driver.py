@@ -29,7 +29,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from configuration import Config
 
-
+## Set JShelter level in web browser.
 def set_jsr_level_firefox(driver, level):
     driver.get("about:debugging#/runtime/this-firefox")
     element = WebDriverWait(driver, 10).until(
@@ -91,6 +91,7 @@ def create_driver(browser_type, addon_driver):
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--enable-javascript")
         chrome_options.add_argument("--allow-insecure-localhost")
+        chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
         chrome_options.browserName = 'chrome'
         if version:
@@ -98,13 +99,11 @@ def create_driver(browser_type, addon_driver):
         if addon_driver:
             extension_paths = Config._extensions_dict_chrome
             for extension in tested_extensions:
-                print("installed ", Config._extensions_for_chrome_path + extension_paths[extension])
                 chrome_options.add_extension(Config._extensions_for_chrome_path + extension_paths[extension])
                 if "JS" in extension:
                     with_js = True
         driver = webdriver.Remote(
             command_executor='http://' + Config.grid_server_ip_address + ':4444/wd/hub',
-            #desired_capabilities=d,
             options=chrome_options)
                 
         if with_js:
@@ -123,13 +122,11 @@ def create_driver(browser_type, addon_driver):
 
         driver = webdriver.Remote(
         command_executor='http://' + Config.grid_server_ip_address + ':4444/wd/hub',
-        #desired_capabilities=d,
         options=firefox_options)
 
         if addon_driver:
             extension_paths = Config._extensions_dict_firefox
             for extension in tested_extensions:
-                print("installed ", Config._extensions_for_firefox_path + extension_paths[extension])
                 webdriver.Firefox.install_addon(driver, Config._extensions_for_firefox_path + extension_paths[extension])   
                 if "JS" in extension:
                     with_js = True

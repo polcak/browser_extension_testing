@@ -1,9 +1,6 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2022  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -21,16 +18,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-
 from math_operations import is_in_accuracy
 from shared_set import get_shared_addonRun
 
 import pytest
-
-## Setup method - it is run before time tests execution starts.
-#
-#  This setup method open testing page - it is necessary in Mozilla Firefox.
-#  In Mozilla Firefox: Time is spoofed only when page is opened.
 
 ## Test time accuracy.
 def test_accuracy(addonRun, expected):

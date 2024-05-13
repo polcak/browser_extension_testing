@@ -31,7 +31,6 @@ import io_funcs as io
 import grid
 import driver
 from test_type import TestType
-import datetime
 
 #Edit this if you are not interested in certain logs.
 filter_log_strings = [
@@ -212,7 +211,6 @@ def main():
     if Config.grid_server_ip_address == '172.17.0.1':
         server = grid.start_server()
     nodes = grid.start_nodes()
-    #timestamp = datetime.now().strftime("%d:%m:%H:%M").replace(":", "-")
 
     if Config.grid_server_ip_address == '172.17.0.1':
         try:

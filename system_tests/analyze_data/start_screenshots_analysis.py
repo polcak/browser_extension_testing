@@ -103,25 +103,17 @@ def build_site_screenshots_comparison(site, site_name, site_number, average_colo
 ## Create difference image between screenshot with JShelter and screenshot without JShelter by substracting
 #  one image from another.
 def create_differences_img(site):
-    file_without_addon = "../data/screenshots/" + site + "/without_addon.png"
-    file_with_addon = "../data/screenshots/" + site + "/with_addon.png"
-    
-    if os.path.exists(file_without_addon) and os.path.exists(file_with_addon):      
-        try:
-            screen_without_addon = cv2.imread("../data/screenshots/" + site + "/without_addon.png")
-            screen_with_addon = cv2.imread("../data/screenshots/" + site + "/with_addon.png")
-        except:
-            return None
+
+        screen_without_addon = cv2.imread("../data/screenshots/" + site + "/without_addon.png")
+        screen_with_addon = cv2.imread("../data/screenshots/" + site + "/with_addon.png")
+
         if screen_without_addon is None or screen_with_addon is None:
             return None
-        try:
-            differences = cv2.subtract(screen_with_addon, screen_without_addon)
-            cv2.imwrite("../data/screenshots/" + site + "/differences.png", differences)
-            return cv2.cvtColor(differences, cv2.COLOR_BGR2GRAY)
-        except:
-            return None
-    else:
-        return None
+
+        differences = cv2.subtract(screen_with_addon, screen_without_addon)
+        cv2.imwrite("../data/screenshots/" + site + "/differences.png", differences)
+        return cv2.cvtColor(differences, cv2.COLOR_BGR2GRAY)
+
 
 
 ## Get mean pixel value of given image.

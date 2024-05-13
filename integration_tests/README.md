@@ -13,40 +13,14 @@ Please note that this tool does not serve as an evaluation of a browsers extensi
 
 ## Contents
 Integration testing consists of three main parts:
-- The emulation of a user visiting a site that creates users browser fingerprint. This user could be using either Google Chrome or Mozilla Firefox to access said webpage. They could have no extension or a combination of extensions installed. 
-- A server implementing known techniques used to calculate users fingerprint. The server runs continuously inside the container and gathers data once the simulated client visits its webpage. This data is stored into a JSON file. 
-- After relevant data is gathered by the fingerprinting server and stored in s JSON file, it is compared against the expected results.
+- The emulation of a user visiting a site that creates users browser fingerprint. This user could be using either Google Chrome or Mozilla Firefox to access said webpage. They could have no extension or a combination of extensions installed. Contained in `client_simulator`.
+- A server implementing known techniques used to calculate users fingerprint. The server runs continuously inside the container and gathers data once the simulated client visits its webpage. This data is stored into a JSON file. Contained in `fingerprinting_server`.
+- After relevant data is gathered by the fingerprinting server and stored in s JSON file, it is compared against the expected results. Contained in `test_data`.
+- `outputs` contains attribute data calculated by the server as well as the results of integration testing.
 
 Script `start_testing.sh` is run immediately after creating and executing the container from a Docker image. By default the server is deployed and its outputs are logged into the `server.log` file. The client is initiated using the command:
 ```
 python3 start.py ./example_configs/client.json ./example_configs/server.json
 ```
-The configuration files to be used can be changed. The script also executes integration testing after the data is gathered.
+The configuration files to be used can be changed. 
 
-
-## How to run the container
-### Linux based host
-In order to run the testing you must have `docker engine` installed, NOT `Docker Desktop`. This is due to how it handles display forwarding.
-
-Once you have build the image from the **Dockerfile** in the previous folder, run this command from inside this folder:
-```
-docker run --rm -it -v .:/usr/app/src/ --net=host --env DISPLAY=$DISPLAY --add-host=host.docker.internal:172.17.0.1 --device /dev/snd testing_integration
-```
-This will create a mounted volume so all the output files will persist even after the container is deleted. The output files will be stored in the `fingerprinting_server/outputs` folder.
-
-If you run into privileges issues, try giving `start_testing.sh` execution privileges on the local machine.
-
-```
-sudo chmod +x start_testing.sh
-```
-If you run into display issues, try adding *Docker* to *xhost*:
-```
-sudo xhost +local:docker
-```
-
-### Windows host
-
-Assuming *Docker Desktop* and a *Xserver* are running on the host and you have already built the image, run the container from this folder using command:
-```
-docker run --rm -it --env DISPLAY=host.docker.internal:0.0 -v .:/usr/app/src/ --env PULSE_SERVER=tcp:host.docker.internal  testing_integration
-```

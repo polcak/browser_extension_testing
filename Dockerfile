@@ -21,7 +21,7 @@ ENTRYPOINT ["/usr/app/src/start_testing.sh"]
 FROM base AS integration
 COPY --from=base /bin/ /bin/
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get install -y openssl pulseaudio alsa-base alsa-utils libsndfile1-dev jq
+RUN apt-get install -y openssl pulseaudio alsa-base alsa-utils libsndfile1-dev jq expect-dev colorized-logs
 RUN pip3 install  flask flask_babel pytest pyopenssl regex ndg-httpsclient pyasn1 urllib3 --break-system-packages
 WORKDIR /usr/app/src
 COPY integration_tests ./

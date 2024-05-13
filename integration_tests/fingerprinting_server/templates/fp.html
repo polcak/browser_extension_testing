@@ -92,7 +92,16 @@
         </table>
     </div>
 
-    <!-- Add the canvas fingerprinting section -->
+<!--
+SPDX-FileCopyrightText: 2019 Martin Timko
+SPDX-FileCopyrightText: 2020 Peter Marko
+SPDX-FileCopyrightText: 2020-2021 Libor Polčák
+SPDX-FileCopyrightText: 2021 Matúš Švancár
+SPDX-FileCopyrightText: 2022 Martin Bednář
+
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 <h2>Canvas fingerprinting</h2>
 <h3>window.HTMLCanvasElement.toDataURL() example</h3>
 
@@ -144,7 +153,6 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAA8CAYAAABIFuztAAAgAElEQ
 <p><b>Initial .isPointInStroke test: </b><code id="result">false</code></p>
 <p><b>Initial .isPointInPath test: </b><code id="result1">false</code></p>
 
-
 <br><br><br><hr>
 	<h2>WebGL</h2>
 	<div>
@@ -164,21 +172,11 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAA8CAYAAABIFuztAAAgAElEQ
 	<div id="webglParams">
 		<p id="glversion"><b>GL version: </b></p>
 		<p id="shadingLanguageVersion"><b>Shading language version: </b></p>
-		<p id="vendor"><b>Vendor: </b></p>
-		<p id="unmaskedVendor"><b>Unmasked vendor: </b></p>
-		<p id="renderer"><b>Renderer: </b></p>
-		<p id="unmaskedRenderer"><b>Unmasked renderer: </b></p>
-		<ul id="webGLFarbledMax"></ul>
 	</div>
 	<div id="webglExtensions">
 		<h3>Enabled WebGL extenstions:</h3>
 		<ul id="extensionList"></ul>
 	</div>
-	<div id="webglPrecisions">
-		<h3>WebGL shader precisions:</h3>
-		<ul id="precisionList"></ul>
-	</div>
-	<br><br><br>
 	<hr>
 
     
@@ -200,21 +198,11 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAA8CAYAAABIFuztAAAgAElEQ
 		<div id="byte_time_result"></div>
 	</div>
 	<button id="play">Test audio</button>
-	<br><br><br>
 	<hr>
 
-    <h2>Arrays</h2>
-    <div id="arrays">
-       <h3>crypto.getRandomValues:</h3>
-       <ul id="getRandomValues">
-       </ul>
-    </div>
-    <br><br><hr>
-    
     <!-- Load the FP Central API -->
     <script type="text/javascript" src="{{ url_for('static', filename="js/clientAPI.js") }}"></script> 
     <script type="text/javascript" src="{{ url_for('static', filename="js/canvas.js") }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename="js/arrays.js") }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename="js/webgl.js") }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename="js/audio.js") }}"></script>
 
@@ -226,10 +214,7 @@ src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAA8CAYAAABIFuztAAAgAElEQ
     <!-- Here the webpage automatically runs JavaScript tests -->
     <script type="text/javascript">
     function process() {
-        // alert('Hello')
-        getArrays();
         api.run();
-        //api.send();
     }
     window.onload = process(); 
     </script>

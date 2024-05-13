@@ -14,7 +14,7 @@ for the test.
 The definition file includes:
 * the name of the attribute
 * the description of the attribute
-* the name of the stored variables in an array. This way, one script can store more than a single value.
+* the name of the stored variables in an array. This way, one script can store more than a single value. If the array is empty, the calculated attribute will be stored in an output JSON file but it won"t be displayed on the visited page.
 * the name of the test files in an array,
 * (Optional) the computation of a hash for this attribute,
 * (Optional) an URL to a webpage with more information on the attribute or
@@ -31,7 +31,7 @@ in a JSON object: `{ "att1":X, "att2":Y, ...}`.
 **Example**
 
 *platform.json*
-```javascript
+```json
 {
   "name" : "Platform",
   "description" : "A string representing the platform on which the browser is running. This attribute is collected through JavaScript via the 'navigator' object.",

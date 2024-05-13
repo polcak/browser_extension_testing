@@ -23,13 +23,11 @@ def test_pet(exp, browser, pet, server_config, delay):
             data = json.load(f)
             fp_sites, proxy_setting = get_server_attributes(data)
 
-        print("configure the browser")
         unit = sim_browser(browser, pet, proxy_setting)
 
         if "NBS" in pet[0] or "DLS" in pet[0]:
             sys.stdout.write("\n")
             sys.stdout.flush()
-            print("exit")
             cleanup_browser(unit)
             return
 
@@ -41,7 +39,6 @@ def test_pet(exp, browser, pet, server_config, delay):
         sys.stdout.write("\n")
         sys.stdout.flush()
 
-        print("exit")
         cleanup_browser(unit)
     except Exception as e:
         print(e)
@@ -57,9 +54,6 @@ def cleanup_browser(unit):
     unit.quit()
 
 if __name__ == '__main__':
-    if(len(sys.argv) != 9):
-        print("Call as follows: python start_pet.py <exp> <browser> <pet> <server_config>")
-        sys.exit(0)
     EXP = sys.argv[1]
     BROWSER = sys.argv[2]
     PET = sys.argv[3]

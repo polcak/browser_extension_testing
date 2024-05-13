@@ -3,50 +3,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 var gl;
-var shaderTypes = ["FRAGMENT_SHADER", "VERTEX_SHADER"];
-var precisionTypes = ["LOW_FLOAT", "MEDIUM_FLOAT", "HIGH_FLOAT", "LOW_INT", "MEDIUM_INT", "HIGH_INT"];
-const FARBLEDPARAMSMAX = [
-	"MAX_VERTEX_UNIFORM_COMPONENTS",
-	"MAX_VERTEX_UNIFORM_BLOCKS",
-	"MAX_VERTEX_OUTPUT_COMPONENTS",
-	"MAX_VARYING_COMPONENTS",
-	"MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS",
-	"MAX_FRAGMENT_UNIFORM_COMPONENTS",
-	"MAX_FRAGMENT_UNIFORM_BLOCKS",
-	"MAX_FRAGMENT_INPUT_COMPONENTS",
-	"MAX_UNIFORM_BUFFER_BINDINGS",
-	"MAX_COMBINED_UNIFORM_BLOCKS",
-	"MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS",
-	"MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS",
-	"MAX_UNIFORM_BLOCK_SIZE",
-	"MAX_VERTEX_ATTRIBS",
-	"MAX_VERTEX_UNIFORM_VECTORS",
-	"MAX_VERTEX_TEXTURE_IMAGE_UNITS",
-	"MAX_TEXTURE_SIZE",
-	"MAX_CUBE_MAP_TEXTURE_SIZE",
-	"MAX_3D_TEXTURE_SIZE",
-	"MAX_ARRAY_TEXTURE_LAYERS",
-]
 
-function getShaderPrecision(gl, shaderType, precisionType) {
-	var shaderPrecision = gl.getShaderPrecisionFormat(gl[shaderType], gl[precisionType]);
-	return "rangeMin: " + shaderPrecision.rangeMin + " rangeMax: " + shaderPrecision.rangeMax + " precision: " + shaderPrecision.precision;
-}
 
 function getWebGLData(gl) {
 	gl.getExtension('WEBGL_debug_renderer_info');
-	var uvendor = gl.getParameter(0x9245);
-	var urenderer = gl.getParameter(0x9246);
-	var vendor = gl.getParameter(0x1F00);
-	var renderer = gl.getParameter(0x1F01);
 	var glversion = gl.getParameter(gl.VERSION);
 	var shadingLanguageVersion = gl.getParameter(gl.SHADING_LANGUAGE_VERSION);
 	document.getElementById('glversion').innerHTML += glversion;
 	document.getElementById('shadingLanguageVersion').innerHTML += shadingLanguageVersion;
-	document.getElementById('vendor').innerHTML += vendor;
-	document.getElementById('renderer').innerHTML += renderer;
-	document.getElementById('unmaskedVendor').innerHTML += uvendor;
-	document.getElementById('unmaskedRenderer').innerHTML += urenderer;
 	var ul = document.getElementById('extensionList');
 	var extensions = gl.getSupportedExtensions();
 	if (extensions) {
@@ -56,26 +20,6 @@ function getWebGLData(gl) {
 			li.appendChild(document.createTextNode(extension));
 			ul.appendChild(li);
 		}
-	}
-	var ul = document.getElementById('precisionList');
-	for (var i = 0; i < shaderTypes.length; i++) {
-		var shaderType = shaderTypes[i];
-		for (var j = 0; j < precisionTypes.length; j++) {
-			var precisionType = precisionTypes[j];
-			var shaderPrecision = getShaderPrecision(gl, shaderType, precisionType);
-			var li = document.createElement('li');
-			var span = document.createElement('span');
-			li.appendChild(span);
-			span.innerHTML = shaderType + " " + precisionType + " : ";
-			li.appendChild(document.createTextNode(shaderPrecision));
-			ul.appendChild(li);
-		}
-	}
-	var ul = document.getElementById('webGLFarbledMax');
-	for (param of FARBLEDPARAMSMAX) {
-		var li = document.createElement('li');
-		li.innerHTML = `${param}: ${gl.getParameter(gl[param])}`;
-		ul.appendChild(li);
 	}
 }
 

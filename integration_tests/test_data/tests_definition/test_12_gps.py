@@ -1,9 +1,6 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2021  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -22,16 +19,9 @@
 #
 
 import pytest
-from time import time
 from shared_set import get_shared_addonRun
 	
 from math_operations import is_in_accuracy, calc_distance
-
-## Setup method - it is run before gps tests execution starts.
-#
-#  This setup method initialize variable position that contains current data about position and
-#  this variable is provided to gps tests and values in position variable are compared with expected values.
-
 
 ## Test accuracy of the latitude and longitude properties in meters.
 

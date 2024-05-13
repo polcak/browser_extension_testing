@@ -10,7 +10,6 @@ from functools import wraps
 import env_config as config
 import json
 import hashlib
-import sys
 import os
 import time
 import re

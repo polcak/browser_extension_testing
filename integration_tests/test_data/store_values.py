@@ -1,17 +1,37 @@
+#
+#  Copyright (C) 2024  Jana Petranova
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+## During testing multiple runs can be tested.
+#  Variable _shared_browser is for testing all runs in one browser.
+#  Variable _noaddon represents attribute values calculated while no extension was installed.
+#  Variable _addonRun represents attribute values calculated while a combination of extensions was installed.
+#  Variable _level is set if JShelter was installed and represents selected testing level.
+#  Variable _addonsInstalled is a list of extensions installed during the tested visit.
+
 import json
 import os
 from values_tested import TestedValues
 
-def read_browsers(file_path):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-        testing = data.get('integration_testing')
-        if not testing:
-             return False
-        else:
-            return True
-
-
+'''
+Read an output JSON file. If you are interested in testing for more attributes, you can get them
+out of the file in this function.
+'''
 def read_data(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -90,16 +110,12 @@ def read_data(file_path):
     except Exception as e:
         print("An error occurred:", e)
 
-
+'''
+Gather data from server output files and mark them based on extensions used.
+'''
 def create_browser_data(subfolder):
 
     results = os.path.join('/usr/app/src/fingerprinting_server/outputs', subfolder)
-    
-    start_testing = read_browsers('/usr/app/src/client_simulator/example_configs/client.json')
-
-    if not start_testing:
-         return False
-    
     testing_data = []
 
     for filename in os.listdir(results):

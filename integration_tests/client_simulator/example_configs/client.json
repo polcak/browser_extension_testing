@@ -8,5 +8,5 @@
         },
     "delay": 35,
     "mode": "threaded",
-    "integration_testing": false
+    "integration_testing": true
 }

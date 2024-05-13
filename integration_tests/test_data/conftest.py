@@ -1,10 +1,7 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2020  Martin Bednar
 #  Copyright (C) 2021  Matus Svancar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -23,13 +20,9 @@
 #
 
 import pytest
-import logging
-import datetime
-import sys
 
 from shared_set import get_shared_noaddon, get_shared_addonRun, get_shared_addonsInstalled, get_shared_browser, get_shared_level
 import  values_expected 
-
 
 ## This module is automatically called by pytest before start executing tests.
 #
@@ -55,6 +48,8 @@ def browser():
 @pytest.fixture(scope="session", autouse=True)
 def expected():
     addonsTested = get_shared_addonsInstalled()
+    # The way the testing is set up right now is to always pick JShelter values as expected values if JShelter was tested in any setting.
+    # This is to save space in the values_expected.py file but can be changed any time, just delete the following if statement.
     if "JS" in addonsTested:
         js_level = get_shared_level()
         exp = "JS_" + str(js_level)

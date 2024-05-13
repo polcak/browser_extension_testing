@@ -94,9 +94,9 @@ class Config(metaclass=MetaConfig):
     # IP address of Selenium Grid server in distributed environment.
     _grid_server_ip_address = '172.17.0.1'
     # Number of Selenium Grid nodes on this device.
-    _number_of_grid_nodes_on_this_device = 1
+    _number_of_grid_nodes_on_this_device = 3
     # Degree of paralelism. It should be the same number as total number of grid nodes.
-    _number_of_concurrent_sites_testing = 1
+    _number_of_concurrent_sites_testing = 3
 
     # Timeout during loading one site in seconds.
     _get_page_data_timeout = 240

@@ -2,7 +2,6 @@ import sys
 import json
 from start_visit.start_pet import test_pet 
 import concurrent.futures
-import time
 
 def start_native_threaded(exp, browsers, pets, server_config, delay):
         with concurrent.futures.ThreadPoolExecutor() as executor:

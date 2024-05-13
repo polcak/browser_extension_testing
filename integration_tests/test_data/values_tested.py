@@ -5,6 +5,7 @@
 #
 #  Copyright (C) 2020  Martin Bednar
 #  Copyright (C) 2021  Matus Svancar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #

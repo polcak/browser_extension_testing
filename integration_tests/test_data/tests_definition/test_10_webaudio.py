@@ -1,10 +1,7 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2021  Matus Svancar
 #  Copyright (C) 2022  Libor Polčák
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -24,12 +21,6 @@
 import pytest
 import numpy as np
 from shared_set import get_shared_level, get_shared_addonRun
-
-## AudioContext and AnalyserNode tests
-##
-## All of these tests fail in Google Chrome on JShelter level 3 - expected failure because of known bug:
-## selenium.common.exceptions.JavascriptException: Message: javascript error:
-## Failed to execute 'getRandomValues' on 'Crypto': parameter 1 is not of type 'ArrayBufferView'.
 
 
 def assertNotEqualNumbersInTexts(spoofed, orig, max_similarity = 0.05):

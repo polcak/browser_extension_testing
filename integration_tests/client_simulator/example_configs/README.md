@@ -17,6 +17,10 @@ A JSON file that sets attributes for the experiment:
 
 * *pets*: a dictionary where the key is a browser and the value is a list of lists of extensions to test on that browser. That means more extensions can be installed during a single run. Extension name "None" stands for a run with no extensions installed. **Please note that the integration testing works based on comparing values gathered during a run with no extensions installed and runs with extensions installed. A run with the "None" extension must always exist in order to perform integration testing and it must always come first before any other runs in the *pets* list.**
 
+* *delay*: defines how long should the page visit take in seconds.
+
+* *mode*: use `interactive` if you'd like to see the visits happen sqeuntially. Use `threaded` for parallel visits.
+
 * *integration_testing*: a bool value indicating whether integration testing should start right after the data gathering is complete. 
 
 ### How to select a browser version
