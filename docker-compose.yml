@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  testing_system:
+  testing_system_windows:
     build:
       context: .
       target: system
@@ -9,10 +9,13 @@ services:
     volumes:
       - ./system_tests/data:/usr/app/src/data
 
-  testing_integration:
+  testing_integration_windows:
     build:
       context: .
       target: integration
+    environment:
+      - DISPLAY=host.docker.internal:0.0
+      - PULSE_SERVER=tcp:host.docker.internal
     volumes:
       - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
@@ -30,3 +33,15 @@ services:
       - "host.docker.internal:172.17.0.1"
     devices:
       - "/dev/snd"
+
+  testing_system_linux:
+    build:
+      context: .
+      target: system
+    network_mode: host
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - ./system_tests/data:/usr/app/src/data

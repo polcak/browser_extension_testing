@@ -22,20 +22,20 @@ The **Dockerfile** takes advangate of multi-stage builds. The overlap of technol
 ### How to build an image and run a container for integration testing
 To build the image and run the container on *Linux* host, run the following command:
 ```bash
-docker-compose run --rm --env DISPLAY=$DISPLAY --add-host=host.docker.internal:172.17.0.1 --device /dev/snd --service-ports testing_integration
+docker-compose run --rm --service-ports testing_integration_linux
 ```
 In order to build an image and run a container for integration testing on *Windows* host (assuming *Docker Desktop*, *Xserver* and *Pulseaudio* are running), use this command:
 ```bash
-docker-compose run --rm --env DISPLAY=host.docker.internal:0.0 --env PULSE_SERVER=tcp:host.docker.internal --service-ports testing_integration
+docker-compose run --rm --service-ports testing_integration_windows
 ```
 ### How to build an image and run a container for system testing
 To build the image and run the container on *Linux* host, run the following command:
 ```bash
-docker-compose run --rm --env DISPLAY=$DISPLAY --add-host=host.docker.internal:172.17.0.1 --service-ports testing_system
+docker-compose run --rm --service-ports testing_system_linux
 ```
 In order to build an image and run a container for system testing on *Windows* host (assuming *Docker Engine* is running), use this command:
 ```bash
-docker-compose run --rm  --env DISPLAY=host.docker.internal:0.0 --service-ports testing_system
+docker-compose run --rm --service-ports testing_system_windows
 ```
 If you run into privileges issues on *Linux*, try giving both `start_testing.sh` scripts execution privileges on the local machine.
 
