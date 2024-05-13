@@ -27,6 +27,7 @@ services:
     volumes:
       - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
+      - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
       - DISPLAY=${DISPLAY}
     extra_hosts:
@@ -45,3 +46,4 @@ services:
       - DISPLAY=${DISPLAY}
     volumes:
       - ./system_tests/data:/usr/app/src/data
+      - /tmp/.X11-unix:/tmp/.X11-unix
