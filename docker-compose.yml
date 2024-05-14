@@ -37,13 +37,14 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./integration_tests/client_simulator/example_configs/client.json:/usr/app/src/client_simulator/example_configs/client.json
       - ./integration_tests/client_simulator/example_configs/server.json:/usr/app/src/client_simulator/example_configs/server.json
+      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
+      - ~/.config/pulse/cookie:/root/.config/pulse/cookie
     environment:
       - DISPLAY=${DISPLAY}
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
     privileged: true
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
-    devices:
-      - /dev/snd:/dev/snd
 
   testing_system_linux:
     build:
@@ -59,3 +60,4 @@ services:
       - ./system_tests/data:/usr/app/src/data
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./system_tests/get_data/configuration.py:/usr/app/src/get_data/configuration.py
+

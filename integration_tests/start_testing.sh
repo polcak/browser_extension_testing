@@ -1,4 +1,5 @@
 #!/bin/bash
+
 client_config="./example_configs/client.json"
 server_config="./example_configs/server.json"
 
