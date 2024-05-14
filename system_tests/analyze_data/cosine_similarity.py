@@ -54,14 +54,14 @@ def cosine_sim_vectors(vec1, vec2):
 
 
 ## Check if log was added by JShelter. Check with Cosine similarity method.
-def was_log_added(log, logs_without_jsr):
-    for log_without_jsr in logs_without_jsr:
-        if log_without_jsr['level'] == log['level']:
-            if log_without_jsr['source'] == log['source']:
+def was_log_added(log, logs_without_addon):
+    for log_without_addon in logs_without_addon:
+        if log_without_addon['level'] == log['level']:
+            if log_without_addon['source'] == log['source']:
                 # When logs have the same level and the same source, let's check if they have similar message too.
                 # This check is based on Cosine Similarity.
                 # It tells cosine of angle between two strings represented as vectors.
-                vectorizer = CountVectorizer().fit_transform([clean_string(log_without_jsr['message']), clean_string(log['message'])])
+                vectorizer = CountVectorizer().fit_transform([clean_string(log_without_addon['message']), clean_string(log['message'])])
                 vectors = vectorizer.toarray()
                 # Cosine similarity calculated from two vectors.
                 csim = cosine_sim_vectors(vectors[0], vectors[1])

@@ -1,7 +1,27 @@
-import time                                 # for sleeping for a given duration
-import sys                                  # some prints, exit
-import os                                   # for running  os
-from selenium import webdriver              # for running the driver on websites
+#
+#  Copyright (C) 2019  Amit Datta
+#  Copyright (C) 2024  Jana Petranova
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+import time                                 
+import sys                                 
+import os                                   
+from selenium import webdriver             
 
 from selenium.common.exceptions import WebDriverException
 from selenium.common.exceptions import TimeoutException
@@ -14,6 +34,12 @@ from .client_side_tests.NBS_settings_test import *
 
 """
 In case Selenium Manager times out, try to downlaod the browser driver again.
+
+    firefox_options : options from the Webdriver library
+
+    ------------------------------------------------------
+
+    driver : Webdriver object
 """
 def create_webdriver(firefox_options):
     try:
@@ -28,6 +54,14 @@ def create_webdriver(firefox_options):
 
 """
 Find JShelter Options Page. Must be done seperately for both Firefox and Chrome.
+    browser : str
+        Browser type.
+    driver : Webdriver object
+
+    ------------------------------------------------------
+
+    options_page : str
+        JShelter options page.
 """
 def find_jshelter_options_page(browser, driver):
     options_page = None
@@ -35,7 +69,7 @@ def find_jshelter_options_page(browser, driver):
         #Change the JShelter level in Firefox.       
         driver.get("about:debugging#/runtime/this-firefox")
         time.sleep(0.5)
-        element = WebDriverWait(driver, 10).until(
+        element = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located(("xpath", "//span[@title='JShelter']"))
         )
         parent_li = element.find_element("xpath", "./..")
@@ -46,7 +80,7 @@ def find_jshelter_options_page(browser, driver):
     if "chrome" in browser:
         #Change the JShelter level in Chrome.  
         driver.get("chrome://extensions/")
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
         manager_shadow_root = driver.execute_script('return document.querySelector("extensions-manager").shadowRoot')
         toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
         dev_mode_toggle = driver.execute_script('return arguments[0].shadowRoot.querySelector("#devMode")', toolbar)
@@ -134,6 +168,18 @@ class PetConfig:
     """
     Retrieve the extension files so they could be installed. Also check if JShelter is being tested, so it could be set up later. This could be configured
     by developers to activate their own extension settings.
+
+        my_pets : [str]
+            List of extensions to test.
+        my_browser : str
+            Name and version of the browser.
+        
+        ------------------------------------------------------
+
+        totalPaths : [str]
+            List of extension files locations.
+        JSlevel : str
+            The level of JShelter to be tested.
     """
     def getExtensionsPath(self,my_pets,my_browser):
 
@@ -167,7 +213,17 @@ class PetConfig:
         else:
             return totalPaths, None 
 
+'''
+Class representing a browser instance.
+
+    browser : str
+        Name and version of the browser.
+    pets : [str]
+        List of extensions to test.
+    proxy_settings : dict
+        Proxy settings for the browser.
     
+'''
 class Browser:
     
     def __init__(self, browser, pet, proxy_setting):
@@ -202,7 +258,7 @@ class Browser:
         #The set up for individual extensions on individual browsers can vary immensely, it's not really possible to create a uniform function.
         #This is due to the set up being executed client-side, different set up pages can have different DOM model on different browsers. 
         #Also the way browsers name installed extensions is inconsistent. 
-        #So its up to the developer to do their own set up.
+        #So it's up to the developer to do their own set up.
 
         totalPaths, config, *JSlevel = pet_config.getExtensionsPath(pet,browser)
         
@@ -237,7 +293,7 @@ class Browser:
 
             self.driver = create_webdriver(firefox_options)
 
-
+            #Install extensions.
             if (totalPaths != "No addons to install"):
                 for addon in totalPaths:     
                     if "ghostery" in addon.lower():      
@@ -253,7 +309,7 @@ class Browser:
                     self.driver.switch_to.window(window_handle)
                     if self.driver.title == "Welcome to Ghostery":
                         try:
-                            element = WebDriverWait(self.driver, 10).until(
+                            element = WebDriverWait(self.driver, 30).until(
                                 EC.presence_of_element_located(("xpath", "/html/body/ui-onboarding-short/ui-onboarding-layout/ui-onboarding-short-main-view/ui-onboarding-card/div[2]/div[2]/ui-button"))
                             )
                             element.click()
@@ -277,7 +333,7 @@ class Browser:
                     return
 
                 self.driver.get(options_page)
-                select_level = WebDriverWait(self.driver, 10).until(
+                select_level = WebDriverWait(self.driver, 30).until(
                     EC.presence_of_element_located(("id", "level-" + str(JSlevel[0])))
                     )
                 select_level.click()
@@ -288,6 +344,7 @@ class Browser:
             chrome_options = webdriver.ChromeOptions()
             setup_socks5_proxy("chrome", chrome_options, proxy_setting)
 
+            #Install extensions.
             if (totalPaths):
                 for addon in totalPaths:
                     if "ghostery" in addon.lower():      
@@ -315,7 +372,7 @@ class Browser:
                     self.driver.switch_to.window(window_handle)
                     if self.driver.title == "Welcome to Ghostery":
                         try:
-                            element = WebDriverWait(self.driver, 10).until(
+                            element = WebDriverWait(self.driver, 30).until(
                                 EC.presence_of_element_located(("xpath", "/html/body/ui-onboarding/ui-onboarding-layout/ui-onboarding-main-view/ui-onboarding-card/div[2]/div[2]/ui-button[1]"))
                             )
                             element.click()
@@ -336,7 +393,7 @@ class Browser:
                 
                 self.driver.get(options_page)
                 time.sleep(1)
-                select_level = WebDriverWait(self.driver, 10).until(
+                select_level = WebDriverWait(self.driver, 30).until(
                     EC.presence_of_element_located(("id", "level-" + str(JSlevel[0])))
                     )
                 select_level.click()
@@ -352,9 +409,15 @@ class Browser:
         except:
             self.driver.close() 
 
+    """
+    Visits all pages in site_list with delay
 
+        site_list : [str]
+            List of sites to visit.
+        delay : int
+            Time spent on test page.
+    """
     def visit_sites(self, site_list, delay): 
-        """Visits all pages in site_list with delay"""
         for site in site_list:
             self.driver.set_page_load_timeout(delay + 60)
             sys.stdout.write(".")

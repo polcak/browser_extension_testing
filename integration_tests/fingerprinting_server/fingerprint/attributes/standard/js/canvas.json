@@ -1,6 +1,6 @@
 {
   "name" : "canvas",
-  "description" : "hash of the canvas fingerprint of the user's browser",
+  "description" : "Information about users canvas.",
   "files" : ["canvas.js"],
   "variables" :[
                 "canvas.spoof",

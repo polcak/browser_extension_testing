@@ -17,12 +17,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-## During testing multiple runs can be tested.
-#  Variable _shared_browser is for testing all runs in one browser.
-#  Variable _noaddon represents attribute values calculated while no extension was installed.
-#  Variable _addonRun represents attribute values calculated while a combination of extensions was installed.
-#  Variable _level is set if JShelter was installed and represents selected testing level.
-#  Variable _addonsInstalled is a list of extensions installed during the tested visit.
 
 import json
 import os

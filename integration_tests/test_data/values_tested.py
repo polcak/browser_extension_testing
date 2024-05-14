@@ -23,8 +23,6 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-## Module define class which contains variables that are tested.
-
 
 class Navigator:
     def __init__(self,
@@ -52,9 +50,6 @@ class Navigator:
         self.mimeTypes = mimeTypes
 
 
-
-## Variables about geolocation that are checked during testing.
-        
 class Geolocation:
     def __init__(self,
                  accuracy=None,
@@ -75,9 +70,6 @@ class Geolocation:
         self.speed = speed
         self.timestamp = timestamp
         self.valid = valid
-
-
-## Variables about device that are checked during testing.
 
 class Device:
     def __init__(self,
@@ -107,7 +99,6 @@ class Audio:
         self.float_time_domain = float_time_domain
         self.byte_frequency = byte_frequency
         self.float_frequency = float_frequency
-## Variables about audio that are checked during testing.
 
 ## All variables that are checked during testing.
 class TestedValues:

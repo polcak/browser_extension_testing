@@ -1,9 +1,6 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2020  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -100,7 +97,7 @@ def build_site_screenshots_comparison(site, site_name, site_number, average_colo
     return output
 
 
-## Create difference image between screenshot with JShelter and screenshot without JShelter by substracting
+## Create difference image between screenshot with exensions and screenshot without exensions by substracting
 #  one image from another.
 def create_differences_img(site):
 

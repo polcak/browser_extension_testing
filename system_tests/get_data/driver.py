@@ -4,6 +4,7 @@
 #  internet.
 #
 #  Copyright (C) 2020  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -48,29 +49,21 @@ def set_jsr_level_firefox(driver, level):
 ## Set JShelter level in web browser.
 def set_jsr_level_chrome(driver, level):
     extension_id = None
-
     driver.get("chrome://extensions/")
-    manager = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located(("xpath", "/html/body/extensions-manager"))
-                )
-    manager_shadow_root = driver.execute_script('return arguments[0].shadowRoot', manager)
+    WebDriverWait(driver, 30).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
+    manager_shadow_root = driver.execute_script('return document.querySelector("extensions-manager").shadowRoot')
     toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
-    toggle_shadow_root = driver.execute_script('return arguments[0].shadowRoot', toolbar)
-    dev_mode_toggle = toggle_shadow_root.find_element("css selector",'cr-toggle#devMode')
+    dev_mode_toggle = driver.execute_script('return arguments[0].shadowRoot.querySelector("#devMode")', toolbar)
     dev_mode_toggle.click()
     sleep(1)
-    container = manager_shadow_root.find_element("css selector", "#container")
-    view = container.find_element("css selector", "#viewManager")
-    items = view.find_element("css selector", "#items-list")
-    items_shadow_root = driver.execute_script('return arguments[0].shadowRoot', items)
-    items_container = items_shadow_root.find_element("css selector", "#content-wrapper > div:nth-child(4)")
+    container = manager_shadow_root.find_element("css selector", "#container #viewManager #items-list")
+    items_container = driver.execute_script('return arguments[0].shadowRoot.querySelector("#content-wrapper > div:nth-child(4)")', container)
     extensions_items = items_container.find_elements("tag name","extensions-item")
     for item in extensions_items:
-        item_shadow_root = driver.execute_script('return arguments[0].shadowRoot', item)
-        item_text_content = item_shadow_root.find_element("css selector", "#name")    
-        if item_text_content.get_attribute('innerHTML') == "JShelter":
-             extension_id = item.get_attribute("id")
-    options_page = f"chrome-extension://{extension_id}/options.html"
+        item_text_content = driver.execute_script('return arguments[0].shadowRoot.querySelector("#name").innerText', item)
+        if item_text_content == "JShelter":
+            extension_id = item.get_attribute("id")
+    options_page = f"chrome-extension://{extension_id}/options.html" 
     driver.get(options_page)
     select_level = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located(("id", "level-" + str(level)))

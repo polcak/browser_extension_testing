@@ -1,8 +1,4 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2020  Martin Bednar
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -21,7 +17,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-## Check if log was added by JShelter. Check with Simple method (equality of text strings).
+## Check if log was added by extension. Check with Simple method (equality of text strings).
 def was_log_added(log, logs_without_addon):
     for log_without_addon in logs_without_addon:
         if log_without_addon['level'] == log['level']:

@@ -1,3 +1,29 @@
+/*
+#  JShelter is a browser extension which increases level
+#  of security, anonymity and privacy of the user while browsing the
+#  internet.
+#
+#  Copyright (C) 2022  Libor Polčák
+#  Copyright (C) 2022  Martin Bednar
+#  Copyright (C) 2020  Peter Hornak
+#  Copyright (C) 2024  Jana Petranova
+#
+#  SPDX-License-Identifier: GPL-3.0-or-later
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/ 
+
 BigInt.prototype.toJSON = function() { 
     return this.toString() + "n"; /* Used by deepEqual below, this generates an invalid JSON file but it does not matter for the test cases */ 
   }; 

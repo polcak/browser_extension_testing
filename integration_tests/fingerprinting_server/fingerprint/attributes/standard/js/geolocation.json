@@ -1,6 +1,6 @@
 {
     "name" : "Geolocation",
-    "description" : "User's latitude and longitude",
+    "description" : "User's geolocation information",
     "files" : ["geolocation.js"],
     "variables" : [ "geolocation.accuracy",
                     "geolocation.altitude",

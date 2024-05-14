@@ -4,6 +4,7 @@
 #  internet.
 #
 #  Copyright (C) 2020  Martin Bednar
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -83,7 +84,7 @@ class Config(metaclass=MetaConfig):
     # Relative or absolute path to top sites csv file.
     _sites_to_test_csv_path = './top_sites/tranco.csv'
     # Number of sites from beggining of the top sites list taken for testing.
-    _number_of_sites_for_testing = 80
+    _number_of_sites_for_testing = 100
     # Run tests in this browsers.
     _tested_browsers = ["chrome=stable"]
     # Run tests with JShelter on this level.
@@ -143,4 +144,4 @@ class Config(metaclass=MetaConfig):
     }
     #Use extensions ABs from the dictionary above here if you want to install
     #them during the run.
-    _extensions_to_test = ["JS", "DE"]
+    _extensions_to_test = ["JS", "DDGPE"]

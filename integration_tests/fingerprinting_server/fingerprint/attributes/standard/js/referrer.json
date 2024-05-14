@@ -1,6 +1,6 @@
 {
-    "name" : "JShelter referrer",
-    "description" : "Needed for tests",
+    "name" : "Referrer",
+    "description" : "Returns referring page",
     "files" : ["referrer.js"],
     "variables" : [],
     "hash" : "False"

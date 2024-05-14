@@ -1,6 +1,6 @@
 {
     "name" : "Navigator info",
-    "description" : "Needed for tests",
+    "description" : "Navigator attribuetes.",
     "files" : ["navigator.js"],
     "variables" : ["navigator.userAgent", 
                    "navigator.appVersion", 

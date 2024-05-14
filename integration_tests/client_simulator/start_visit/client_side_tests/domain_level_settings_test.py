@@ -3,7 +3,8 @@
 #  of security, anonymity and privacy of the user while browsing the
 #  internet.
 #
-#  Copyright (C) 2022  Martin Bednar, 2024 Jana Petranova
+#  Copyright (C) 2022  Martin Bednar 
+#  Copyright (C) 2024  Jana Petranova
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #

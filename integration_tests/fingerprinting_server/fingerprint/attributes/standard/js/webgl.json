@@ -1,6 +1,6 @@
 {
     "name" : "webgl",
-    "description" : "WebGL tests",
+    "description" : "WebGL info",
     "files" : ["webgl.js"],
     "variables": [
       "WebGL.webglVendor",

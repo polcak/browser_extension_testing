@@ -1,8 +1,4 @@
 #
-#  JShelter is a browser extension which increases level
-#  of security, anonymity and privacy of the user while browsing the
-#  internet.
-#
 #  Copyright (C) 2020  Martin Bednar
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
@@ -23,7 +19,7 @@
 
 import Levenshtein
 
-## Check if log was added by JShelter. Check with Levenshtein distance method.
+## Check if log was added by extension. Check with Levenshtein distance method.
 def was_log_added(log, logs_without_addon):
     for log_without_addon in logs_without_addon:
         if log_without_addon['level'] == log['level']:
@@ -37,7 +33,7 @@ def was_log_added(log, logs_without_addon):
                 # How many percent of strings are similar
                 percentage_similarity = (message_length - levenshtein_dst) / message_length
                 if percentage_similarity > 0.6:
-                    # If similarity of logs is too high, tested log was not added by JShelter.
-                    # It is issue already existing in page even without JShelter.
+                    # If similarity of logs is too high, tested log was not added by extension.
+                    # It is issue already existing in page even without extension.
                     return False
     return True

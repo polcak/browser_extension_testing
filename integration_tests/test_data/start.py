@@ -23,13 +23,14 @@ import re
 import os
 import datetime
 from store_values import create_browser_data
-from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled, get_shared_addonsInstalled
+from shared_set import set_shared_noaddon, set_shared_addonRun, set_shared_level, set_shared_browser, set_shared_addonsInstalled
 
 def sort_extensions(addonsTested):
     extensions = addonsTested.split("-")
     sorted_extensions = sorted(extensions)
     sorted_addonsTested = '_'.join(sorted_extensions)
-    return sorted_addonsTested
+    extensions_listing = ', '.join(sorted_extensions)
+    return sorted_addonsTested, extensions_listing
 
 ## Main module - it starts and control testing.
 #
@@ -49,10 +50,10 @@ def main():
         browser_data = create_browser_data(test_date_timestamp + "/" + subfolder)  
 
         if not browser_data:
-            print("Integration testing skipped.")
+            print("Integration testing skipped, no data found")
             exit(0)
 
-        print("Integration testing for JShelter starting.")
+        print("Integration testing starting.")
         print("Testing log files in directory: ", test_date_timestamp + "/" + subfolder)
         print("Browser currently tested:", browser_name)
 
@@ -67,7 +68,7 @@ def main():
 
 
         for value in browser_data[1:]:     
-                sorted_addonsTested = sort_extensions(value.addons)      
+                sorted_addonsTested, soretd_names = sort_extensions(value.addons)      
                 set_shared_addonsInstalled(sorted_addonsTested)           
                 if "JS" in sorted_addonsTested:
                     js_level = re.search(r'\d+', sorted_addonsTested).group(0)
@@ -76,7 +77,7 @@ def main():
                 else:
                     set_shared_level(0)               
                 set_shared_addonRun(value)     
-                print("Addons installed this run: ", get_shared_addonsInstalled())
+                print("Addons installed this run: ", soretd_names)
                       
                 pytest.main(['-s'])                  
 

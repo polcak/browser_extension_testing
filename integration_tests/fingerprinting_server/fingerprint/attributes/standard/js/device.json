@@ -1,6 +1,6 @@
 {
     "name" : "device",
-    "description" : "Needed for tests",
+    "description" : "Device memory and harware concurrency",
     "files" : ["device.js"],
     "variables" : ["device.deviceMemory", "device.hardwareConcurrency"],
     "hash" : "False"
