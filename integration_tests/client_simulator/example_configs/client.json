@@ -6,7 +6,7 @@
         "chrome=stable": [["None"], ["JS_2"]]
         
     },
-    "delay": 35,
-    "mode": "threaded",
+    "delay": 45,
+    "mode": "interactive",
     "integration_testing": true
 }
