@@ -24,8 +24,7 @@ services:
     volumes:
       - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
-      - ./integration_tests/client_simulator/example_configs/client.json:/usr/app/src/client_simulator/example_configs/client.json
-      - ./integration_tests/client_simulator/example_configs/server.json:/usr/app/src/client_simulator/example_configs/server.json
+      - ./integration_tests/client_simulator/example_configs:/usr/app/src/client_simulator/example_configs
 
   testing_integration_linux:
     build:
@@ -35,8 +34,7 @@ services:
       - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - ./integration_tests/client_simulator/example_configs/client.json:/usr/app/src/client_simulator/example_configs/client.json
-      - ./integration_tests/client_simulator/example_configs/server.json:/usr/app/src/client_simulator/example_configs/server.json
+      - ./integration_tests/client_simulator/example_configs:/usr/app/src/client_simulator/example_configs
       - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
       - ~/.config/pulse/cookie:/root/.config/pulse/cookie
     environment:
