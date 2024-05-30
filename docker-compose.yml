@@ -25,6 +25,7 @@ services:
       - ./integration_tests/outputs/attributes:/usr/app/src/fingerprinting_server/outputs
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
       - ./integration_tests/client_simulator/example_configs:/usr/app/src/client_simulator/example_configs
+      - ./integration_tests/start_testing.sh:/usr/app/src/start_testing.sh
 
   testing_integration_linux:
     build:
@@ -35,6 +36,7 @@ services:
       - ./integration_tests/outputs/integration_testing:/usr/app/src/test_data/outputs
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ./integration_tests/client_simulator/example_configs:/usr/app/src/client_simulator/example_configs
+      - ./integration_tests/start_testing.sh:/usr/app/src/start_testing.sh
       - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
       - ~/.config/pulse/cookie:/root/.config/pulse/cookie
     environment:
