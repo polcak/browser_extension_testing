@@ -71,7 +71,7 @@ The extension name abbreviations are defined in a dictionary inside the `start_b
 - also for a run with no extensions installed - `None` (the `None` extension setting is mutually exclusive with any other extension).
 
 ### Special extension configurations
-If you are interested in setting an extension to a specific configuration or maybe doing some client-side testing, you can add an underscore after the abbreviation. The parser considers `_` symbol as a seperator. Whatever comes after `_` you can configure in the `start_browser.py` file. For example using `JS_userSettings` as a extension name in the JSON file performs client-side tests to check the functionality of user defined behavior through the extension UI. More information can be found inside the `start_browser.py` file.
+If you are interested in setting an extension to a specific configuration or maybe doing some client-side testing, you can add an underscore after the abbreviation. The parser considers `_` symbol as a seperator. Whatever comes after `_` you can configure in the `start_browser.py` file. For example using `JS_NBS` as a extension name in the JSON file performs client-side tests to check the functionality of user defined behavior through the extension UI. More information can be found inside the `start_browser.py` file.
 
 ## Server configuration
 

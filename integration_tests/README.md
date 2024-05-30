@@ -24,3 +24,5 @@ python3 start.py ./example_configs/client.json ./example_configs/server.json
 ```
 The configuration files to be used can be changed. 
 
+## How to configure the tests
+See [`client_simulator/example_configs`](https://github.com/kafka-mono/diplomka_implementace/tree/main/integration_tests/client_simulator/example_configs) for more information.

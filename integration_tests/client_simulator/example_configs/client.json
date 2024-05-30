@@ -2,7 +2,7 @@
     "experiment_name": "exp01",
     "browsers": ["firefox=stable" , "chrome=stable" ],
     "pets": {
-        "firefox=stable": [["None"], ["JS_2"]],
+        "firefox=stable": [["None"], ["JS_2", "UO"]],
         "chrome=stable": [["None"], ["JS_2"]]
         
     },
