@@ -63,7 +63,7 @@ Find JShelter Options Page. Must be done seperately for both Firefox and Chrome.
     options_page : str
         JShelter options page.
 """
-def find_jshelter_options_page(browser, driver):
+def find_jshelter_options_page(browser, version, driver):
     options_page = None
     if "firefox" in browser:
         #Change the JShelter level in Firefox.       
@@ -79,21 +79,39 @@ def find_jshelter_options_page(browser, driver):
 
     if "chrome" in browser:
         #Change the JShelter level in Chrome.  
-        driver.get("chrome://extensions/")
-        WebDriverWait(driver, 30).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
-        manager_shadow_root = driver.execute_script('return document.querySelector("extensions-manager").shadowRoot')
-        toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
-        dev_mode_toggle = driver.execute_script('return arguments[0].shadowRoot.querySelector("#devMode")', toolbar)
-        dev_mode_toggle.click()
-        time.sleep(1)
-        container = manager_shadow_root.find_element("css selector", "#container #viewManager #items-list")
-        items_container = driver.execute_script('return arguments[0].shadowRoot.querySelector("#content-wrapper > div:nth-child(4)")', container)
-        extensions_items = items_container.find_elements("tag name","extensions-item")
-        for item in extensions_items:
-            item_text_content = driver.execute_script('return arguments[0].shadowRoot.querySelector("#name").innerText', item)
-            if item_text_content == "JShelter":
-                extension_id = item.get_attribute("id")
-        options_page = f"chrome-extension://{extension_id}/options.html" 
+        if (version.split('.')[0] == "127") or (version.split('.')[0] == "126"):
+            driver.get("chrome://extensions/")
+            WebDriverWait(driver, 30).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
+            manager_shadow_root = driver.execute_script('return document.querySelector("extensions-manager").shadowRoot')
+            toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
+            dev_mode_toggle = driver.execute_script('return arguments[0].shadowRoot.querySelector("#devMode")', toolbar)
+            dev_mode_toggle.click()
+            time.sleep(1)
+            container = manager_shadow_root.find_element("css selector", "#container #viewManager #items-list")
+            items_container = driver.execute_script('return arguments[0].shadowRoot.querySelector("#extensions-section > div")', container)
+            extensions_items = items_container.find_elements("tag name","extensions-item")
+            for item in extensions_items:
+                item_text_content = driver.execute_script('return arguments[0].shadowRoot.querySelector("#name").innerText', item)
+                if item_text_content == "JShelter":
+                    extension_id = item.get_attribute("id")
+            options_page = f"chrome-extension://{extension_id}/options.html" 
+            
+        else:
+            driver.get("chrome://extensions/")
+            WebDriverWait(driver, 30).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
+            manager_shadow_root = driver.execute_script('return document.querySelector("extensions-manager").shadowRoot')
+            toolbar = manager_shadow_root.find_element("css selector", "#toolbar")
+            dev_mode_toggle = driver.execute_script('return arguments[0].shadowRoot.querySelector("#devMode")', toolbar)
+            dev_mode_toggle.click()
+            time.sleep(1)
+            container = manager_shadow_root.find_element("css selector", "#container #viewManager #items-list")
+            items_container = driver.execute_script('return arguments[0].shadowRoot.querySelector("#content-wrapper > div:nth-child(4)")', container)
+            extensions_items = items_container.find_elements("tag name","extensions-item")
+            for item in extensions_items:
+                item_text_content = driver.execute_script('return arguments[0].shadowRoot.querySelector("#name").innerText', item)
+                if item_text_content == "JShelter":
+                    extension_id = item.get_attribute("id")
+            options_page = f"chrome-extension://{extension_id}/options.html" 
     
     return options_page
 
@@ -272,7 +290,7 @@ class Browser:
             setup_socks5_proxy("firefox", fp, proxy_setting)
             if version:
                 firefox_options.browser_version=str(version[0])
-            
+
             fp.set_preference("geo.enabled", True)
             fp.set_preference('geo.prompt.testing', True)
             fp.set_preference('geo.prompt.testing.allow', True)
@@ -293,6 +311,14 @@ class Browser:
 
             self.driver = create_webdriver(firefox_options)
 
+            session_details = self.driver.capabilities
+            browser_version = session_details['browserVersion']
+
+            if "esr" in browser.lower():
+                self.browser_and_version="firefox" + "=" + browser_version + "esr"
+            else:
+                self.browser_and_version="firefox" + "=" + browser_version
+            
             #Install extensions.
             if (totalPaths != "No addons to install"):
                 for addon in totalPaths:     
@@ -321,7 +347,7 @@ class Browser:
 
             if JSlevel:    
                 #Change the JShelter level in Firefox.       
-                options_page = find_jshelter_options_page(browser.lower(), self.driver)
+                options_page = find_jshelter_options_page(browser.lower(), browser_version, self.driver)
 
                 if JSlevel[0] == "NBS":
                     test_switching_NBS(self.driver, options_page, browser_type)
@@ -353,7 +379,8 @@ class Browser:
 
             if version:
                 chrome_options.browser_version=str(version[0])
-
+            
+            
             chrome_options.add_argument("--disable-gpu")
             chrome_options.add_argument("--no-sandbox")
             chrome_options.add_argument('--disable-dev-shm-usage')   
@@ -362,6 +389,11 @@ class Browser:
             chrome_options.add_argument("enable-automation")
             chrome_options.add_argument("--use-fake-ui-for-media-stream")
             self.driver = webdriver.Chrome(options=chrome_options)
+
+            session_details = self.driver.capabilities
+            browser_version = session_details['browserVersion']
+
+            self.browser_and_version= "chrome" + "=" + browser_version
 
             #At this point all listed extensions are installed. If you wish to configure them you can do so from this point on till the end of the 
             #object class.
@@ -384,7 +416,7 @@ class Browser:
 
             if JSlevel:
                 # Change the JShelter level in Chrome.
-                options_page = options_page = find_jshelter_options_page(browser.lower(), self.driver)
+                options_page = options_page = find_jshelter_options_page(browser.lower(), browser_version, self.driver)
 
                 if JSlevel[0] == "DLS":
                     test_setting_domain_level(self.driver, options_page)
@@ -402,6 +434,9 @@ class Browser:
         else:
             print("Unsupported Browser")
             sys.exit(0)
+
+    def get_version(self):
+        return self.browser_and_version
 
     def quit(self):
         try:

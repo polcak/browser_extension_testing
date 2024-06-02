@@ -119,12 +119,15 @@ if __name__ == '__main__':
         except:
             print("Please give valid json files as input. See vm_all.json and vm_server.json as the template.")
             sys.exit(0)
-    if mode == "interactive":
+    elif mode == "interactive":
         try:
             print("Starting the visits in interactive mode.")
             start_native_interactive(exp, browsers, pets, server_config, delay)
         except:
             print("Please give valid json files as input. See vm_all.json and vm_server.json as the template.")
             sys.exit(0)
+    else:
+        print("Please supply correct JSON congfiguration files.")
+        sys.exit(0)
 
 

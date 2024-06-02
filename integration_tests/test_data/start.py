@@ -44,7 +44,7 @@ def main():
     test_date_timestamp = re.search(test_date, test_start).group(0)
 
     subfolders = [f for f in os.listdir("/usr/app/src/fingerprinting_server/outputs/" + test_date_timestamp) if os.path.isdir(os.path.join("/usr/app/src/fingerprinting_server/outputs/" + test_date_timestamp, f))]
-    
+    print("Integration testing starting.")
     for subfolder in subfolders:
         browser_name = subfolder.split('_')[-1]
         browser_data = create_browser_data(test_date_timestamp + "/" + subfolder)  
@@ -53,7 +53,6 @@ def main():
             print("Integration testing skipped, no data found")
             exit(0)
 
-        print("Integration testing starting.")
         print("Testing log files in directory: ", test_date_timestamp + "/" + subfolder)
         print("Browser currently tested:", browser_name)
 
@@ -79,7 +78,8 @@ def main():
                 set_shared_addonRun(value)     
                 print("Addons installed this run: ", soretd_names)
                       
-                pytest.main(['-s'])                  
+                pytest.main(['-s'])       
+        print("\n")           
 
 if __name__ == "__main__":
     main()
