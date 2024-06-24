@@ -67,7 +67,6 @@ def test_pet(exp, browser, pet, server_config, delay):
 
         browser = unit.get_version()
         time.sleep(5)
-        print("visit sites")
         html_args = "?exp="+exp+"&browser="+browser+"&pet="+'-'.join(pet)
         fp_site = fp_sites[0] + html_args
         unit.visit_sites([fp_site], delay)

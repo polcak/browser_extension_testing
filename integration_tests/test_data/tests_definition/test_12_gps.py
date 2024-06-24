@@ -27,7 +27,7 @@ from math_operations import is_in_accuracy, calc_distance
 
 def test_accuracy(noaddon, addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.accuracy is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.accuracy['value'] == 'REAL VALUE':
@@ -58,7 +58,7 @@ def test_accuracy(noaddon, addonRun, expected):
 ## Test position's altitude in meters, relative to sea level.
 def test_altitude(noaddon, addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.altitude is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.altitude['value'] == 'REAL VALUE':
@@ -81,7 +81,7 @@ def test_altitude(noaddon, addonRun, expected):
 ## Test accuracy of the altitude property in meters.
 def test_altitudeaccurac(noaddon, addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.altitudeAccurac is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.altitudeAccurac['value'] == 'REAL VALUE':
@@ -110,7 +110,7 @@ def test_altitudeaccurac(noaddon, addonRun, expected):
 # If speed is 0, heading is NaN. If the device is unable to provide heading information, this value is null
 def test_heading(noaddon, addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.heading is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.heading['value'] == 'REAL VALUE':
@@ -133,7 +133,7 @@ def test_heading(noaddon, addonRun, expected):
 ## Test position's latitude in decimal degrees.
 def test_latitude(noaddon, addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.latitude is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.latitude['value'] == 'REAL VALUE':
@@ -158,7 +158,7 @@ def test_latitude(noaddon, addonRun, expected):
 ## Test position's longitude in decimal degrees.
 def test_longitude(noaddon, addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.longitude is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.longitude['value'] == 'REAL VALUE':
@@ -183,7 +183,7 @@ def test_longitude(noaddon, addonRun, expected):
 ## Test speed (velocity) of the device in meters per second. This value can be null.
 def test_speed(noaddon, addonRun, expected):
     if get_shared_addonRun().geolocation.valid == False:
-        pytest.skip("Geolocation not supported during this run.")
+        pytest.xfail("Geolocation not supported during this run.")
     if get_shared_addonRun().geolocation.speed is None:
         pytest.skip("Geolocation not tested.")
     if expected.geolocation.speed['value'] == 'REAL VALUE':

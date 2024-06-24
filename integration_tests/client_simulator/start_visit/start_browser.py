@@ -31,6 +31,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from .client_side_tests.domain_level_settings_test import *
 from .client_side_tests.NBS_settings_test import *
 
+browser_versions = ["stable", "dev", "beta", "canary", "esr", "nightly"]
 
 """
 In case Selenium Manager times out, try to downlaod the browser driver again.
@@ -79,7 +80,7 @@ def find_jshelter_options_page(browser, version, driver):
 
     if "chrome" in browser:
         #Change the JShelter level in Chrome.  
-        if (version.split('.')[0] == "127") or (version.split('.')[0] == "126"):
+        if int(version.split('.')[0]) >= 126:
             driver.get("chrome://extensions/")
             WebDriverWait(driver, 30).until(EC.presence_of_element_located(("xpath", "/html/body/extensions-manager")))
             manager_shadow_root = driver.execute_script('return document.querySelector("extensions-manager").shadowRoot')
@@ -271,7 +272,7 @@ class Browser:
                     profile.set_preference("network.proxy.no_proxies_on", bypass_list)
                     print("socks5 proxy configured on firefox")
 
-
+        self.pet_names = pet
         pet_config = PetConfig()
         #The set up for individual extensions on individual browsers can vary immensely, it's not really possible to create a uniform function.
         #This is due to the set up being executed client-side, different set up pages can have different DOM model on different browsers. 
@@ -282,6 +283,7 @@ class Browser:
         
         ghostery_tested = False
         browser_type, *version = browser.split('=')
+        matched_type = next((bt for bt in browser_versions if bt in browser.lower()), None)
 
         if "firefox" in browser.lower():
             
@@ -314,10 +316,10 @@ class Browser:
             session_details = self.driver.capabilities
             browser_version = session_details['browserVersion']
 
-            if "esr" in browser.lower():
-                self.browser_and_version="firefox" + "=" + browser_version + "esr"
+            if matched_type:
+                self.browser_and_version = f"firefox={browser_version}{matched_type}"
             else:
-                self.browser_and_version="firefox" + "=" + browser_version
+                self.browser_and_version = f"firefox={browser_version}"
             
             #Install extensions.
             if (totalPaths != "No addons to install"):
@@ -393,7 +395,10 @@ class Browser:
             session_details = self.driver.capabilities
             browser_version = session_details['browserVersion']
 
-            self.browser_and_version= "chrome" + "=" + browser_version
+            if matched_type:
+                self.browser_and_version = f"chrome={browser_version}{matched_type}"
+            else:
+                self.browser_and_version = f"chrome={browser_version}"
 
             #At this point all listed extensions are installed. If you wish to configure them you can do so from this point on till the end of the 
             #object class.
@@ -453,9 +458,10 @@ class Browser:
             Time spent on test page.
     """
     def visit_sites(self, site_list, delay): 
-        for site in site_list:
+        print("Browser currently tested: " + self.get_version() + "\n" + "Extensions installed: " + ", ".join(self.pet_names))
+        for site in site_list:         
             self.driver.set_page_load_timeout(delay + 60)
-            sys.stdout.write(".")
+            sys.stdout.write(". \n")
             sys.stdout.flush()
             try:                          
                 self.driver.get(site)
