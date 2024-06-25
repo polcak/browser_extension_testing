@@ -11,14 +11,13 @@ This repository contains the source code implemented as part of my master thesis
 
 ---
 
-Building either of the images from the **Dockerfile** might take several minutes based on the internet speed and host machine capacity. After the first build, build data is cached through *Docker*, so subsequent builds take very litte time, unless the cache is cleared with the `docker prune` command.
-
 ## Contents
 - The `integration_testing` folder contains the code base needed to perform integration browser extension testing as described in detail in the thesis. 
 - The `system_testing` folder similarly contains the code base for system testing.
 
 ## How to build
-The **Dockerfile** takes advangate of multi-stage builds. The overlap of technologies is not huge so this is done in order to save space and time. 
+
+Building either of the images from the **Dockerfile** might take several minutes based on the internet speed and host machine capacity. The **Dockerfile** takes advangate of multi-stage builds. The overlap of technologies is not huge so this is done in order to save space and time.  After the first build, build data is cached through *Docker*, so subsequent builds take very litte time, unless the cache is cleared with the `docker prune` command.
 
 ### How to build an image and run a container for integration testing
 To build the image and run the container on *Linux* host, run the following command:
